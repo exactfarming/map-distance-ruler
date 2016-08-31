@@ -1,4 +1,4 @@
-function initMap () {
+function initMap(useCustomRender = true) {
 
   let mapId = `mapid_${new Date().getTime()}`;
   let $body = $('body');
@@ -10,19 +10,27 @@ function initMap () {
 
   $body.append(`<div id="distance"></div>`);
 
-  let options = {
-    center: [52, 37],
-    renderRuler: function (map, _el) {
-      $('#distance').append(_el);
-    },
-    onChange: function(distance, distanceArray, rulerHTMLObjects) {
+  let options;
+  if (useCustomRender) {
+    options = {
+      center: [52, 37],
+      renderRuler: function (map, _el) {
+        $('#distance').append(_el);
+      },
+      onChange: function (distance, distanceArray, rulerHTMLObjects) {
+      }
+    };
+  } else {
+    options = {
+      center: [52, 37]
+    };
+  }
 
-    }
-  };
-  map.addLayer(L.mapDistanceRuler(options));
+  let mapDistanceRuler = L.mapDistanceRuler(options);
+  map.addLayer(mapDistanceRuler);
 
   return map;
-};
+}
 
 function destroyMap() {
   $('body').html('');
