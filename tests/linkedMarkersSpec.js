@@ -127,4 +127,8 @@ describe('Linked List', function () {
     expect(list.get(0)).toEqual(jasmine.any(Object));
     expect(list._length).toBe(0);
   });
+
+  it('list: isEmpty', () => {
+    expect(list.isEmpty()).toBe(false);
+  });
 });

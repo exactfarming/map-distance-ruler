@@ -10,3 +10,23 @@
   position: relative;
   margin: 5px;
 }
+.ruler-icon {
+  background-color: #000;
+  border-radius: 5px;
+}
+.ruler-tooltip {
+  font: 9px/1.25 "Helvetica Neue", Arial, Helvetica, sans-serif;
+  background-color: rgba(255,255,255,0.7);
+  box-shadow: 0 0 5px #bbb;
+  margin: 0;
+  padding: 2px;
+  width: auto !important;
+  height: auto !important;
+  white-space: nowrap;
+}
+.ruler-tooltip-total {
+  font-weight: bold;
+}
+.ruler-tooltip-difference {
+  color: #777;
+}

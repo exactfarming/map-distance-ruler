@@ -4,12 +4,35 @@
     width: 100px
 
     background-color #f4f4f4
-    
+
     border-radius: 4px
-    
-    box-shadow: 0 1px 5px rgba(0,0,0,0.65)
+
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65)
 
     &-items
         position: relative
 
         margin 5px
+
+    &-icon
+        background-color black
+        border-radius 5px
+
+.ruler-tooltip {
+    font: 9px / 1.25 "Helvetica Neue", Arial, Helvetica, sans-serif;
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 5px #BBB;
+    margin: 0;
+    padding: 2px;
+    width: auto !important;
+    height: auto !important;
+    white-space: nowrap;
+}
+
+.ruler-tooltip-total {
+    font-weight: bold;
+}
+
+.ruler-tooltip-difference {
+    color: #777;
+}
