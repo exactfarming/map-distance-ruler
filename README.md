@@ -37,4 +37,4 @@ Demo - https://exactfarming.github.io/map-distance-ruler/
 ```
 For more details see example
 
-##### Thanks to this guy https://github.com/jtreml for this example http://jtreml.github.io/leaflet.measure/example.html
+##### Thanks this guy https://github.com/jtreml for this example http://jtreml.github.io/leaflet.measure/example.html
