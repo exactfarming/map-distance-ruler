@@ -7,11 +7,10 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@0.7.7/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@0.7.7/dist/leaflet.js"></script>
 
-  <link rel="stylesheet" href="lib/app.css" />
-  <script src="build.js"></script>
+  <link rel="stylesheet" href="https://rawgit.com/exactfarming/map-distance-ruler/master/lib/app.css" />
+  <script src="https://rawgit.com/exactfarming/map-distance-ruler/master/build.js"></script>
   
   <script>
-    // System.import('lib/app').then(function () {
       $(function () {
         var map = L.map('mapid').setView([52, 37], 13);
 
@@ -65,7 +64,6 @@
           }
         });
       });
-    // });
   </script>
   <style type="text/css">
     #mapid {
@@ -74,14 +72,9 @@
 
     .distance-container {
       padding: 10px;
-      /*position: absolute;*/
-      /*top: 10px;*/
-      /*left: 10px;*/
-      /*z-index: 1;*/
     }
 
     .distance-container > * {
-      /*background-color: rgba(0, 0, 0, 0.5);*/
       color: #fff;
       font-size: 11px;
       line-height: 18px;
