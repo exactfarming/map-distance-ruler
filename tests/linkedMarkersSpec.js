@@ -2,6 +2,25 @@ import List from '../lib/app/linked-list';
 
 var list;
 
+var posArray = function(view) {
+  let posArray = []; 
+  
+  view.hash.each((item) => {
+    posArray.push(item._position);
+  });
+
+  return posArray;
+};
+
+var click = function(map, x, y) {
+  var latlngPoint = new L.LatLng(x, y);
+    map.fireEvent('click', {
+      latlng: latlngPoint,
+      layerPoint: map.latLngToLayerPoint(latlngPoint),
+      containerPoint: map.latLngToContainerPoint(latlngPoint)
+    });
+};
+
 describe('Linked List', function () {
   beforeEach(function () {
     window.map = initMap();
@@ -130,5 +149,85 @@ describe('Linked List', function () {
 
   it('list: isEmpty', () => {
     expect(list.isEmpty()).toBe(false);
+  });
+
+  it('list: add/remove markers - 1', () => {
+    list.clear();
+    expect(list.isEmpty()).toBe(true);
+
+    var ruler = map.__dr;
+
+    ruler.view._startMeasuring();
+
+    click(map, 0, 10);
+    click(map, 10, 10);
+    click(map, 10, 20);
+    click(map, 10, 30);
+    click(map, 10, 40);
+
+    expect(posArray(ruler.view)).toEqual([0,1,2,3,4]);
+    
+    console.log('posArray - before', posArray(ruler.view));
+    
+    ruler.view.removeMarker(ruler.view.markers[4]);
+    expect(posArray(ruler.view)).toEqual([0,1,2,3]);
+    ruler.view.removeMarker(ruler.view.markers[3]);
+    expect(posArray(ruler.view)).toEqual([0,1,2]);
+    ruler.view.removeMarker(ruler.view.markers[2]);
+    expect(posArray(ruler.view)).toEqual([0,1]);
+    ruler.view.removeMarker(ruler.view.markers[1]);
+    expect(posArray(ruler.view)).toEqual([0]);
+  });
+
+  it('list: add/remove markers - 2', () => {
+    list.clear();
+    expect(list.isEmpty()).toBe(true);
+
+    var ruler = map.__dr;
+
+    ruler.view._startMeasuring();
+
+    click(map, 0, 10);
+    click(map, 10, 10);
+    click(map, 10, 20);
+    click(map, 10, 30);
+    click(map, 10, 40);
+
+    expect(posArray(ruler.view)).toEqual([0,1,2,3,4]);
+    
+    ruler.view.removeMarker(ruler.view.markers[1]);
+    expect(posArray(ruler.view)).toEqual([0,1,2,3]);
+    ruler.view.removeMarker(ruler.view.markers[1]);
+    expect(posArray(ruler.view)).toEqual([0,1,2]);
+    ruler.view.removeMarker(ruler.view.markers[1]);
+    expect(posArray(ruler.view)).toEqual([0,1]);
+    ruler.view.removeMarker(ruler.view.markers[1]);
+    expect(posArray(ruler.view)).toEqual([0]);
+  });
+
+  it('list: add/remove markers - 3', () => {
+    list.clear();
+    expect(list.isEmpty()).toBe(true);
+
+    var ruler = map.__dr;
+
+    ruler.view._startMeasuring();
+
+    click(map, 0, 10);
+    click(map, 10, 10);
+    click(map, 10, 20);
+    click(map, 10, 30);
+    click(map, 10, 40);
+
+    expect(posArray(ruler.view)).toEqual([0,1,2,3,4]);
+    
+    ruler.view.removeMarker(ruler.view.markers[3]);
+    expect(posArray(ruler.view)).toEqual([0,1,2,3]);
+    ruler.view.removeMarker(ruler.view.markers[2]);
+    expect(posArray(ruler.view)).toEqual([0,1,2]);
+    ruler.view.removeMarker(ruler.view.markers[1]);
+    expect(posArray(ruler.view)).toEqual([0,1]);
+    ruler.view.removeMarker(ruler.view.markers[0]);
+    expect(posArray(ruler.view)).toEqual([0]);
   });
 });
