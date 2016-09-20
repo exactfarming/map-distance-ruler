@@ -24,9 +24,9 @@
           _updateTooltipDistance(tooltip, total, difference) {
             var totalRound = total, differenceRound = difference;
 
-            var text = '<div class="ruler-tooltip-total">' + totalRound.toFixed(2) + ' m</div>';
+            var text = '<span class="ruler-tooltip-total">' + totalRound.toFixed(2) + ' m</span>';
             if (differenceRound > 0 && totalRound != differenceRound) {
-              text += '<div class="ruler-tooltip-difference">(+' + differenceRound.toFixed(2) + ' m)</div>';
+              text += '<span class="ruler-tooltip-difference">+' + differenceRound.toFixed(2) + ' m</span>';
             }
 
             tooltip._icon.innerHTML = text;
@@ -35,7 +35,7 @@
             this._tooltip = L.marker(position, {
               icon: L.divIcon({
                 className: 'ruler-tooltip',
-                iconAnchor: [-5, -5]
+                iconAnchor: [-10, -10]
               }),
               clickable: false,
             }).addTo(this._layerPaint);
@@ -43,6 +43,7 @@
             return this._tooltip;
           },
           lineOptions: {
+            color: '#4a4a4a',
             weight: 4
           },
           iconOptions: { 
