@@ -2,20 +2,18 @@
 <html>
 <head>
   <title>Test - map-distance-ruler</title>
-  <script src="/jspm_packages/system.js"></script>
-  <script src="/jspm_packages/github/components/jquery@3.1.0/jquery.min.js"></script>
-  <script src="/jspm_packages/github/Leaflet/Leaflet@0.7.7/dist/leaflet.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@0.7.7/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@0.7.7/dist/leaflet.js"></script>
 
-  <script src="config.js"></script>
-  <!--<script src="build.js"></script>-->
-  <!--<script src="lib/app.js"></script>-->
+  <link rel="stylesheet" href="https://rawgit.com/exactfarming/map-distance-ruler/master/lib/app.css" />
+  <script src="https://rawgit.com/exactfarming/map-distance-ruler/master/build.prod.js"></script>
+  
   <script>
-    System.import('lib/app').then(function () {
       $(function () {
         var map = L.map('mapid').setView([52, 37], 13);
-
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-
         let options = {
           center: [52, 37],
           renderRuler: function (map, _el) {
@@ -23,12 +21,10 @@
           },
           _updateTooltipDistance(tooltip, total, difference) {
             var totalRound = total, differenceRound = difference;
-
-            var text = '<span class="ruler-tooltip-total">' + totalRound.toFixed(2) + ' m</span>';
+            var text = '<div class="ruler-tooltip-total">' + totalRound.toFixed(2) + ' m</div>';
             if (differenceRound > 0 && totalRound != differenceRound) {
-              text += '<span class="ruler-tooltip-difference">+' + differenceRound.toFixed(2) + ' m</span>';
+              text += '<div class="ruler-tooltip-difference">(+' + differenceRound.toFixed(2) + ' m)</div>';
             }
-
             tooltip._icon.innerHTML = text;
           },
           _createTooltip(position) {
@@ -39,7 +35,6 @@
               }),
               clickable: false,
             }).addTo(this._layerPaint);
-
             return this._tooltip;
           },
           lineOptions: {
@@ -55,15 +50,11 @@
         // debugger;
         // var map = L.map('mapid').setView([52, 37], 13);
         // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-
         // console.log(mapRuler.init(map));
         // });
-
         var ruler = map.__dr;
-
         $('#toggleRuler').on('click', function () {
           ruler.view._toggleMeasure();
-
           if (ruler.view.__enabled) {
             $('#toggleRuler').text('toggle ruler (on)');
           } else {
@@ -71,25 +62,15 @@
           }
         });
       });
-    });
   </script>
-  <link rel="stylesheet" href="jspm_packages/github/Leaflet/Leaflet@0.7.7/dist/leaflet.css"/>
-  <link rel="stylesheet" href="lib/app.css"/>
   <style type="text/css">
     #mapid {
       height: 300px;
     }
-
     .distance-container {
       padding: 10px;
-      /*position: absolute;*/
-      /*top: 10px;*/
-      /*left: 10px;*/
-      /*z-index: 1;*/
     }
-
     .distance-container > * {
-      /*background-color: rgba(0, 0, 0, 0.5);*/
       color: #fff;
       font-size: 11px;
       line-height: 18px;
@@ -99,7 +80,6 @@
       border-radius: 3px;
     }
   </style>
-  <script src="http://0.0.0.0:35729/livereload.js?snipver=1"></script>
 </head>
 <body>
 <div id="mapid"></div>
