@@ -27,18 +27,31 @@
   background: transparent;
 }
 .ruler-tooltip {
-  font: 9px/1.25 "Helvetica Neue", Arial, Helvetica, sans-serif;
-  background-color: rgba(255,255,255,0.7);
-  box-shadow: 0 0 5px #bbb;
-  margin: 0;
-  padding: 2px;
   width: auto !important;
   height: auto !important;
+  margin: 0;
+  background-color: rgba(51,50,50,0.5);
+  border-radius: 2px;
+  padding: 3px;
   white-space: nowrap;
 }
 .ruler-tooltip-total {
-  font-weight: bold;
+  display: inline-block;
+  vertical-align: bottom;
+  color: #fff;
+  font: 13px/1.25 "Roboto", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  white-space: nowrap;
 }
 .ruler-tooltip-difference {
-  color: #777;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-left: 3px;
+  font: 10px/1.25 "Roboto", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  color: #7ed321;
 }
