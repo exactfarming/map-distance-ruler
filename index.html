@@ -41,6 +41,13 @@
             }).addTo(this._layerPaint);
 
             return this._tooltip;
+          },
+          lineOptions: {
+            color: '#4a4a4a',
+            weight: 4
+          },
+          iconOptions: { 
+            iconSize: new L.Point(14, 14)
           }
         };
         map.addLayer(L.mapDistanceRuler(options));
