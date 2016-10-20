@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Jasmine Spec Runner v2.5.2</title>
+
+  <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.5.2/jasmine_favicon.png">
+  <link rel="stylesheet" href="lib/jasmine-2.5.2/jasmine.css">
+
+  <script src="lib/jasmine-2.5.2/jasmine.js"></script>
+  <script src="lib/jasmine-2.5.2/jasmine-html.js"></script>
+  <script src="lib/jasmine-2.5.2/boot.js"></script>
+
+  <!-- include source files here... -->
+  <script src="../jspm_packages/system.js"></script>
+  <script src="../jspm_packages/github/components/jquery@3.1.0/jquery.min.js"></script>
+  <script src="../jspm_packages/github/Leaflet/Leaflet@0.7.7/dist/leaflet.js"></script>
+
+  <script src="../config.js"></script>
+  <!--<script src="../build.js"></script>-->
+  <!--<script src="../lib/app.js"></script>-->
+  <script>
+    System.import('../lib/app').then(function () {
+      $(function () {
+        var map = L.map('mapid').setView([52, 37], 13);
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+        let options = {
+          center: [52, 37],
+          renderRuler: function (map, _el) {
+            $('#distance').append(_el);
+          },
+          _updateTooltipDistance(tooltip, total, difference) {
+            var totalRound = total, differenceRound = difference;
+
+            var text = '<span class="ruler-tooltip-total">' + totalRound.toFixed(2) + ' m</span>';
+            if (differenceRound > 0 && totalRound != differenceRound) {
+              text += '<span class="ruler-tooltip-difference">+' + differenceRound.toFixed(2) + ' m</span>';
+            }
+
+            tooltip._icon.innerHTML = text;
+          },
+          _createTooltip(position) {
+            this._tooltip = L.marker(position, {
+              icon: L.divIcon({
+                className: 'ruler-tooltip',
+                iconAnchor: [-10, -10]
+              }),
+              clickable: false,
+            }).addTo(this._layerPaint);
+
+            return this._tooltip;
+          },
+          lineOptions: {
+            color: '#000000',
+            weight: 4,
+            opacity: 1
+          },
+          iconOptions: { 
+            iconSize: new L.Point(14, 14)
+          }
+        };
+        map.addLayer(L.mapDistanceRuler(options));
+        // System.import('../lib/app').then(function(mapRuler) {
+        // debugger;
+        // var map = L.map('mapid').setView([52, 37], 13);
+        // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+        // console.log(mapRuler.init(map));
+        // });
+
+        var ruler = map.__dr;
+
+        $('#toggleRuler').on('click', function () {
+          ruler.view._toggleMeasure();
+
+          if (ruler.view.__enabled) {
+            $('#toggleRuler').text('toggle ruler (on)');
+          } else {
+            $('#toggleRuler').text('toggle ruler (off)');
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- include spec files here... -->
+  <script src="../tests/init.js"></script>
+  <script src="../tests/initSpec.js"></script>
+  <script src="../tests/linkedMarkersSpec.js"></script>
+  <script src="../tests/rulerViewSpec.js"></script>
+
+</head>
+
+<body>
+  <div id="mapid"></div>
+  <div id='distance' class='distance-container'>
+    <button id="toggleRuler">toggle ruler (off)</button>
+  </div>
+</body>
+</html>
