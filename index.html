@@ -2,13 +2,14 @@
 <html>
 <head>
   <title>Test - map-distance-ruler</title>
-  <script src="/jspm_packages/system.js"></script>
+  <!--<script src="/jspm_packages/system.js"></script>-->
   <script src="/jspm_packages/github/components/jquery@3.1.0/jquery.min.js"></script>
   <script src="/jspm_packages/github/Leaflet/Leaflet@0.7.7/dist/leaflet.js"></script>
 
-  <script src="jspm.config.js"></script>
+  <!--<script src="jspm.config.js"></script>-->
+  <script src="build.js"></script>
   <script>
-    System.import('lib/app.js').then(function () {
+
       $(function () {
         var map = L.map('mapid').setView([52, 37], 13);
 
@@ -70,7 +71,7 @@
           }
         });
       });
-    });
+//    });
   </script>
   <link rel="stylesheet" href="jspm_packages/github/Leaflet/Leaflet@0.7.7/dist/leaflet.css"/>
   <link rel="stylesheet" href="lib/app.css"/>
