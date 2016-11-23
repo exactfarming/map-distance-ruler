@@ -10,26 +10,28 @@
   <script src="build.js"></script>
   <script>
 
-      $(function () {
-        var map = L.map('mapid').setView([52, 37], 13);
+    $(function () {
+      var map = L.map('mapid').setView([52, 37], 13);
 
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
-        let options = {
-          center: [52, 37],
-          renderRuler: function (map, _el) {
-            $('#distance').append(_el);
-          },
-          _updateTooltipDistance(tooltip, total, difference) {
-            var totalRound = total, differenceRound = difference;
+      let options = {
+        center: [52, 37],
+        renderRuler: function (map, _el) {
+          $('#distance').append(_el);
+        },
+        _updateTooltipDistance(tooltip, total, difference) {
+          var totalRound = total, differenceRound = difference;
 
-            var text = '<span class="ruler-tooltip-total">' + totalRound.toFixed(2) + ' m</span>';
-            if (differenceRound > 0 && totalRound != differenceRound) {
-              text += '<span class="ruler-tooltip-difference">+' + differenceRound.toFixed(2) + ' m</span>';
-            }
+          var text = '<span class="ruler-tooltip-total">' + totalRound.toFixed(2) + ' m</span>';
+          if (differenceRound > 0 && totalRound != differenceRound) {
+            text += '<span class="ruler-tooltip-difference">+' + differenceRound.toFixed(2) + ' m</span>';
+          }
 
+          if (tooltip._icon) {
             tooltip._icon.innerHTML = text;
-          },
+          }
+        },
 //          _createTooltip(position) {
 //            this._tooltip = L.marker(position, {
 //              icon: L.divIcon({
@@ -46,32 +48,32 @@
 //            weight: 4,
 //            opacity: 1
 //          },
-          iconOptions: {
-            iconSize: new L.Point(14, 14)
-          }
-        };
-        map.addLayer(L.mapDistanceRuler(options));
-        // System.import('lib/app').then(function(mapRuler) {
-        // debugger;
-        // var map = L.map('mapid').setView([52, 37], 13);
-        // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+        iconOptions: {
+          iconSize: new L.Point(14, 14)
+        }
+      };
+      map.addLayer(L.mapDistanceRuler(options));
+      // System.import('lib/app').then(function(mapRuler) {
+      // debugger;
+      // var map = L.map('mapid').setView([52, 37], 13);
+      // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
-        // console.log(mapRuler.init(map));
-        // });
+      // console.log(mapRuler.init(map));
+      // });
 
-        var ruler = map.__dr;
+      var ruler = map.__dr;
 
-        $('#toggleRuler').on('click', function () {
-          ruler.view._toggleMeasure();
+      $('#toggleRuler').on('click', function () {
+        ruler.view._toggleMeasure();
 
-          if (ruler.view.__enabled) {
-            $('#toggleRuler').text('toggle ruler (on)');
-          } else {
-            $('#toggleRuler').text('toggle ruler (off)');
-          }
-        });
+        if (ruler.view.__enabled) {
+          $('#toggleRuler').text('toggle ruler (on)');
+        } else {
+          $('#toggleRuler').text('toggle ruler (off)');
+        }
       });
-//    });
+    });
+    //    });
   </script>
   <link rel="stylesheet" href="jspm_packages/github/Leaflet/Leaflet@0.7.7/dist/leaflet.css"/>
   <link rel="stylesheet" href="lib/app.css"/>
