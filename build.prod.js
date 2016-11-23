@@ -277,12 +277,8 @@ var View = L.Class.extend({
 
     this.hash.remove(pos);
     this.hash.resetPositions();
-
     this._layerPaint.removeLayer(marker);
-    if (pos === 0) {
-      this._layerPaint.removeLayer(this._tooltip[0]);
-      this._tooltip.splice(0, 1);
-    } else {
+    if (pos !== 0) {
       this._layerPaint.removeLayer(this._tooltip[pos - 1]);
       this._tooltip.splice(pos - 1, 1);
     }
@@ -330,12 +326,14 @@ var View = L.Class.extend({
   },
   insertAfter: function insertAfter(pos, data) {
     var marker = this.createMarker(data._latlng);
+    var tooltip = this._addTooltip(data._latlng);
 
     this._layerPaintPath.spliceLatLngs(pos, 0, data._latlng);
     this.hash.insertAfter(marker, pos);
     marker.node = this.hash;
 
     this.markers.splice(pos, 0, marker);
+    this._tooltip.splice(pos, 0, tooltip);
     this._points.splice(pos, 0, data._latlng);
 
     this.resetMarkersPositions();
@@ -519,7 +517,7 @@ var View = L.Class.extend({
       this.addMarker(e.latlng);
 
       if (this.markers.length > 1) {
-        this._createTooltip(e.latlng);
+        this._addTooltip(e.latlng);
       }
 
       // If we have a tooltip, update the distance and create a new tooltip, leaving the old one exactly where it is (i.e. where the user has clicked)
@@ -597,6 +595,11 @@ var View = L.Class.extend({
       clickable: false
     });
 
+    return tooltip;
+  },
+  _addTooltip: function _addTooltip(position) {
+    var tooltip = this._createTooltip(position);
+
     this._tooltip.push(tooltip);
 
     tooltip.addTo(this._layerPaint);
@@ -619,19 +622,12 @@ var View = L.Class.extend({
     tooltip._icon.innerHTML = text;
   },
   _resetTooltipPositions: function _resetTooltipPositions(redrawFromPosition) {
-    // if (position != null) {
-    console.log('redrawFromPosition', redrawFromPosition);
-    console.log('this._points', this._points.length);
-    // }
     var total_distance = 0;
     if (this._points.length && this._tooltip.length) {
       for (var i = 0; i < this._points.length - 1; i++) {
         this._updateTooltipPosition(this._tooltip[i], this._points[i + 1]);
         var distance = this._points[i].distanceTo(this._points[i + 1]);
         this._updateTooltipDistance(this._tooltip[i], total_distance + distance, distance);
-        // if (redrawFromPosition >= i) {
-        this._createTooltip(this._points[i + 1]);
-        // }
         total_distance += distance;
       }
     }
@@ -650,9 +646,6 @@ var View = L.Class.extend({
 
   hash: new List(),
 
-  _calcDistanceBetweenPoints: function _calcDistanceBetweenPoints(x1, y1, x2, y2) {
-    return Math.hypot(x2 - x1, y2 - y1);
-  },
   _calcHoverMarkerCoordinates: function _calcHoverMarkerCoordinates(point, linePoint1, linePoint2) {
     var x0 = point.lat;
     var y0 = point.lng;

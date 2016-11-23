@@ -1,723 +1,763 @@
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.lib = global.lib || {})));
-}(this, (function (exports) { 'use strict';
+System.register('lib/app/linked-list.js', [], function (_export, _context) {
+  "use strict";
 
-var Node = L.Class.extend({
-  data: null,
-  next: null,
-  prev: null,
-  initialize: function initialize(data) {
-    this.data = data;
-  },
+  var posArray, Node;
+  return {
+    setters: [],
+    execute: function () {
+      posArray = function posArray(list) {
+        var posArray = [];
 
-  index: 0
-});
+        list.each(function (item) {
+          posArray.push(item._position);
+        });
 
-var List = L.Class.extend({
-  _length: 0,
-  _head: null,
-  _tail: null,
-  _hash: {},
-  _count: 0,
+        return posArray;
+      };
 
-  add: function add(data) {
-    var node = new Node(data);
+      Node = L.Class.extend({
+        data: null,
+        next: null,
+        prev: null,
+        initialize: function initialize(data) {
+          this.data = data;
+        },
 
-    //special case: no items in the list yet
-    if (this._length == 0) {
-      this._head = node;
-      this._tail = node;
-    } else {
-      //attach to the tail node
-      this._tail.next = node;
-      node.prev = this._tail;
-      this._tail = node;
-    }
+        index: 0
+      });
 
-    //don't forget to update the count
-    this._length++;
+      _export('default', L.Class.extend({
+        _length: 0,
+        _head: null,
+        _tail: null,
+        _hash: {},
+        _count: 0,
 
-    node.index = this._count;
-    this._hash[this._count] = node;
-    this._count++;
+        add: function add(data) {
+          var node = new Node(data);
 
-    this.resetPositions();
+          //special case: no items in the list yet
+          if (this._length == 0) {
+            this._head = node;
+            this._tail = node;
+          } else {
+            //attach to the tail node
+            this._tail.next = node;
+            node.prev = this._tail;
+            this._tail = node;
+          }
 
-    return node;
-  },
-  insertAfter: function insertAfter(data, index) {
-    var rslt = this._head;
+          //don't forget to update the count
+          this._length++;
 
-    if (this._length == 0 || index > this._length || index < 0) {
-      return;
-    }
+          node.index = this._count;
+          this._hash[this._count] = node;
+          this._count++;
 
-    if (rslt !== null) {
-      var prev = this.get(index);
-      var next = this.get(index + 1);
+          this.resetPositions();
 
-      var node = this.add(data);
+          return node;
+        },
+        insertAfter: function insertAfter(data, index) {
+          var rslt = this._head;
 
-      this._tail = node.prev;
-      delete this._tail.next;
+          if (this._length == 0 || index > this._length || index < 0) {
+            return;
+          }
 
-      node.prev = prev;
-      node.next = next;
+          if (rslt !== null) {
+            var prev = this.get(index);
+            var next = this.get(index + 1);
 
-      prev.next = node;
-      next.prev = node;
+            var node = this.add(data);
 
-      var current = node;
-      while (index++ < this._length - 1) {
-        current.index = index;
-        current = current.next;
-      }
+            this._tail = node.prev;
+            delete this._tail.next;
 
-      this.resetPositions();
+            node.prev = prev;
+            node.next = next;
 
-      return node;
-    }
-  },
-  get: function get(index) {
-    var currentNode = this._head,
-        length = this._length,
-        count = 0,
-        message = { failure: 'Failure: non-existent node in this list.' };
+            prev.next = node;
+            next.prev = node;
 
-    // 1st use-case: an invalid position
-    if (length === 0 || index < 0 || index > length) {
-      // throw new Error(message.failure);
-      return new Node();
-    }
+            var current = node;
+            while (index++ < this._length - 1) {
+              current.index = index;
+              current = current.next;
+            }
 
-    // 2nd use-case: a valid position
-    while (count < index) {
-      currentNode = currentNode.next;
-      count++;
-    }
+            this.resetPositions();
 
-    return currentNode;
-  },
-  getLast: function getLast() {
-    return this.get(this._length - 1);
-  },
-  getFirst: function getFirst() {
-    return this.get(0);
-  },
-  remove: function remove(index) {
-    //check for out-of-bounds values
-    if (index > -1 && index < this._length) {
+            return node;
+          }
+        },
+        get: function get(index) {
+          var currentNode = this._head,
+              length = this._length,
+              count = 0,
+              message = { failure: 'Failure: non-existent node in this list.' };
 
-      var current = this._head,
-          i = 0;
+          // 1st use-case: an invalid position
+          if (length === 0 || index < 0 || index > length) {
+            // throw new Error(message.failure);
+            return new Node();
+          }
 
-      //special case: removing first item
-      if (index === 0) {
-        this._head = current.next;
+          // 2nd use-case: a valid position
+          while (count < index) {
+            currentNode = currentNode.next;
+            count++;
+          }
 
-        /*
-         * If there's only one item in the list and you remove it,
-         * then this._head will be null. In that case, you should
-         * also set this._tail to be null to effectively destroy
-         * the list. Otherwise, set the previous pointer on the
-         * new this._head to be null.
-         */
-        if (!this._head) {
+          return currentNode;
+        },
+        getLast: function getLast() {
+          return this.get(this._length - 1);
+        },
+        getFirst: function getFirst() {
+          return this.get(0);
+        },
+        remove: function remove(index) {
+          //check for out-of-bounds values
+          if (index > -1 && index < this._length) {
+
+            var current = this._head,
+                i = 0;
+
+            //special case: removing first item
+            if (index === 0) {
+              this._head = current.next;
+
+              /*
+               * If there's only one item in the list and you remove it,
+               * then this._head will be null. In that case, you should
+               * also set this._tail to be null to effectively destroy
+               * the list. Otherwise, set the previous pointer on the
+               * new this._head to be null.
+               */
+              if (!this._head) {
+                this._tail = null;
+              } else {
+                this._head.prev = null;
+              }
+
+              //special case: removing last item
+            } else if (index === this._length - 1) {
+              current = this._tail;
+              this._tail = current.prev;
+              this._tail.next = null;
+            } else {
+
+              //find the right location
+              while (i++ < index) {
+                current = current.next;
+              }
+
+              //skip over the item to remove
+              current.prev.next = current.next;
+              current.next.prev = current.prev;
+            }
+
+            //decrement the length
+            this._length--;
+            // this._count--;
+
+            for (var ind in this._hash) {
+              if (this._hash[ind] === current) {
+                delete this._hash[ind];
+              }
+            }
+
+            this.resetPositions();
+            //return the value
+
+            return current.data;
+          } else {
+            return null;
+          }
+        },
+        isEmpty: function isEmpty() {
+          return this._length === 0;
+        },
+        each: function each(func) {
+          var node = this._head;
+
+          while (node !== null) {
+            if (node !== null) {
+              func.call(this, node);
+            }
+            node = node.next;
+          }
+        },
+        resetPositions: function resetPositions() {
+          var pos = 0;
+          this.each(function (node) {
+            node._position = pos++;
+          });
+        },
+        _beforeClear: function _beforeClear() {},
+        clear: function clear() {
+          this._beforeClear();
+
+          this._length = 0;
+          this._head = null;
           this._tail = null;
-        } else {
-          this._head.prev = null;
+          this._hash = {};
+          this._count = 0;
         }
+      }));
+    }
+  };
+});
+System.register('lib/app/div-icon.js', [], function (_export, _context) {
+  "use strict";
 
-        //special case: removing last item
-      } else if (index === this._length - 1) {
-        current = this._tail;
-        this._tail = current.prev;
-        this._tail.next = null;
-      } else {
-
-        //find the right location
-        while (i++ < index) {
-          current = current.next;
+  return {
+    setters: [],
+    execute: function () {
+      _export('default', L.DivIcon.extend({
+        options: {
+          className: 'ruler-icon',
+          iconSize: new L.Point(10, 10)
         }
+      }));
+    }
+  };
+});
+System.register('lib/app/ruler-view.js', ['./linked-list.js', './div-icon.js'], function (_export, _context) {
+  "use strict";
 
-        //skip over the item to remove
-        current.prev.next = current.next;
-        current.next.prev = current.prev;
-      }
+  var List, DivIcon, Line, _cursorOffset, cursorOffset;
 
-      //decrement the length
-      this._length--;
-      // this._count--;
-
-      for (var ind in this._hash) {
-        if (this._hash[ind] === current) {
-          delete this._hash[ind];
+  return {
+    setters: [function (_linkedListJs) {
+      List = _linkedListJs.default;
+    }, function (_divIconJs) {
+      DivIcon = _divIconJs.default;
+    }],
+    execute: function () {
+      Line = L.Polyline.extend({
+        options: {
+          color: '#4a4a4a',
+          weight: 2,
+          clickable: true
         }
-      }
+      });
+      _cursorOffset = void 0;
+      cursorOffset = 0.3;
 
-      this.resetPositions();
-      //return the value
+      _export('default', L.Class.extend({
+        initialize: function initialize(map) {
+          this._map = map;
+          this.rulerOptions = this._map.__dr._options;
 
-      return current.data;
-    } else {
-      return null;
-    }
-  },
-  isEmpty: function isEmpty() {
-    return this._length === 0;
-  },
-  each: function each(func) {
-    var node = this._head;
+          if (this.rulerOptions._updateTooltipDistance) {
+            this._updateTooltipDistance = this.rulerOptions._updateTooltipDistance;
+          }
 
-    while (node !== null) {
-      if (node !== null) {
-        func.call(this, node);
-      }
-      node = node.next;
-    }
-  },
-  resetPositions: function resetPositions() {
-    var pos = 0;
-    this.each(function (node) {
-      node._position = pos++;
-    });
-  },
-  _beforeClear: function _beforeClear() {},
-  clear: function clear() {
-    this._beforeClear();
+          if (this.rulerOptions._createTooltip) {
+            this._createTooltip = this.rulerOptions._createTooltip;
+          }
 
-    this._length = 0;
-    this._head = null;
-    this._tail = null;
-    this._hash = {};
-    this._count = 0;
-  }
-});
+          cursorOffset = this.rulerOptions.cursorOffset || cursorOffset;
 
-var DivIcon = L.DivIcon.extend({
-  options: {
-    className: 'ruler-icon',
-    iconSize: new L.Point(10, 10)
-  }
-});
+          _cursorOffset = this._recalcZoom();
+        },
 
-var Line = L.Polyline.extend({
-  options: {
-    color: '#4a4a4a',
-    weight: 2,
-    clickable: true
-  }
-});
+        _layerPaintPath: null,
+        _layerPaintTemp: null,
+        markers: [],
+        _points: [],
+        _tooltip: [],
+        _hoverMarker: null,
 
-var _cursorOffset = void 0;
-var cursorOffset = 0.3; // смещение положения курсора относительно линии, при котором появляется метка маркера
+        isEmpty: function isEmpty(value) {
+          return value === '' || value === null || value === undefined || value.length === 0;
+        },
 
-var View = L.Class.extend({
-  initialize: function initialize(map) {
-    this._map = map;
-    this.rulerOptions = this._map.__dr._options;
+        // interface
 
-    if (this.rulerOptions._updateTooltipDistance) {
-      this._updateTooltipDistance = this.rulerOptions._updateTooltipDistance;
-    }
+        createMarker: function createMarker(latlng) {
+          var marker = L.marker(latlng, {
+            icon: new DivIcon(this.rulerOptions.iconOptions),
+            draggable: true,
+            isDragging: false
+          }).addTo(this._layerPaint);
 
-    if (this.rulerOptions._createTooltip) {
-      this._createTooltip = this.rulerOptions._createTooltip;
-    }
+          marker.on('dragstart', this._onDragStartMarker);
+          marker.on('drag', this._onDragMarker);
+          marker.on('dragend', this._onDragEndMarker);
+          marker.on('click', this._onClickMarker);
 
-    cursorOffset = this.rulerOptions.cursorOffset || cursorOffset;
+          return marker;
+        },
+        addMarker: function addMarker(latlng) {
+          var marker = this.createMarker(latlng);
 
-    _cursorOffset = this._recalcZoom();
-  },
+          marker.node = this.hash.add(marker);
 
-  _layerPaintPath: null,
-  _layerPaintTemp: null,
-  markers: [],
-  _points: [],
-  _tooltip: [],
-  _hoverMarker: null,
+          this.markers.push(marker);
+          this._points.push(latlng);
+          this.resetMarkersPositions();
 
-  isEmpty: function isEmpty(value) {
-    return value === '' || value === null || value === undefined || value.length === 0;
-  },
+          return marker;
+        },
+        removeMarker: function removeMarker(marker) {
+          var pos = marker.options.position;
+          this._layerPaintPath.spliceLatLngs(pos, 1);
 
+          this.hash.remove(pos);
+          this.hash.resetPositions();
+          this._layerPaint.removeLayer(marker);
+          if (pos !== 0) {
+            this._layerPaint.removeLayer(this._tooltip[pos - 1]);
+            this._tooltip.splice(pos - 1, 1);
+          }
 
-  // interface
+          this.markers.splice(pos, 1);
+          this._points.splice(pos, 1);
 
-  createMarker: function createMarker(latlng) {
-    var marker = L.marker(latlng, {
-      icon: new DivIcon(this.rulerOptions.iconOptions),
-      draggable: true,
-      isDragging: false
-    }).addTo(this._layerPaint);
+          this.resetMarkersPositions();
+          this._resetTooltipPositions(pos);
+        },
+        resetMarkersPositions: function resetMarkersPositions() {
+          var pos = 0;
+          this.markers.forEach(function (node) {
+            node.options.position = pos++;
+          });
+        },
+        addHoverMarker: function addHoverMarker(e, prevMarkerIndex) {
+          e.target._map = e.target.__dr._map;
+          e.target._map.__dr.view._hoverMarker = L.marker(e.latlng, {
+            icon: new DivIcon(e.target._map.__dr.view.rulerOptions.iconOptions),
+            draggable: true,
+            position: e.target._map.__dr.view.hash._length
+          }).addTo(e.target._map.__dr.view._layerPaint);
 
-    marker.on('dragstart', this._onDragStartMarker);
-    marker.on('drag', this._onDragMarker);
-    marker.on('dragend', this._onDragEndMarker);
-    marker.on('click', this._onClickMarker);
+          e.target._map.__dr.view._hoverMarker.isDragging = false;
+          e.target._map.__dr.view._hoverMarker.prevMarkerIndex = prevMarkerIndex;
+          e.target._map.__dr.view._hoverMarker.on('dragstart', this._onDragStartHoverMarker);
+          e.target._map.__dr.view._hoverMarker.on('drag', this._onDragHoverMarker);
+          e.target._map.__dr.view._hoverMarker.on('dragend', this._onDragEndHoverMarker);
+          e.target._map.__dr.view._hoverMarker.node = this.hash.insertAfter(e.target._map.__dr.view._hoverMarker, prevMarkerIndex);
+        },
+        removeHoverMarker: function removeHoverMarker(e) {
+          if (e.target._map.__dr.view._hoverMarker.prevMarkerIndex !== null) {
+            this.hash.remove(e.target.__dr._map.__dr.view._hoverMarker.prevMarkerIndex + 1);
+          }
+          e.target._map.__dr.view._layerPaint.removeLayer(e.target._map.__dr.view._hoverMarker);
+          e.target._map.__dr.view._hoverMarker = null;
+        },
+        redrawHoverMarker: function redrawHoverMarker(e, prevMarkerIndex) {
+          this._hoverMarker.setLatLng(e.latlng);
+          if (prevMarkerIndex !== e.target._map.__dr.view._hoverMarker.prevMarkerIndex && !e.target._map.__dr.view._hoverMarker.isDragging) {
+            e.target._map.__dr.view._hoverMarker.node = this.hash.insertAfter(e.target._map.__dr.view._hoverMarker, prevMarkerIndex);
+            e.target._map.__dr.view._hoverMarker.prevMarkerIndex = prevMarkerIndex;
+          }
+        },
+        insertAfter: function insertAfter(pos, data) {
+          var marker = this.createMarker(data._latlng);
+          var tooltip = this._addTooltip(data._latlng);
 
-    return marker;
-  },
-  addMarker: function addMarker(latlng) {
-    var marker = this.createMarker(latlng);
+          this._layerPaintPath.spliceLatLngs(pos, 0, data._latlng);
+          this.hash.insertAfter(marker, pos);
+          marker.node = this.hash;
 
-    marker.node = this.hash.add(marker);
+          this.markers.splice(pos, 0, marker);
+          this._tooltip.splice(pos, 0, tooltip);
+          this._points.splice(pos, 0, data._latlng);
 
-    this.markers.push(marker);
-    this._points.push(latlng);
-    this.resetMarkersPositions();
+          this.resetMarkersPositions();
+        },
+        get: function get() {},
+        getLast: function getLast() {},
+        getFirst: function getFirst() {},
+        clear: function clear() {},
+        _onDragStartMarker: function _onDragStartMarker(e) {
+          e.target.options.isDragging = true;
+          e.target._map.__dr.view._points.splice(e.target.options.position, 1, e.target._latlng);
+          // e.target._map.__dr.view._resetTooltipPositions();
+        },
+        _onDragMarker: function _onDragMarker(e) {
+          e.target._map.__dr.view._layerPaintPath.spliceLatLngs(e.target.options.position, 1, e.target._latlng);
+        },
+        _onDragEndMarker: function _onDragEndMarker(e) {
+          e.target.options.isDragging = false;
+          e.target._map.__dr.view._points.splice(e.target.options.position, 1, e.target._latlng);
+          e.target._map.__dr.view._resetTooltipPositions(e.target.options.position);
+        },
+        _onDragStartHoverMarker: function _onDragStartHoverMarker(e) {
+          e.target._map.__dr.view._hoverMarker.isDragging = true;
+          if (!this._layerPaintTemp) {
+            this._layerPaintTemp = L.polyline([e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1]._latlng], Object.assign({
+              color: 'black',
+              weight: 1.5,
+              clickable: false,
+              dashArray: '6,3'
+            }, e.target._map.__dr.view.rulerOptions.paintLineOptions)).addTo(e.target._map.__dr.view._layerPaint);
+          }
+        },
+        _onDragHoverMarker: function _onDragHoverMarker(e) {
+          this._layerPaintTemp.spliceLatLngs(0, 2, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1]._latlng);
+        },
+        _onDragEndHoverMarker: function _onDragEndHoverMarker(e) {
+          e.target._map.__dr.view._hoverMarker.isDragging = false;
+          e.target._map.__dr.view.insertAfter(e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1, e.target);
+          e.target._map = e.target._map.removeLayer(e.target._map.__dr.view._hoverMarker);
+          e.target._map.removeLayer(e.target._layerPaintTemp);
+          e.target._layerPaintTemp = null;
+          e.target._hoverMarker = null;
 
-    return marker;
-  },
-  removeMarker: function removeMarker(marker) {
-    var pos = marker.options.position;
-    this._layerPaintPath.spliceLatLngs(pos, 1);
+          e.target._map.__dr.view._resetTooltipPositions();
+        },
+        _onClickMarker: function _onClickMarker(e) {
+          var marker = e.target;
+          marker._map.__dr.view.removeMarker(marker);
+        },
 
-    this.hash.remove(pos);
-    this.hash.resetPositions();
+        //inner functions (http://jtreml.github.com/leaflet.measure)
+        __enabled: false,
+        _toggleMeasure: function _toggleMeasure() {
+          this.__enabled = !this.__enabled;
 
-    this._layerPaint.removeLayer(marker);
-    if (pos === 0) {
-      this._layerPaint.removeLayer(this._tooltip[0]);
-      this._tooltip.splice(0, 1);
-    } else {
-      this._layerPaint.removeLayer(this._tooltip[pos - 1]);
-      this._tooltip.splice(pos - 1, 1);
-    }
+          if (this.__enabled) {
+            this._startMeasuring();
+          } else {
+            this._stopMeasuring();
+          }
+        },
+        _startMeasuring: function _startMeasuring() {
+          this._oldCursor = this._map._container.style.cursor;
+          this._map._container.style.cursor = 'crosshair';
 
-    this.markers.splice(pos, 1);
-    this._points.splice(pos, 1);
+          this._doubleClickZoom = this._map.doubleClickZoom.enabled();
+          this._map.doubleClickZoom.disable();
 
-    this.resetMarkersPositions();
-    this._resetTooltipPositions(pos);
-  },
-  resetMarkersPositions: function resetMarkersPositions() {
-    var pos = 0;
-    this.markers.forEach(function (node) {
-      node.options.position = pos++;
-    });
-  },
-  addHoverMarker: function addHoverMarker(e, prevMarkerIndex) {
-    e.target._map = e.target.__dr._map;
-    e.target._map.__dr.view._hoverMarker = L.marker(e.latlng, {
-      icon: new DivIcon(e.target._map.__dr.view.rulerOptions.iconOptions),
-      draggable: true,
-      position: e.target._map.__dr.view.hash._length
-    }).addTo(e.target._map.__dr.view._layerPaint);
+          L.DomEvent.on(this._map, 'zoomend', this._zoomChanged, this).on(this._map, 'mousemove', this._mouseMove, this).on(this._map, 'click', this._mouseClick.bind(this), this)
+          //.on(this._map, 'dblclick', this._finishPath, this)
+          .on(document, 'keydown', this._onKeyDown, this);
 
-    e.target._map.__dr.view._hoverMarker.isDragging = false;
-    e.target._map.__dr.view._hoverMarker.prevMarkerIndex = prevMarkerIndex;
-    e.target._map.__dr.view._hoverMarker.on('dragstart', this._onDragStartHoverMarker);
-    e.target._map.__dr.view._hoverMarker.on('drag', this._onDragHoverMarker);
-    e.target._map.__dr.view._hoverMarker.on('dragend', this._onDragEndHoverMarker);
-    e.target._map.__dr.view._hoverMarker.node = this.hash.insertAfter(e.target._map.__dr.view._hoverMarker, prevMarkerIndex);
-  },
-  removeHoverMarker: function removeHoverMarker(e) {
-    if (e.target._map.__dr.view._hoverMarker.prevMarkerIndex !== null) {
-      this.hash.remove(e.target.__dr._map.__dr.view._hoverMarker.prevMarkerIndex + 1);
-    }
-    e.target._map.__dr.view._layerPaint.removeLayer(e.target._map.__dr.view._hoverMarker);
-    e.target._map.__dr.view._hoverMarker = null;
-  },
-  redrawHoverMarker: function redrawHoverMarker(e, prevMarkerIndex) {
-    this._hoverMarker.setLatLng(e.latlng);
-    if (prevMarkerIndex !== e.target._map.__dr.view._hoverMarker.prevMarkerIndex && !e.target._map.__dr.view._hoverMarker.isDragging) {
-      e.target._map.__dr.view._hoverMarker.node = this.hash.insertAfter(e.target._map.__dr.view._hoverMarker, prevMarkerIndex);
-      e.target._map.__dr.view._hoverMarker.prevMarkerIndex = prevMarkerIndex;
-    }
-  },
-  insertAfter: function insertAfter(pos, data) {
-    var marker = this.createMarker(data._latlng);
+          if (!this._layerPaint) {
+            this._layerPaint = L.layerGroup().addTo(this._map);
+          }
 
-    this._layerPaintPath.spliceLatLngs(pos, 0, data._latlng);
-    this.hash.insertAfter(marker, pos);
-    marker.node = this.hash;
+          if (!this._points) {
+            this._points = [];
+          }
+        },
+        _stopMeasuring: function _stopMeasuring() {
+          this._map._container.style.cursor = this._oldCursor;
 
-    this.markers.splice(pos, 0, marker);
-    this._points.splice(pos, 0, data._latlng);
+          L.DomEvent.off(document, 'keydown', this._onKeyDown, this).off(this._map, 'mousemove', this._mouseMove, this).off(this._map, 'click', this._mouseClick, this).off(this._map, 'dblclick', this._mouseClick, this);
 
-    this.resetMarkersPositions();
-  },
-  get: function get() {},
-  getLast: function getLast() {},
-  getFirst: function getFirst() {},
-  clear: function clear() {},
-  _onDragStartMarker: function _onDragStartMarker(e) {
-    e.target.options.isDragging = true;
-    e.target._map.__dr.view._points.splice(e.target.options.position, 1, e.target._latlng);
-    // e.target._map.__dr.view._resetTooltipPositions();
-  },
-  _onDragMarker: function _onDragMarker(e) {
-    e.target._map.__dr.view._layerPaintPath.spliceLatLngs(e.target.options.position, 1, e.target._latlng);
-  },
-  _onDragEndMarker: function _onDragEndMarker(e) {
-    e.target.options.isDragging = false;
-    e.target._map.__dr.view._points.splice(e.target.options.position, 1, e.target._latlng);
-    e.target._map.__dr.view._resetTooltipPositions(e.target.options.position);
-  },
-  _onDragStartHoverMarker: function _onDragStartHoverMarker(e) {
-    e.target._map.__dr.view._hoverMarker.isDragging = true;
-    if (!this._layerPaintTemp) {
-      this._layerPaintTemp = L.polyline([e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1]._latlng], Object.assign({
-        color: 'black',
-        weight: 1.5,
-        clickable: false,
-        dashArray: '6,3'
-      }, e.target._map.__dr.view.rulerOptions.paintLineOptions)).addTo(e.target._map.__dr.view._layerPaint);
-    }
-  },
-  _onDragHoverMarker: function _onDragHoverMarker(e) {
-    this._layerPaintTemp.spliceLatLngs(0, 2, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1]._latlng);
-  },
-  _onDragEndHoverMarker: function _onDragEndHoverMarker(e) {
-    e.target._map.__dr.view._hoverMarker.isDragging = false;
-    e.target._map.__dr.view.insertAfter(e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1, e.target);
-    e.target._map = e.target._map.removeLayer(e.target._map.__dr.view._hoverMarker);
-    e.target._map.removeLayer(e.target._layerPaintTemp);
-    e.target._layerPaintTemp = null;
-    e.target._hoverMarker = null;
+          if (this._doubleClickZoom) {
+            this._map.doubleClickZoom.enable();
+          }
 
-    e.target._map.__dr.view._resetTooltipPositions();
-  },
-  _onClickMarker: function _onClickMarker(e) {
-    var marker = e.target;
-    marker._map.__dr.view.removeMarker(marker);
-  },
+          if (this._layerPaint) {
+            this._layerPaint.clearLayers();
+          }
 
+          this._restartPath();
+        },
+        _mouseMove: function _mouseMove(e) {
+          var _this = this;
 
-  //inner functions (http://jtreml.github.com/leaflet.measure)
-  __enabled: false,
-  _toggleMeasure: function _toggleMeasure() {
-    this.__enabled = !this.__enabled;
+          if (!e.latlng || !this._lastPoint) {
+            return;
+          }
 
-    if (this.__enabled) {
-      this._startMeasuring();
-    } else {
-      this._stopMeasuring();
-    }
-  },
-  _startMeasuring: function _startMeasuring() {
-    this._oldCursor = this._map._container.style.cursor;
-    this._map._container.style.cursor = 'crosshair';
+          var new_latlng = void 0,
+              prevMarkerIndex = void 0,
+              markerHovered = void 0;
+          var distLine = _cursorOffset;
+          var distMarker = _cursorOffset;
+          this.markers.forEach(function (item, i) {
+            var distanceToCursor = L.point(e.latlng.lat, e.latlng.lng).distanceTo(L.point(_this.markers[i]._latlng.lat, _this.markers[i]._latlng.lng));
+            if (distanceToCursor && distanceToCursor < distMarker) {
+              markerHovered = _this.markers[i];
+              distMarker = distanceToCursor;
+            } else {
+              if (i !== _this.markers.length - 1) {
+                distanceToCursor = _this._calcHoverMarkerCoordinates(e.latlng, _this.markers[i], _this.markers[i + 1]);
+                if (distanceToCursor && distanceToCursor.distance && distanceToCursor.distance < distLine) {
+                  new_latlng = distanceToCursor.latlng;
+                  distLine = distanceToCursor.distance;
+                  prevMarkerIndex = i;
+                }
+              }
+            }
+          });
 
-    this._doubleClickZoom = this._map.doubleClickZoom.enabled();
-    this._map.doubleClickZoom.disable();
+          if (!this.isEmpty(markerHovered)) {
+            if (!this.isEmpty(e.target.__dr._map.__dr.view._hoverMarker)) {
+              this.removeHoverMarker(e);
+            }
+          } else {
+            if (!this.isEmpty(new_latlng) && this.isEmpty(this.markers.find(function (marker) {
+              return marker.options.isDragging;
+            }))) {
+              var e_new = e;
+              e_new.latlng = new_latlng;
+              if (this.isEmpty(e.target.__dr._map.__dr.view._hoverMarker)) {
+                this.addHoverMarker(e_new, prevMarkerIndex);
+              } else {
+                this.redrawHoverMarker(e_new, prevMarkerIndex);
+              }
+            } else {
+              if (!this.isEmpty(e.target.__dr._map.__dr.view._hoverMarker) && !e.target.__dr._map.__dr.view._hoverMarker.isDragging) {
+                this.removeHoverMarker(e);
+              }
+            }
+          }
 
-    L.DomEvent.on(this._map, 'zoomend', this._zoomChanged, this).on(this._map, 'mousemove', this._mouseMove, this).on(this._map, 'click', this._mouseClick.bind(this), this)
-    //.on(this._map, 'dblclick', this._finishPath, this)
-    .on(document, 'keydown', this._onKeyDown, this);
+          if (!this.rulerOptions.paintLineOptions) {
+            return;
+          }
 
-    if (!this._layerPaint) {
-      this._layerPaint = L.layerGroup().addTo(this._map);
-    }
+          if (!this._layerPaintPathTemp) {
+            this._layerPaintPathTemp = L.polyline([this._lastPoint, e.latlng], Object.assign({
+              color: 'black',
+              weight: 1.5,
+              clickable: false,
+              dashArray: '6,3'
+            }, this.rulerOptions.paintLineOptions)).addTo(this._layerPaint);
+          } else {
+            this._layerPaintPathTemp.spliceLatLngs(0, 2, this._lastPoint, e.latlng);
+          }
 
-    if (!this._points) {
-      this._points = [];
-    }
-  },
-  _stopMeasuring: function _stopMeasuring() {
-    this._map._container.style.cursor = this._oldCursor;
+          if (this._tooltip.length) {
+            if (!this._distance) {
+              this._distance = 0;
+            }
+            var tooltip_latlng = new_latlng ? L.latLng(new_latlng) : e.latlng;
+            this._updateTooltipPosition(this._tooltip[this._tooltip.length - 1], tooltip_latlng);
+            if (!this._lastPoint.equals(tooltip_latlng)) {
+              var distance = tooltip_latlng.distanceTo(this._lastPoint);
+              this._updateTooltipDistance(this._tooltip[this._tooltip.length - 1], this._distance + distance, distance);
+            }
+          }
+        },
+        _mouseClick: function _mouseClick(e) {
+          // Skip if no coordinates
+          if (!e.latlng) {
+            return;
+          }
+          if (this.isEmpty(this._hoverMarker)) {
+            this.addMarker(e.latlng);
 
-    L.DomEvent.off(document, 'keydown', this._onKeyDown, this).off(this._map, 'mousemove', this._mouseMove, this).off(this._map, 'click', this._mouseClick, this).off(this._map, 'dblclick', this._mouseClick, this);
+            if (this.markers.length > 1) {
+              this._addTooltip(e.latlng);
+            }
 
-    if (this._doubleClickZoom) {
-      this._map.doubleClickZoom.enable();
-    }
+            // If we have a tooltip, update the distance and create a new tooltip, leaving the old one exactly where it is (i.e. where the user has clicked)
+            if (this._lastPoint && this._tooltip.length) {
+              if (!this._distance) {
+                this._distance = 0;
+              }
+              this._updateTooltipPosition(this._tooltip[this._tooltip.length - 1], e.latlng);
 
-    if (this._layerPaint) {
-      this._layerPaint.clearLayers();
-    }
+              var distance = e.latlng.distanceTo(this._lastPoint);
+              this._updateTooltipDistance(this._tooltip[this._tooltip.length - 1], this._distance + distance, distance);
 
-    this._restartPath();
-  },
-  _mouseMove: function _mouseMove(e) {
-    var _this = this;
+              this._distance += distance;
+            }
 
-    if (!e.latlng || !this._lastPoint) {
-      return;
-    }
+            // If this is already the second click, add the location to the fix path (create one first if we don't have one)
+            if (this._lastPoint && !this._layerPaintPath) {
+              this._layerPaintPath = new Line([this._lastPoint], this.rulerOptions.lineOptions).addTo(this._layerPaint);
+            }
 
-    var new_latlng = void 0,
-        prevMarkerIndex = void 0,
-        markerHovered = void 0;
-    var distLine = _cursorOffset;
-    var distMarker = _cursorOffset;
-    this.markers.forEach(function (item, i) {
-      var distanceToCursor = L.point(e.latlng.lat, e.latlng.lng).distanceTo(L.point(_this.markers[i]._latlng.lat, _this.markers[i]._latlng.lng));
-      if (distanceToCursor && distanceToCursor < distMarker) {
-        markerHovered = _this.markers[i];
-        distMarker = distanceToCursor;
-      } else {
-        if (i !== _this.markers.length - 1) {
-          distanceToCursor = _this._calcHoverMarkerCoordinates(e.latlng, _this.markers[i], _this.markers[i + 1]);
-          if (distanceToCursor && distanceToCursor.distance && distanceToCursor.distance < distLine) {
-            new_latlng = distanceToCursor.latlng;
-            distLine = distanceToCursor.distance;
-            prevMarkerIndex = i;
+            if (this._layerPaintPath) {
+              this._layerPaintPath.addLatLng(e.latlng);
+            }
+
+            // Save current location as last location
+            this._lastPoint = e.latlng;
+          }
+        },
+
+        _recalcZoom: function _recalcZoom() {
+          var zoom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this._map.getZoom();
+
+          return cursorOffset * Math.pow(2, 7 - zoom);
+        },
+
+        _zoomChanged: function _zoomChanged() {
+          var zoom = this._map.getZoom();
+
+          _cursorOffset = this._recalcZoom(zoom);
+        },
+        _finishPath: function _finishPath() {
+          // Remove the last end marker as well as the last (moving tooltip)
+          if (this._lastCircle) {
+            this._layerPaint.removeLayer(this._lastCircle);
+          }
+          if (this._tooltip.length) {
+            this._layerPaint.removeLayer(this._tooltip);
+          }
+          if (this._layerPaint && this._layerPaintPathTemp) {
+            this._layerPaint.removeLayer(this._layerPaintPathTemp);
+          }
+
+          // Reset everything
+          this._restartPath();
+        },
+        _restartPath: function _restartPath() {
+          this._distance = 0;
+          this._tooltip = [];
+          this._lastCircle = undefined;
+          this._lastPoint = undefined;
+          this._layerPaintPath = undefined;
+          this._layerPaintPathTemp = undefined;
+          this.hash.clear();
+          this.markers = [];
+          this._points = [];
+        },
+        _createTooltip: function _createTooltip(position) {
+          var icon = L.divIcon({
+            className: 'ruler-tooltip',
+            iconAnchor: [-5, -5]
+          });
+          var tooltip = L.marker(position, {
+            icon: icon,
+            clickable: false
+          });
+
+          return tooltip;
+        },
+        _addTooltip: function _addTooltip(position) {
+          var tooltip = this._createTooltip(position);
+
+          this._tooltip.push(tooltip);
+
+          tooltip.addTo(this._layerPaint);
+
+          return tooltip;
+        },
+        _updateTooltipPosition: function _updateTooltipPosition(tooltip, latlng) {
+          tooltip.setLatLng(latlng);
+          tooltip.update();
+        },
+        _updateTooltipDistance: function _updateTooltipDistance(tooltip, total, difference) {
+          var totalRound = total,
+              differenceRound = difference;
+
+          var text = '<div class="ruler-tooltip-total">' + totalRound + ' m</div>';
+          if (differenceRound > 0 && totalRound != differenceRound) {
+            text += '<div class="ruler-tooltip-difference">(+' + differenceRound + ' m)</div>';
+          }
+
+          tooltip._icon.innerHTML = text;
+        },
+        _resetTooltipPositions: function _resetTooltipPositions(redrawFromPosition) {
+          var total_distance = 0;
+          if (this._points.length && this._tooltip.length) {
+            for (var i = 0; i < this._points.length - 1; i++) {
+              this._updateTooltipPosition(this._tooltip[i], this._points[i + 1]);
+              var distance = this._points[i].distanceTo(this._points[i + 1]);
+              this._updateTooltipDistance(this._tooltip[i], total_distance + distance, distance);
+              total_distance += distance;
+            }
+          }
+        },
+        _onKeyDown: function _onKeyDown(e) {
+          if (e.keyCode == 27) {
+            // If not in path exit measuring mode, else just finish path
+            if (!this._lastPoint) {
+              this._toggleMeasure();
+            } else {
+              this._finishPath();
+            }
+          }
+        },
+
+        hash: new List(),
+
+        _calcHoverMarkerCoordinates: function _calcHoverMarkerCoordinates(point, linePoint1, linePoint2) {
+          var x0 = point.lat;
+          var y0 = point.lng;
+          var x1 = linePoint1._latlng.lat;
+          var y1 = linePoint1._latlng.lng;
+          var x2 = linePoint2._latlng.lat;
+          var y2 = linePoint2._latlng.lng;
+          var lineLength = L.point(x1, y1).distanceTo(L.point(x2, y2));
+          var pointToLinePoint1 = L.point(x0, y0).distanceTo(L.point(x1, y1));
+          var pointToLinePoint2 = L.point(x0, y0).distanceTo(L.point(x2, y2));
+
+          var a = y2 - y1;
+          var b = x1 - x2;
+          var c = -x1 * y2 + x2 * y1;
+          var t = L.point(a, b).distanceTo(L.point(0, 0));
+
+          var distance = Math.abs((a * x0 + b * y0 + c) / t);
+
+          if (pointToLinePoint1 >= L.point(pointToLinePoint2, lineLength).distanceTo(L.point(0, 0)) || pointToLinePoint2 >= L.point(pointToLinePoint1, lineLength).distanceTo(L.point(0, 0))) {
+            return { latlng: null, distance: distance };
+          } else {
+            if (distance < _cursorOffset) {
+              var k = ((x0 - x1) * (x2 - x1) + (y0 - y1) * (y2 - y1)) / (Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+              var x3 = x1 - b * k;
+              var y3 = y1 + a * k;
+
+              return { latlng: { lat: x3, lng: y3 }, distance: distance };
+            }
           }
         }
-      }
-    });
-
-    if (!this.isEmpty(markerHovered)) {
-      if (!this.isEmpty(e.target.__dr._map.__dr.view._hoverMarker)) {
-        this.removeHoverMarker(e);
-      }
-    } else {
-      if (!this.isEmpty(new_latlng) && this.isEmpty(this.markers.find(function (marker) {
-        return marker.options.isDragging;
-      }))) {
-        var e_new = e;
-        e_new.latlng = new_latlng;
-        if (this.isEmpty(e.target.__dr._map.__dr.view._hoverMarker)) {
-          this.addHoverMarker(e_new, prevMarkerIndex);
-        } else {
-          this.redrawHoverMarker(e_new, prevMarkerIndex);
-        }
-      } else {
-        if (!this.isEmpty(e.target.__dr._map.__dr.view._hoverMarker) && !e.target.__dr._map.__dr.view._hoverMarker.isDragging) {
-          this.removeHoverMarker(e);
-        }
-      }
+      }));
     }
-
-    if (!this.rulerOptions.paintLineOptions) {
-      return;
-    }
-
-    if (!this._layerPaintPathTemp) {
-      this._layerPaintPathTemp = L.polyline([this._lastPoint, e.latlng], Object.assign({
-        color: 'black',
-        weight: 1.5,
-        clickable: false,
-        dashArray: '6,3'
-      }, this.rulerOptions.paintLineOptions)).addTo(this._layerPaint);
-    } else {
-      this._layerPaintPathTemp.spliceLatLngs(0, 2, this._lastPoint, e.latlng);
-    }
-
-    if (this._tooltip.length) {
-      if (!this._distance) {
-        this._distance = 0;
-      }
-      var tooltip_latlng = new_latlng ? L.latLng(new_latlng) : e.latlng;
-      this._updateTooltipPosition(this._tooltip[this._tooltip.length - 1], tooltip_latlng);
-      if (!this._lastPoint.equals(tooltip_latlng)) {
-        var distance = tooltip_latlng.distanceTo(this._lastPoint);
-        this._updateTooltipDistance(this._tooltip[this._tooltip.length - 1], this._distance + distance, distance);
-      }
-    }
-  },
-  _mouseClick: function _mouseClick(e) {
-    // Skip if no coordinates
-    if (!e.latlng) {
-      return;
-    }
-    if (this.isEmpty(this._hoverMarker)) {
-      this.addMarker(e.latlng);
-
-      if (this.markers.length > 1) {
-        this._createTooltip(e.latlng);
-      }
-
-      // If we have a tooltip, update the distance and create a new tooltip, leaving the old one exactly where it is (i.e. where the user has clicked)
-      if (this._lastPoint && this._tooltip.length) {
-        if (!this._distance) {
-          this._distance = 0;
-        }
-        this._updateTooltipPosition(this._tooltip[this._tooltip.length - 1], e.latlng);
-
-        var distance = e.latlng.distanceTo(this._lastPoint);
-        this._updateTooltipDistance(this._tooltip[this._tooltip.length - 1], this._distance + distance, distance);
-
-        this._distance += distance;
-      }
-
-      // If this is already the second click, add the location to the fix path (create one first if we don't have one)
-      if (this._lastPoint && !this._layerPaintPath) {
-        this._layerPaintPath = new Line([this._lastPoint], this.rulerOptions.lineOptions).addTo(this._layerPaint);
-      }
-
-      if (this._layerPaintPath) {
-        this._layerPaintPath.addLatLng(e.latlng);
-      }
-
-      // Save current location as last location
-      this._lastPoint = e.latlng;
-    }
-  },
-
-
-  _recalcZoom: function _recalcZoom() {
-    var zoom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this._map.getZoom();
-
-    return cursorOffset * Math.pow(2, 7 - zoom);
-  },
-
-  _zoomChanged: function _zoomChanged() {
-    var zoom = this._map.getZoom();
-
-    _cursorOffset = this._recalcZoom(zoom);
-  },
-  _finishPath: function _finishPath() {
-    // Remove the last end marker as well as the last (moving tooltip)
-    if (this._lastCircle) {
-      this._layerPaint.removeLayer(this._lastCircle);
-    }
-    if (this._tooltip.length) {
-      this._layerPaint.removeLayer(this._tooltip);
-    }
-    if (this._layerPaint && this._layerPaintPathTemp) {
-      this._layerPaint.removeLayer(this._layerPaintPathTemp);
-    }
-
-    // Reset everything
-    this._restartPath();
-  },
-  _restartPath: function _restartPath() {
-    this._distance = 0;
-    this._tooltip = [];
-    this._lastCircle = undefined;
-    this._lastPoint = undefined;
-    this._layerPaintPath = undefined;
-    this._layerPaintPathTemp = undefined;
-    this.hash.clear();
-    this.markers = [];
-    this._points = [];
-  },
-  _createTooltip: function _createTooltip(position) {
-    var icon = L.divIcon({
-      className: 'ruler-tooltip',
-      iconAnchor: [-5, -5]
-    });
-    var tooltip = L.marker(position, {
-      icon: icon,
-      clickable: false
-    });
-
-    this._tooltip.push(tooltip);
-
-    tooltip.addTo(this._layerPaint);
-
-    return tooltip;
-  },
-  _updateTooltipPosition: function _updateTooltipPosition(tooltip, latlng) {
-    tooltip.setLatLng(latlng);
-    tooltip.update();
-  },
-  _updateTooltipDistance: function _updateTooltipDistance(tooltip, total, difference) {
-    var totalRound = total,
-        differenceRound = difference;
-
-    var text = '<div class="ruler-tooltip-total">' + totalRound + ' m</div>';
-    if (differenceRound > 0 && totalRound != differenceRound) {
-      text += '<div class="ruler-tooltip-difference">(+' + differenceRound + ' m)</div>';
-    }
-
-    tooltip._icon.innerHTML = text;
-  },
-  _resetTooltipPositions: function _resetTooltipPositions(redrawFromPosition) {
-    // if (position != null) {
-    //   console.log('redrawFromPosition', redrawFromPosition);
-    //   console.log('this._points', this._points.length);
-    // }
-    var total_distance = 0;
-    if (this._points.length && this._tooltip.length) {
-      for (var i = 0; i < this._points.length - 1; i++) {
-        this._updateTooltipPosition(this._tooltip[i], this._points[i + 1]);
-        var distance = this._points[i].distanceTo(this._points[i + 1]);
-        this._updateTooltipDistance(this._tooltip[i], total_distance + distance, distance);
-        // if (redrawFromPosition >= i) {
-        this._createTooltip(this._points[i + 1]);
-        // }
-        total_distance += distance;
-      }
-    }
-  },
-  _onKeyDown: function _onKeyDown(e) {
-    if (e.keyCode == 27) {
-      // If not in path exit measuring mode, else just finish path
-      if (!this._lastPoint) {
-        this._toggleMeasure();
-      } else {
-        this._finishPath();
-      }
-    }
-  },
-
-
-  hash: new List(),
-
-  _calcDistanceBetweenPoints: function _calcDistanceBetweenPoints(x1, y1, x2, y2) {
-    return Math.hypot(x2 - x1, y2 - y1);
-  },
-  _calcHoverMarkerCoordinates: function _calcHoverMarkerCoordinates(point, linePoint1, linePoint2) {
-    var x0 = point.lat;
-    var y0 = point.lng;
-    var x1 = linePoint1._latlng.lat;
-    var y1 = linePoint1._latlng.lng;
-    var x2 = linePoint2._latlng.lat;
-    var y2 = linePoint2._latlng.lng;
-    var lineLength = L.point(x1, y1).distanceTo(L.point(x2, y2));
-    var pointToLinePoint1 = L.point(x0, y0).distanceTo(L.point(x1, y1));
-    var pointToLinePoint2 = L.point(x0, y0).distanceTo(L.point(x2, y2));
-
-    var a = y2 - y1;
-    var b = x1 - x2;
-    var c = -x1 * y2 + x2 * y1;
-    var t = L.point(a, b).distanceTo(L.point(0, 0));
-
-    var distance = Math.abs((a * x0 + b * y0 + c) / t);
-
-    if (pointToLinePoint1 >= L.point(pointToLinePoint2, lineLength).distanceTo(L.point(0, 0)) || pointToLinePoint2 >= L.point(pointToLinePoint1, lineLength).distanceTo(L.point(0, 0))) {
-      return { latlng: null, distance: distance };
-    } else {
-      if (distance < _cursorOffset) {
-        var k = ((x0 - x1) * (x2 - x1) + (y0 - y1) * (y2 - y1)) / (Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        var x3 = x1 - b * k;
-        var y3 = y1 + a * k;
-
-        return { latlng: { lat: x3, lng: y3 }, distance: distance };
-      }
-    }
-  }
+  };
 });
+System.register("lib/app/ruler-options.js", [], function (_export, _context) {
+  "use strict";
 
-var options = {
-  renderRuler: null,
-  iconOptions: {
-    draggable: true
-  },
-  lastNodeOptions: {},
-  lineOptions: {},
-  paintLineOptions: false
-};
-
-L.MapDistanceRuler = L.Class.extend({
-  baseOptions: options,
-  initialize: function initialize(options$$1) {
-    this._options = Object.assign({}, this.baseOptions, options$$1);
-  },
-  onAdd: function onAdd(map) {
-    this._map = map;
-    this._map.__dr = this;
-
-    this.view = new View(this._map);
-  },
-  onRemove: function onRemove(map) {},
-
-
-  view: null
+  return {
+    setters: [],
+    execute: function () {
+      _export("default", {
+        renderRuler: null,
+        iconOptions: {
+          draggable: true
+        },
+        lastNodeOptions: {},
+        lineOptions: {},
+        paintLineOptions: false
+      });
+    }
+  };
 });
+System.register('lib/app.js', ['./app/ruler-view.js', './app/ruler-options.js'], function (_export, _context) {
+  "use strict";
 
-L.mapDistanceRuler = function (options$$1) {
-  return new L.MapDistanceRuler(options$$1);
-};
+  var View, options;
+  return {
+    setters: [function (_appRulerViewJs) {
+      View = _appRulerViewJs.default;
+    }, function (_appRulerOptionsJs) {
+      options = _appRulerOptionsJs.default;
+    }],
+    execute: function () {
 
-Object.defineProperty(exports, '__esModule', { value: true });
+      L.MapDistanceRuler = L.Class.extend({
+        baseOptions: options,
+        initialize: function initialize(options) {
+          this._options = Object.assign({}, this.baseOptions, options);
+        },
+        onAdd: function onAdd(map) {
+          this._map = map;
+          this._map.__dr = this;
 
-})));
+          this.view = new View(this._map);
+        },
+        onRemove: function onRemove(map) {},
 
+        view: null
+      });
+
+      L.mapDistanceRuler = function (options) {
+        return new L.MapDistanceRuler(options);
+      };
+    }
+  };
+});
 //# sourceMappingURL=build.js.map
