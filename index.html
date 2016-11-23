@@ -27,20 +27,20 @@
             }
             tooltip._icon.innerHTML = text;
           },
-          _createTooltip(position) {
-            this._tooltip = L.marker(position, {
-              icon: L.divIcon({
-                className: 'ruler-tooltip',
-                iconAnchor: [-10, -10]
-              }),
-              clickable: false,
-            }).addTo(this._layerPaint);
-            return this._tooltip;
-          },
-          lineOptions: {
-            color: '#4a4a4a',
-            weight: 4
-          },
+//          _createTooltip(position) {
+//            this._tooltip = L.marker(position, {
+//              icon: L.divIcon({
+//                className: 'ruler-tooltip',
+//                iconAnchor: [-10, -10]
+//              }),
+//              clickable: false,
+//            }).addTo(this._layerPaint);
+//            return this._tooltip;
+//          },
+//          lineOptions: {
+//            color: '#4a4a4a',
+//            weight: 4
+//          },
           iconOptions: { 
             iconSize: new L.Point(14, 14)
           }
