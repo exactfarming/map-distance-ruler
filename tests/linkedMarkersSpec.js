@@ -1,10 +1,10 @@
-import List from '../lib/app/linked-list';
+import List from '../lib/app/linked-list.js';
 
 var list;
 
-var posArray = function(view) {
-  let posArray = []; 
-  
+var posArray = function (view) {
+  let posArray = [];
+
   view.hash.each((item) => {
     posArray.push(item._position);
   });
@@ -12,13 +12,13 @@ var posArray = function(view) {
   return posArray;
 };
 
-var click = function(map, x, y) {
+var click = function (map, x, y) {
   var latlngPoint = new L.LatLng(x, y);
-    map.fireEvent('click', {
-      latlng: latlngPoint,
-      layerPoint: map.latLngToLayerPoint(latlngPoint),
-      containerPoint: map.latLngToContainerPoint(latlngPoint)
-    });
+  map.fireEvent('click', {
+    latlng: latlngPoint,
+    layerPoint: map.latLngToLayerPoint(latlngPoint),
+    containerPoint: map.latLngToContainerPoint(latlngPoint)
+  });
 };
 
 describe('Linked List', function () {
@@ -165,16 +165,16 @@ describe('Linked List', function () {
     click(map, 10, 30);
     click(map, 10, 40);
 
-    expect(posArray(ruler.view)).toEqual([0,1,2,3,4]);
-    
+    expect(posArray(ruler.view)).toEqual([0, 1, 2, 3, 4]);
+
     console.log('posArray - before', posArray(ruler.view));
-    
+
     ruler.view.removeMarker(ruler.view.markers[4]);
-    expect(posArray(ruler.view)).toEqual([0,1,2,3]);
+    expect(posArray(ruler.view)).toEqual([0, 1, 2, 3]);
     ruler.view.removeMarker(ruler.view.markers[3]);
-    expect(posArray(ruler.view)).toEqual([0,1,2]);
+    expect(posArray(ruler.view)).toEqual([0, 1, 2]);
     ruler.view.removeMarker(ruler.view.markers[2]);
-    expect(posArray(ruler.view)).toEqual([0,1]);
+    expect(posArray(ruler.view)).toEqual([0, 1]);
     ruler.view.removeMarker(ruler.view.markers[1]);
     expect(posArray(ruler.view)).toEqual([0]);
   });
@@ -185,6 +185,7 @@ describe('Linked List', function () {
 
     var ruler = map.__dr;
 
+    ruler.view._stopMeasuring();
     ruler.view._startMeasuring();
 
     click(map, 0, 10);
@@ -193,14 +194,14 @@ describe('Linked List', function () {
     click(map, 10, 30);
     click(map, 10, 40);
 
-    expect(posArray(ruler.view)).toEqual([0,1,2,3,4]);
-    
+    expect(posArray(ruler.view)).toEqual([0, 1, 2, 3, 4]);
+
     ruler.view.removeMarker(ruler.view.markers[1]);
-    expect(posArray(ruler.view)).toEqual([0,1,2,3]);
+    expect(posArray(ruler.view)).toEqual([0, 1, 2, 3]);
     ruler.view.removeMarker(ruler.view.markers[1]);
-    expect(posArray(ruler.view)).toEqual([0,1,2]);
+    expect(posArray(ruler.view)).toEqual([0, 1, 2]);
     ruler.view.removeMarker(ruler.view.markers[1]);
-    expect(posArray(ruler.view)).toEqual([0,1]);
+    expect(posArray(ruler.view)).toEqual([0, 1]);
     ruler.view.removeMarker(ruler.view.markers[1]);
     expect(posArray(ruler.view)).toEqual([0]);
   });
@@ -211,6 +212,7 @@ describe('Linked List', function () {
 
     var ruler = map.__dr;
 
+    ruler.view._stopMeasuring();
     ruler.view._startMeasuring();
 
     click(map, 0, 10);
@@ -219,14 +221,14 @@ describe('Linked List', function () {
     click(map, 10, 30);
     click(map, 10, 40);
 
-    expect(posArray(ruler.view)).toEqual([0,1,2,3,4]);
-    
+    expect(posArray(ruler.view)).toEqual([0, 1, 2, 3, 4]);
+
     ruler.view.removeMarker(ruler.view.markers[3]);
-    expect(posArray(ruler.view)).toEqual([0,1,2,3]);
+    expect(posArray(ruler.view)).toEqual([0, 1, 2, 3]);
     ruler.view.removeMarker(ruler.view.markers[2]);
-    expect(posArray(ruler.view)).toEqual([0,1,2]);
+    expect(posArray(ruler.view)).toEqual([0, 1, 2]);
     ruler.view.removeMarker(ruler.view.markers[1]);
-    expect(posArray(ruler.view)).toEqual([0,1]);
+    expect(posArray(ruler.view)).toEqual([0, 1]);
     ruler.view.removeMarker(ruler.view.markers[0]);
     expect(posArray(ruler.view)).toEqual([0]);
   });

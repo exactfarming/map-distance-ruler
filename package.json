@@ -5,13 +5,38 @@
       "leaflet": "github:Leaflet/Leaflet@^0.7.7"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@5.8.24",
       "babel-runtime": "npm:babel-runtime@5.8.24",
-      "core-js": "npm:core-js@1.1.4"
+      "core-js": "npm:core-js@1.1.4",
+      "fs": "npm:jspm-nodelibs-fs@^0.2.0",
+      "path": "npm:jspm-nodelibs-path@^0.2.0",
+      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.17",
+      "process": "npm:jspm-nodelibs-process@^0.2.0"
     },
     "buildConfig": {
       "transpileES6": true,
       "minify": true
+    },
+    "overrides": {
+      "github:Leaflet/Leaflet@0.7.7": {
+        "dependencies": {
+          "css": "*"
+        },
+        "meta": {
+          "dist/leaflet-src.js": {
+            "deps": [
+              "./leaflet.css!"
+            ],
+            "format": "global"
+          }
+        }
+      },
+      "npm:babel-runtime@5.8.38": {
+        "main": false,
+        "dependencies": {},
+        "optionalDependencies": {
+          "core-js": "^1.2.0"
+        }
+      }
     }
   },
   "devDependencies": {

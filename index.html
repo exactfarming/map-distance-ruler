@@ -6,11 +6,9 @@
   <script src="/jspm_packages/github/components/jquery@3.1.0/jquery.min.js"></script>
   <script src="/jspm_packages/github/Leaflet/Leaflet@0.7.7/dist/leaflet.js"></script>
 
-  <script src="config.js"></script>
-  <!--<script src="build.js"></script>-->
-  <!--<script src="lib/app.js"></script>-->
+  <script src="jspm.config.js"></script>
   <script>
-    System.import('lib/app').then(function () {
+    System.import('lib/app.js').then(function () {
       $(function () {
         var map = L.map('mapid').setView([52, 37], 13);
 
@@ -31,23 +29,23 @@
 
             tooltip._icon.innerHTML = text;
           },
-          _createTooltip(position) {
-            this._tooltip = L.marker(position, {
-              icon: L.divIcon({
-                className: 'ruler-tooltip',
-                iconAnchor: [-10, -10]
-              }),
-              clickable: false,
-            }).addTo(this._layerPaint);
-
-            return this._tooltip;
-          },
-          lineOptions: {
-            color: '#000000',
-            weight: 4,
-            opacity: 1
-          },
-          iconOptions: { 
+//          _createTooltip(position) {
+//            this._tooltip = L.marker(position, {
+//              icon: L.divIcon({
+//                className: 'ruler-tooltip',
+//                iconAnchor: [-10, -10]
+//              }),
+//              clickable: false,
+//            }).addTo(this._layerPaint);
+//
+//            return this._tooltip;
+//          },
+//          lineOptions: {
+//            color: '#000000',
+//            weight: 4,
+//            opacity: 1
+//          },
+          iconOptions: {
             iconSize: new L.Point(14, 14)
           }
         };

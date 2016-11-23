@@ -1,301 +1,5 @@
-System.registerDynamic("npm:core-js@1.2.7/library/modules/$.js", [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  var $Object = Object;
-  module.exports = {
-    create: $Object.create,
-    getProto: $Object.getPrototypeOf,
-    isEnum: {}.propertyIsEnumerable,
-    getDesc: $Object.getOwnPropertyDescriptor,
-    setDesc: $Object.defineProperty,
-    setDescs: $Object.defineProperties,
-    getKeys: $Object.keys,
-    getNames: $Object.getOwnPropertyNames,
-    getSymbols: $Object.getOwnPropertySymbols,
-    each: [].forEach
-  };
-  return module.exports;
-});
-System.registerDynamic("npm:core-js@1.2.7/library/modules/$.defined.js", [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  // 7.2.1 RequireObjectCoercible(argument)
-  module.exports = function (it) {
-    if (it == undefined) throw TypeError("Can't call method on  " + it);
-    return it;
-  };
-  return module.exports;
-});
-System.registerDynamic('npm:core-js@1.2.7/library/modules/$.to-object.js', ['npm:core-js@1.2.7/library/modules/$.defined.js'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  var defined = $__require('npm:core-js@1.2.7/library/modules/$.defined.js');
-  module.exports = function (it) {
-    return Object(defined(it));
-  };
-  return module.exports;
-});
-System.registerDynamic("npm:core-js@1.2.7/library/modules/$.cof.js", [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  var toString = {}.toString;
-
-  module.exports = function (it) {
-    return toString.call(it).slice(8, -1);
-  };
-  return module.exports;
-});
-System.registerDynamic('npm:core-js@1.2.7/library/modules/$.iobject.js', ['npm:core-js@1.2.7/library/modules/$.cof.js'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  var cof = $__require('npm:core-js@1.2.7/library/modules/$.cof.js');
-  module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
-    return cof(it) == 'String' ? it.split('') : Object(it);
-  };
-  return module.exports;
-});
-System.registerDynamic("npm:core-js@1.2.7/library/modules/$.fails.js", [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  module.exports = function (exec) {
-    try {
-      return !!exec();
-    } catch (e) {
-      return true;
-    }
-  };
-  return module.exports;
-});
-System.registerDynamic('npm:core-js@1.2.7/library/modules/$.object-assign.js', ['npm:core-js@1.2.7/library/modules/$.js', 'npm:core-js@1.2.7/library/modules/$.to-object.js', 'npm:core-js@1.2.7/library/modules/$.iobject.js', 'npm:core-js@1.2.7/library/modules/$.fails.js'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  var $ = $__require('npm:core-js@1.2.7/library/modules/$.js'),
-      toObject = $__require('npm:core-js@1.2.7/library/modules/$.to-object.js'),
-      IObject = $__require('npm:core-js@1.2.7/library/modules/$.iobject.js');
-  module.exports = $__require('npm:core-js@1.2.7/library/modules/$.fails.js')(function () {
-    var a = Object.assign,
-        A = {},
-        B = {},
-        S = Symbol(),
-        K = 'abcdefghijklmnopqrst';
-    A[S] = 7;
-    K.split('').forEach(function (k) {
-      B[k] = k;
-    });
-    return a({}, A)[S] != 7 || Object.keys(a({}, B)).join('') != K;
-  }) ? function assign(target, source) {
-    var T = toObject(target),
-        $$ = arguments,
-        $$len = $$.length,
-        index = 1,
-        getKeys = $.getKeys,
-        getSymbols = $.getSymbols,
-        isEnum = $.isEnum;
-    while ($$len > index) {
-      var S = IObject($$[index++]),
-          keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S),
-          length = keys.length,
-          j = 0,
-          key;
-      while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
-    }
-    return T;
-  } : Object.assign;
-  return module.exports;
-});
-System.registerDynamic('npm:core-js@1.2.7/library/modules/es6.object.assign.js', ['npm:core-js@1.2.7/library/modules/$.export.js', 'npm:core-js@1.2.7/library/modules/$.object-assign.js'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  var $export = $__require('npm:core-js@1.2.7/library/modules/$.export.js');
-  $export($export.S + $export.F, 'Object', { assign: $__require('npm:core-js@1.2.7/library/modules/$.object-assign.js') });
-  return module.exports;
-});
-System.registerDynamic('npm:core-js@1.2.7/library/fn/object/assign.js', ['npm:core-js@1.2.7/library/modules/es6.object.assign.js', 'npm:core-js@1.2.7/library/modules/$.core.js'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  $__require('npm:core-js@1.2.7/library/modules/es6.object.assign.js');
-  module.exports = $__require('npm:core-js@1.2.7/library/modules/$.core.js').Object.assign;
-  return module.exports;
-});
-System.registerDynamic("npm:babel-runtime@5.8.38/core-js/object/assign.js", ["npm:core-js@1.2.7/library/fn/object/assign.js"], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  module.exports = { "default": $__require("npm:core-js@1.2.7/library/fn/object/assign.js"), __esModule: true };
-  return module.exports;
-});
-System.registerDynamic('npm:core-js@1.2.7/library/modules/$.global.js', [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-  var global = module.exports = typeof window != 'undefined' && window.Math == Math ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
-  if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-
-  return module.exports;
-});
-System.registerDynamic('npm:core-js@1.2.7/library/modules/$.a-function.js', [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  module.exports = function (it) {
-    if (typeof it != 'function') throw TypeError(it + ' is not a function!');
-    return it;
-  };
-  return module.exports;
-});
-System.registerDynamic('npm:core-js@1.2.7/library/modules/$.ctx.js', ['npm:core-js@1.2.7/library/modules/$.a-function.js'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  var aFunction = $__require('npm:core-js@1.2.7/library/modules/$.a-function.js');
-  module.exports = function (fn, that, length) {
-    aFunction(fn);
-    if (that === undefined) return fn;
-    switch (length) {
-      case 1:
-        return function (a) {
-          return fn.call(that, a);
-        };
-      case 2:
-        return function (a, b) {
-          return fn.call(that, a, b);
-        };
-      case 3:
-        return function (a, b, c) {
-          return fn.call(that, a, b, c);
-        };
-    }
-    return function () {
-      return fn.apply(that, arguments);
-    };
-  };
-  return module.exports;
-});
-System.registerDynamic('npm:core-js@1.2.7/library/modules/$.export.js', ['npm:core-js@1.2.7/library/modules/$.global.js', 'npm:core-js@1.2.7/library/modules/$.core.js', 'npm:core-js@1.2.7/library/modules/$.ctx.js'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  var global = $__require('npm:core-js@1.2.7/library/modules/$.global.js'),
-      core = $__require('npm:core-js@1.2.7/library/modules/$.core.js'),
-      ctx = $__require('npm:core-js@1.2.7/library/modules/$.ctx.js'),
-      PROTOTYPE = 'prototype';
-  var $export = function (type, name, source) {
-    var IS_FORCED = type & $export.F,
-        IS_GLOBAL = type & $export.G,
-        IS_STATIC = type & $export.S,
-        IS_PROTO = type & $export.P,
-        IS_BIND = type & $export.B,
-        IS_WRAP = type & $export.W,
-        exports = IS_GLOBAL ? core : core[name] || (core[name] = {}),
-        target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE],
-        key,
-        own,
-        out;
-    if (IS_GLOBAL) source = name;
-    for (key in source) {
-      own = !IS_FORCED && target && key in target;
-      if (own && key in exports) continue;
-      out = own ? target[key] : source[key];
-      exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key] : IS_BIND && own ? ctx(out, global) : IS_WRAP && target[key] == out ? function (C) {
-        var F = function (param) {
-          return this instanceof C ? new C(param) : C(param);
-        };
-        F[PROTOTYPE] = C[PROTOTYPE];
-        return F;
-      }(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-      if (IS_PROTO) (exports[PROTOTYPE] || (exports[PROTOTYPE] = {}))[key] = out;
-    }
-  };
-  $export.F = 1;
-  $export.G = 2;
-  $export.S = 4;
-  $export.P = 8;
-  $export.B = 16;
-  $export.W = 32;
-  module.exports = $export;
-  return module.exports;
-});
-System.registerDynamic('npm:core-js@1.2.7/library/modules/es6.math.hypot.js', ['npm:core-js@1.2.7/library/modules/$.export.js'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  var $export = $__require('npm:core-js@1.2.7/library/modules/$.export.js'),
-      abs = Math.abs;
-  $export($export.S, 'Math', { hypot: function hypot(value1, value2) {
-      var sum = 0,
-          i = 0,
-          $$ = arguments,
-          $$len = $$.length,
-          larg = 0,
-          arg,
-          div;
-      while (i < $$len) {
-        arg = abs($$[i++]);
-        if (larg < arg) {
-          div = larg / arg;
-          sum = sum * div * div + 1;
-          larg = arg;
-        } else if (arg > 0) {
-          div = arg / larg;
-          sum += div * div;
-        } else sum += arg;
-      }
-      return larg === Infinity ? Infinity : larg * Math.sqrt(sum);
-    } });
-  return module.exports;
-});
-System.registerDynamic('npm:core-js@1.2.7/library/modules/$.core.js', [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  var core = module.exports = { version: '1.2.6' };
-  if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
-
-  return module.exports;
-});
-System.registerDynamic('npm:core-js@1.2.7/library/fn/math/hypot.js', ['npm:core-js@1.2.7/library/modules/es6.math.hypot.js', 'npm:core-js@1.2.7/library/modules/$.core.js'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  $__require('npm:core-js@1.2.7/library/modules/es6.math.hypot.js');
-  module.exports = $__require('npm:core-js@1.2.7/library/modules/$.core.js').Math.hypot;
-  return module.exports;
-});
-System.registerDynamic("npm:babel-runtime@5.8.38/core-js/math/hypot.js", ["npm:core-js@1.2.7/library/fn/math/hypot.js"], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  module.exports = { "default": $__require("npm:core-js@1.2.7/library/fn/math/hypot.js"), __esModule: true };
-  return module.exports;
-});
-System.register('lib/app/linked-list.js', [], function (_export) {
-  'use strict';
+System.register('lib/app/linked-list.js', [], function (_export, _context) {
+  "use strict";
 
   var posArray, Node;
   return {
@@ -318,6 +22,7 @@ System.register('lib/app/linked-list.js', [], function (_export) {
         initialize: function initialize(data) {
           this.data = data;
         },
+
         index: 0
       });
 
@@ -438,24 +143,24 @@ System.register('lib/app/linked-list.js', [], function (_export) {
 
               //special case: removing last item
             } else if (index === this._length - 1) {
-                current = this._tail;
-                this._tail = current.prev;
-                this._tail.next = null;
-              } else {
+              current = this._tail;
+              this._tail = current.prev;
+              this._tail.next = null;
+            } else {
 
-                //find the right location
-                while (i++ < index) {
-                  current = current.next;
-                }
-
-                //skip over the item to remove
-                current.prev.next = current.next;
-                current.next.prev = current.prev;
+              //find the right location
+              while (i++ < index) {
+                current = current.next;
               }
+
+              //skip over the item to remove
+              current.prev.next = current.next;
+              current.next.prev = current.prev;
+            }
 
             //decrement the length
             this._length--;
-            this._count--;
+            // this._count--;
 
             for (var ind in this._hash) {
               if (this._hash[ind] === current) {
@@ -504,8 +209,8 @@ System.register('lib/app/linked-list.js', [], function (_export) {
     }
   };
 });
-System.register('lib/app/div-icon.js', [], function (_export) {
-  'use strict';
+System.register('lib/app/div-icon.js', [], function (_export, _context) {
+  "use strict";
 
   return {
     setters: [],
@@ -519,22 +224,18 @@ System.register('lib/app/div-icon.js', [], function (_export) {
     }
   };
 });
-System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/object/assign.js', 'npm:babel-runtime@5.8.38/core-js/math/hypot.js', 'lib/app/linked-list.js', 'lib/app/div-icon.js'], function (_export) {
-  var _Object$assign, _Math$hypot, List, DivIcon, Line, cursorOffset;
+System.register('lib/app/ruler-view.js', ['./linked-list.js', './div-icon.js'], function (_export, _context) {
+  "use strict";
+
+  var List, DivIcon, Line, _cursorOffset, cursorOffset;
 
   return {
-    setters: [function (_npmBabelRuntime5838CoreJsObjectAssignJs) {
-      _Object$assign = _npmBabelRuntime5838CoreJsObjectAssignJs['default'];
-    }, function (_npmBabelRuntime5838CoreJsMathHypotJs) {
-      _Math$hypot = _npmBabelRuntime5838CoreJsMathHypotJs['default'];
-    }, function (_libAppLinkedListJs) {
-      List = _libAppLinkedListJs['default'];
-    }, function (_libAppDivIconJs) {
-      DivIcon = _libAppDivIconJs['default'];
+    setters: [function (_linkedListJs) {
+      List = _linkedListJs.default;
+    }, function (_divIconJs) {
+      DivIcon = _divIconJs.default;
     }],
     execute: function () {
-      'use strict';
-
       Line = L.Polyline.extend({
         options: {
           color: '#4a4a4a',
@@ -542,33 +243,37 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
           clickable: true
         }
       });
-      cursorOffset = 0.5;
-      // смещение положения курсора относительно линии, при котором появляется метка маркера
+      _cursorOffset = void 0;
+      cursorOffset = 0.3;
 
       _export('default', L.Class.extend({
         initialize: function initialize(map) {
           this._map = map;
-
-          if (this._map.__dr._options._updateTooltipDistance) {
-            this._updateTooltipDistance = this._map.__dr._options._updateTooltipDistance;
-          }
-
-          if (this._map.__dr._options._createTooltip) {
-            this._createTooltip = this._map.__dr._options._createTooltip;
-          }
-
-          if (this._map.__dr._options.cursorOffset) {
-            cursorOffset = this._map.__dr._options.cursorOffset;
-          }
-
           this.rulerOptions = this._map.__dr._options;
+
+          if (this.rulerOptions._updateTooltipDistance) {
+            this._updateTooltipDistance = this.rulerOptions._updateTooltipDistance;
+          }
+
+          if (this.rulerOptions._createTooltip) {
+            this._createTooltip = this.rulerOptions._createTooltip;
+          }
+
+          cursorOffset = this.rulerOptions.cursorOffset || cursorOffset;
+
+          _cursorOffset = this._recalcZoom();
         },
+
         _layerPaintPath: null,
         _layerPaintTemp: null,
         markers: [],
         _points: [],
         _tooltip: [],
         _hoverMarker: null,
+
+        isEmpty: function isEmpty(value) {
+          return value === '' || value === null || value === undefined || value.length === 0;
+        },
 
         // interface
 
@@ -586,7 +291,6 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
 
           return marker;
         },
-
         addMarker: function addMarker(latlng) {
           var marker = this.createMarker(latlng);
 
@@ -598,7 +302,6 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
 
           return marker;
         },
-
         removeMarker: function removeMarker(marker) {
           var pos = marker.options.position;
           this._layerPaintPath.spliceLatLngs(pos, 1);
@@ -621,14 +324,12 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
           this.resetMarkersPositions();
           this._resetTooltipPositions(pos);
         },
-
         resetMarkersPositions: function resetMarkersPositions() {
           var pos = 0;
           this.markers.forEach(function (node) {
             node.options.position = pos++;
           });
         },
-
         addHoverMarker: function addHoverMarker(e, prevMarkerIndex) {
           e.target._map = e.target.__dr._map;
           e.target._map.__dr.view._hoverMarker = L.marker(e.latlng, {
@@ -644,7 +345,6 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
           e.target._map.__dr.view._hoverMarker.on('dragend', this._onDragEndHoverMarker);
           e.target._map.__dr.view._hoverMarker.node = this.hash.insertAfter(e.target._map.__dr.view._hoverMarker, prevMarkerIndex);
         },
-
         removeHoverMarker: function removeHoverMarker(e) {
           if (e.target._map.__dr.view._hoverMarker.prevMarkerIndex !== null) {
             this.hash.remove(e.target.__dr._map.__dr.view._hoverMarker.prevMarkerIndex + 1);
@@ -652,7 +352,6 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
           e.target._map.__dr.view._layerPaint.removeLayer(e.target._map.__dr.view._hoverMarker);
           e.target._map.__dr.view._hoverMarker = null;
         },
-
         redrawHoverMarker: function redrawHoverMarker(e, prevMarkerIndex) {
           this._hoverMarker.setLatLng(e.latlng);
           if (prevMarkerIndex !== e.target._map.__dr.view._hoverMarker.prevMarkerIndex && !e.target._map.__dr.view._hoverMarker.isDragging) {
@@ -660,7 +359,6 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
             e.target._map.__dr.view._hoverMarker.prevMarkerIndex = prevMarkerIndex;
           }
         },
-
         insertAfter: function insertAfter(pos, data) {
           var marker = this.createMarker(data._latlng);
 
@@ -673,32 +371,27 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
 
           this.resetMarkersPositions();
         },
-
         get: function get() {},
         getLast: function getLast() {},
         getFirst: function getFirst() {},
         clear: function clear() {},
-
         _onDragStartMarker: function _onDragStartMarker(e) {
           e.target.options.isDragging = true;
           e.target._map.__dr.view._points.splice(e.target.options.position, 1, e.target._latlng);
-          e.target._map.__dr.view._resetTooltipPositions();
+          // e.target._map.__dr.view._resetTooltipPositions();
         },
-
         _onDragMarker: function _onDragMarker(e) {
           e.target._map.__dr.view._layerPaintPath.spliceLatLngs(e.target.options.position, 1, e.target._latlng);
         },
-
         _onDragEndMarker: function _onDragEndMarker(e) {
           e.target.options.isDragging = false;
           e.target._map.__dr.view._points.splice(e.target.options.position, 1, e.target._latlng);
-          e.target._map.__dr.view._resetTooltipPositions();
+          e.target._map.__dr.view._resetTooltipPositions(e.target.options.position);
         },
-
         _onDragStartHoverMarker: function _onDragStartHoverMarker(e) {
           e.target._map.__dr.view._hoverMarker.isDragging = true;
           if (!this._layerPaintTemp) {
-            this._layerPaintTemp = L.polyline([e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1]._latlng], _Object$assign({
+            this._layerPaintTemp = L.polyline([e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1]._latlng], Object.assign({
               color: 'black',
               weight: 1.5,
               clickable: false,
@@ -706,11 +399,9 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
             }, e.target._map.__dr.view.rulerOptions.paintLineOptions)).addTo(e.target._map.__dr.view._layerPaint);
           }
         },
-
         _onDragHoverMarker: function _onDragHoverMarker(e) {
           this._layerPaintTemp.spliceLatLngs(0, 2, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1]._latlng);
         },
-
         _onDragEndHoverMarker: function _onDragEndHoverMarker(e) {
           e.target._map.__dr.view._hoverMarker.isDragging = false;
           e.target._map.__dr.view.insertAfter(e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1, e.target);
@@ -721,7 +412,6 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
 
           e.target._map.__dr.view._resetTooltipPositions();
         },
-
         _onClickMarker: function _onClickMarker(e) {
           var marker = e.target;
           marker._map.__dr.view.removeMarker(marker);
@@ -738,7 +428,6 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
             this._stopMeasuring();
           }
         },
-
         _startMeasuring: function _startMeasuring() {
           this._oldCursor = this._map._container.style.cursor;
           this._map._container.style.cursor = 'crosshair';
@@ -746,7 +435,9 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
           this._doubleClickZoom = this._map.doubleClickZoom.enabled();
           this._map.doubleClickZoom.disable();
 
-          L.DomEvent.on(this._map, 'mousemove', this._mouseMove, this).on(this._map, 'click', this._mouseClick, this).on(this._map, 'dblclick', this._finishPath, this).on(document, 'keydown', this._onKeyDown, this);
+          L.DomEvent.on(this._map, 'zoomend', this._zoomChanged, this).on(this._map, 'mousemove', this._mouseMove, this).on(this._map, 'click', this._mouseClick.bind(this), this)
+          //.on(this._map, 'dblclick', this._finishPath, this)
+          .on(document, 'keydown', this._onKeyDown, this);
 
           if (!this._layerPaint) {
             this._layerPaint = L.layerGroup().addTo(this._map);
@@ -756,7 +447,6 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
             this._points = [];
           }
         },
-
         _stopMeasuring: function _stopMeasuring() {
           this._map._container.style.cursor = this._oldCursor;
 
@@ -772,7 +462,6 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
 
           this._restartPath();
         },
-
         _mouseMove: function _mouseMove(e) {
           var _this = this;
 
@@ -780,20 +469,20 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
             return;
           }
 
-          var new_latlng = undefined,
-              prevMarkerIndex = undefined,
-              markerHovered = undefined;
-          var distLine = cursorOffset;
-          var distMarker = cursorOffset;
+          var new_latlng = void 0,
+              prevMarkerIndex = void 0,
+              markerHovered = void 0;
+          var distLine = _cursorOffset;
+          var distMarker = _cursorOffset;
           this.markers.forEach(function (item, i) {
-            var distanceToCursor = _this._calcDistanceBetweenPoints(e.latlng.lat, e.latlng.lng, _this.markers[i]._latlng.lat, _this.markers[i]._latlng.lng);
+            var distanceToCursor = L.point(e.latlng.lat, e.latlng.lng).distanceTo(L.point(_this.markers[i]._latlng.lat, _this.markers[i]._latlng.lng));
             if (distanceToCursor && distanceToCursor < distMarker) {
               markerHovered = _this.markers[i];
               distMarker = distanceToCursor;
             } else {
               if (i !== _this.markers.length - 1) {
                 distanceToCursor = _this._calcHoverMarkerCoordinates(e.latlng, _this.markers[i], _this.markers[i + 1]);
-                if (distanceToCursor && distanceToCursor.distance < distLine) {
+                if (distanceToCursor && distanceToCursor.distance && distanceToCursor.distance < distLine) {
                   new_latlng = distanceToCursor.latlng;
                   distLine = distanceToCursor.distance;
                   prevMarkerIndex = i;
@@ -802,21 +491,23 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
             }
           });
 
-          if (!Em.isEmpty(markerHovered)) {
-            if (!Em.isEmpty(e.target.__dr._map.__dr.view._hoverMarker)) {
+          if (!this.isEmpty(markerHovered)) {
+            if (!this.isEmpty(e.target.__dr._map.__dr.view._hoverMarker)) {
               this.removeHoverMarker(e);
             }
           } else {
-            if (!Em.isEmpty(new_latlng) && Em.isEmpty(this.markers.findBy('options.isDragging'))) {
+            if (!this.isEmpty(new_latlng) && this.isEmpty(this.markers.find(function (marker) {
+              return marker.options.isDragging;
+            }))) {
               var e_new = e;
               e_new.latlng = new_latlng;
-              if (Em.isEmpty(e.target.__dr._map.__dr.view._hoverMarker)) {
+              if (this.isEmpty(e.target.__dr._map.__dr.view._hoverMarker)) {
                 this.addHoverMarker(e_new, prevMarkerIndex);
               } else {
                 this.redrawHoverMarker(e_new, prevMarkerIndex);
               }
             } else {
-              if (!Em.isEmpty(e.target.__dr._map.__dr.view._hoverMarker) && !e.target.__dr._map.__dr.view._hoverMarker.isDragging) {
+              if (!this.isEmpty(e.target.__dr._map.__dr.view._hoverMarker) && !e.target.__dr._map.__dr.view._hoverMarker.isDragging) {
                 this.removeHoverMarker(e);
               }
             }
@@ -827,7 +518,7 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
           }
 
           if (!this._layerPaintPathTemp) {
-            this._layerPaintPathTemp = L.polyline([this._lastPoint, e.latlng], _Object$assign({
+            this._layerPaintPathTemp = L.polyline([this._lastPoint, e.latlng], Object.assign({
               color: 'black',
               weight: 1.5,
               clickable: false,
@@ -849,14 +540,18 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
             }
           }
         },
-
         _mouseClick: function _mouseClick(e) {
           // Skip if no coordinates
           if (!e.latlng) {
             return;
           }
+          if (this.isEmpty(this._hoverMarker)) {
+            this.addMarker(e.latlng);
 
-          if (Em.isEmpty(e.target.__dr._map.__dr.view._hoverMarker)) {
+            if (this.markers.length > 1) {
+              this._createTooltip(e.latlng);
+            }
+
             // If we have a tooltip, update the distance and create a new tooltip, leaving the old one exactly where it is (i.e. where the user has clicked)
             if (this._lastPoint && this._tooltip.length) {
               if (!this._distance) {
@@ -870,10 +565,6 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
               this._distance += distance;
             }
 
-            this.addMarker(e.latlng);
-
-            this._createTooltip.call(this, e.latlng);
-
             // If this is already the second click, add the location to the fix path (create one first if we don't have one)
             if (this._lastPoint && !this._layerPaintPath) {
               this._layerPaintPath = new Line([this._lastPoint], this.rulerOptions.lineOptions).addTo(this._layerPaint);
@@ -882,28 +573,24 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
             if (this._layerPaintPath) {
               this._layerPaintPath.addLatLng(e.latlng);
             }
-            //
-            //       // Upate the end marker to the current location
-            //       if (this._lastCircle) {
-            //         this._layerPaint.removeLayer(this._lastCircle);
-            //       }
-            //  
-            //       this._lastCircle = L.marker(e.latlng, Object.assign({
-            //         icon: new DivIcon(this.rulerOptions.iconOptions),
-            //         draggable: true
-            //       }, this.rulerOptions.lastNodeOptions)).addTo(this._layerPaint);
-            //  
-            //       this._lastCircle.on('click', function () {
-            //       this._finishPath();
-            //       }, this);
 
             // Save current location as last location
             this._lastPoint = e.latlng;
           }
         },
 
+        _recalcZoom: function _recalcZoom() {
+          var zoom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this._map.getZoom();
+
+          return cursorOffset * Math.pow(2, 7 - zoom);
+        },
+
+        _zoomChanged: function _zoomChanged() {
+          var zoom = this._map.getZoom();
+
+          _cursorOffset = this._recalcZoom(zoom);
+        },
         _finishPath: function _finishPath() {
-          debugger;
           // Remove the last end marker as well as the last (moving tooltip)
           if (this._lastCircle) {
             this._layerPaint.removeLayer(this._lastCircle);
@@ -918,7 +605,6 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
           // Reset everything
           this._restartPath();
         },
-
         _restartPath: function _restartPath() {
           this._distance = 0;
           this._tooltip = [];
@@ -930,7 +616,6 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
           this.markers = [];
           this._points = [];
         },
-
         _createTooltip: function _createTooltip(position) {
           var icon = L.divIcon({
             className: 'ruler-tooltip',
@@ -947,12 +632,10 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
 
           return tooltip;
         },
-
         _updateTooltipPosition: function _updateTooltipPosition(tooltip, latlng) {
           tooltip.setLatLng(latlng);
           tooltip.update();
         },
-
         _updateTooltipDistance: function _updateTooltipDistance(tooltip, total, difference) {
           var totalRound = total,
               differenceRound = difference;
@@ -964,20 +647,24 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
 
           tooltip._icon.innerHTML = text;
         },
-
-        _resetTooltipPositions: function _resetTooltipPositions() {
+        _resetTooltipPositions: function _resetTooltipPositions(redrawFromPosition) {
+          // if (position != null) {
+          console.log('redrawFromPosition', redrawFromPosition);
+          console.log('this._points', this._points.length);
+          // }
           var total_distance = 0;
           if (this._points.length && this._tooltip.length) {
             for (var i = 0; i < this._points.length - 1; i++) {
               this._updateTooltipPosition(this._tooltip[i], this._points[i + 1]);
               var distance = this._points[i].distanceTo(this._points[i + 1]);
               this._updateTooltipDistance(this._tooltip[i], total_distance + distance, distance);
-              this._createTooltip.call(this, this._points[i + 1]);
+              // if (redrawFromPosition >= i) {
+              this._createTooltip(this._points[i + 1]);
+              // }
               total_distance += distance;
             }
           }
         },
-
         _onKeyDown: function _onKeyDown(e) {
           if (e.keyCode == 27) {
             // If not in path exit measuring mode, else just finish path
@@ -992,7 +679,7 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
         hash: new List(),
 
         _calcDistanceBetweenPoints: function _calcDistanceBetweenPoints(x1, y1, x2, y2) {
-          return _Math$hypot(x2 - x1, y2 - y1);
+          return Math.hypot(x2 - x1, y2 - y1);
         },
         _calcHoverMarkerCoordinates: function _calcHoverMarkerCoordinates(point, linePoint1, linePoint2) {
           var x0 = point.lat;
@@ -1001,21 +688,21 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
           var y1 = linePoint1._latlng.lng;
           var x2 = linePoint2._latlng.lat;
           var y2 = linePoint2._latlng.lng;
-          var lineLength = this._calcDistanceBetweenPoints(x1, y1, x2, y2);
-          var pointToLinePoint1 = this._calcDistanceBetweenPoints(x0, y0, x1, y1);
-          var pointToLinePoint2 = this._calcDistanceBetweenPoints(x0, y0, x2, y2);
+          var lineLength = L.point(x1, y1).distanceTo(L.point(x2, y2));
+          var pointToLinePoint1 = L.point(x0, y0).distanceTo(L.point(x1, y1));
+          var pointToLinePoint2 = L.point(x0, y0).distanceTo(L.point(x2, y2));
 
           var a = y2 - y1;
           var b = x1 - x2;
           var c = -x1 * y2 + x2 * y1;
-          var t = this._calcDistanceBetweenPoints(a, b, 0, 0);
+          var t = L.point(a, b).distanceTo(L.point(0, 0));
 
           var distance = Math.abs((a * x0 + b * y0 + c) / t);
 
-          if (pointToLinePoint1 >= this._calcDistanceBetweenPoints(pointToLinePoint2, lineLength, 0, 0) || pointToLinePoint2 >= this._calcDistanceBetweenPoints(pointToLinePoint1, lineLength, 0, 0)) {
+          if (pointToLinePoint1 >= L.point(pointToLinePoint2, lineLength).distanceTo(L.point(0, 0)) || pointToLinePoint2 >= L.point(pointToLinePoint1, lineLength).distanceTo(L.point(0, 0))) {
             return { latlng: null, distance: distance };
           } else {
-            if (distance < cursorOffset) {
+            if (distance < _cursorOffset) {
               var k = ((x0 - x1) * (x2 - x1) + (y0 - y1) * (y2 - y1)) / (Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
               var x3 = x1 - b * k;
               var y3 = y1 + a * k;
@@ -1028,7 +715,7 @@ System.register('lib/app/ruler-view.js', ['npm:babel-runtime@5.8.38/core-js/obje
     }
   };
 });
-System.register("lib/app/ruler-options.js", [], function (_export) {
+System.register("lib/app/ruler-options.js", [], function (_export, _context) {
   "use strict";
 
   return {
@@ -1046,33 +733,29 @@ System.register("lib/app/ruler-options.js", [], function (_export) {
     }
   };
 });
-System.register('lib/app.js', ['npm:babel-runtime@5.8.38/core-js/object/assign.js', 'lib/app/ruler-view.js', 'lib/app/ruler-options.js'], function (_export) {
-  var _Object$assign, View, options;
+System.register('lib/app.js', ['./app/ruler-view.js', './app/ruler-options.js'], function (_export, _context) {
+  "use strict";
 
+  var View, options;
   return {
-    setters: [function (_npmBabelRuntime5838CoreJsObjectAssignJs) {
-      _Object$assign = _npmBabelRuntime5838CoreJsObjectAssignJs['default'];
-    }, function (_libAppRulerViewJs) {
-      View = _libAppRulerViewJs['default'];
-    }, function (_libAppRulerOptionsJs) {
-      options = _libAppRulerOptionsJs['default'];
+    setters: [function (_appRulerViewJs) {
+      View = _appRulerViewJs.default;
+    }, function (_appRulerOptionsJs) {
+      options = _appRulerOptionsJs.default;
     }],
     execute: function () {
-      'use strict';
 
       L.MapDistanceRuler = L.Class.extend({
         baseOptions: options,
         initialize: function initialize(options) {
-          this._options = _Object$assign({}, this.baseOptions, options);
+          this._options = Object.assign({}, this.baseOptions, options);
         },
-
         onAdd: function onAdd(map) {
           this._map = map;
           this._map.__dr = this;
 
           this.view = new View(this._map);
         },
-
         onRemove: function onRemove(map) {},
 
         view: null
