@@ -251,13 +251,14 @@ var View = L.Class.extend({
     var marker = L.marker(latlng, {
       icon: new DivIcon(this.rulerOptions.iconOptions),
       draggable: true,
-      isDragging: false
+      isDragging: false,
+      riseOnHover: true
     }).addTo(this._layerPaint);
 
-    marker.on('dragstart', this._onDragStartMarker);
-    marker.on('drag', this._onDragMarker);
-    marker.on('dragend', this._onDragEndMarker);
-    marker.on('click', this._onClickMarker);
+    marker.on('dragstart', this._onDragStartMarker.bind(this));
+    marker.on('drag', this._onDragMarker.bind(this));
+    marker.on('dragend', this._onDragEndMarker.bind(this));
+    marker.on('click', this._onClickMarker.bind(this));
 
     return marker;
   },
@@ -285,9 +286,7 @@ var View = L.Class.extend({
     }
 
     if (pos === 0 && this._tooltip.length) {
-      var tooltip = this._tooltip[this._tooltip.length - 1];
-
-      this._layerPaint.removeLayer(tooltip);
+      this._layerPaint.removeLayer(this._tooltip[this._tooltip.length - 1]);
       this._tooltip.pop();
     }
 
@@ -310,38 +309,41 @@ var View = L.Class.extend({
   },
   addHoverMarker: function addHoverMarker(e, prevMarkerIndex) {
     e.target._map = e.target.__dr._map;
-    e.target._map.__dr.view._hoverMarker = L.marker(e.latlng, {
-      icon: new DivIcon(e.target._map.__dr.view.rulerOptions.iconOptions),
+    this._hoverMarker = L.marker(e.latlng, {
+      icon: new DivIcon(this.rulerOptions.iconOptions),
       draggable: true,
-      position: e.target._map.__dr.view.hash._length
-    }).addTo(e.target._map.__dr.view._layerPaint);
+      position: this.hash._length
+    }).addTo(this._layerPaint);
 
-    e.target._map.__dr.view._hoverMarker.isDragging = false;
-    e.target._map.__dr.view._hoverMarker.prevMarkerIndex = prevMarkerIndex;
-    e.target._map.__dr.view._hoverMarker.on('dragstart', this._onDragStartHoverMarker);
-    e.target._map.__dr.view._hoverMarker.on('drag', this._onDragHoverMarker);
-    e.target._map.__dr.view._hoverMarker.on('dragend', this._onDragEndHoverMarker);
-    e.target._map.__dr.view._hoverMarker.node = this.hash.insertAfter(e.target._map.__dr.view._hoverMarker, prevMarkerIndex);
+    this._hoverMarker.isDragging = false;
+    this._hoverMarker.prevMarkerIndex = prevMarkerIndex;
+    this._hoverMarker.on('dragstart', this._onDragStartHoverMarker.bind(this));
+    this._hoverMarker.on('drag', this._onDragHoverMarker.bind(this));
+    this._hoverMarker.on('dragend', this._onDragEndHoverMarker.bind(this));
+    this._hoverMarker.node = this.hash.insertAfter(this._hoverMarker, prevMarkerIndex);
   },
   removeHoverMarker: function removeHoverMarker(e) {
-    if (e.target._map.__dr.view._hoverMarker.prevMarkerIndex !== null) {
-      this.hash.remove(e.target.__dr._map.__dr.view._hoverMarker.prevMarkerIndex + 1);
+    debugger;
+    if (this._hoverMarker.prevMarkerIndex !== null) {
+      this.hash.remove(this._hoverMarker.prevMarkerIndex + 1);
     }
-    e.target._map.__dr.view._layerPaint.removeLayer(e.target._map.__dr.view._hoverMarker);
-    e.target._map.__dr.view._hoverMarker = null;
+    this._layerPaint.removeLayer(this._hoverMarker);
+    this._hoverMarker = null;
   },
   redrawHoverMarker: function redrawHoverMarker(e, prevMarkerIndex) {
     this._hoverMarker.setLatLng(e.latlng);
-    if (prevMarkerIndex !== e.target._map.__dr.view._hoverMarker.prevMarkerIndex && !e.target._map.__dr.view._hoverMarker.isDragging) {
-      e.target._map.__dr.view._hoverMarker.node = this.hash.insertAfter(e.target._map.__dr.view._hoverMarker, prevMarkerIndex);
-      e.target._map.__dr.view._hoverMarker.prevMarkerIndex = prevMarkerIndex;
+    if (prevMarkerIndex !== this._hoverMarker.prevMarkerIndex && !this._hoverMarker.isDragging) {
+      this._hoverMarker.node = this.hash.insertAfter(this._hoverMarker, prevMarkerIndex);
+      this._hoverMarker.prevMarkerIndex = prevMarkerIndex;
     }
   },
   insertAfter: function insertAfter(pos, data) {
     var marker = this.createMarker(data._latlng);
-    var tooltip = this._addTooltip(data._latlng);
+    var tooltip = this._createTooltip(data._latlng);
 
     this._layerPaintPath.spliceLatLngs(pos, 0, data._latlng);
+    tooltip.addTo(this._layerPaint);
+
     this.hash.insertAfter(marker, pos);
     marker.node = this.hash;
 
@@ -357,39 +359,40 @@ var View = L.Class.extend({
   clear: function clear() {},
   _onDragStartMarker: function _onDragStartMarker(e) {
     e.target.options.isDragging = true;
-    e.target._map.__dr.view._points.splice(e.target.options.position, 1, e.target._latlng);
+    this._points.splice(e.target.options.position, 1, e.target._latlng);
   },
   _onDragMarker: function _onDragMarker(e) {
-    e.target._map.__dr.view._layerPaintPath.spliceLatLngs(e.target.options.position, 1, e.target._latlng);
+    this._layerPaintPath.spliceLatLngs(e.target.options.position, 1, e.target._latlng);
   },
   _onDragEndMarker: function _onDragEndMarker(e) {
     e.target.options.isDragging = false;
-    e.target._map.__dr.view._points.splice(e.target.options.position, 1, e.target._latlng);
-    e.target._map.__dr.view._resetTooltipPositions();
+    this._points.splice(e.target.options.position, 1, e.target._latlng);
+    this._resetTooltipPositions();
   },
   _onDragStartHoverMarker: function _onDragStartHoverMarker(e) {
-    e.target._map.__dr.view._hoverMarker.isDragging = true;
+    this._hoverMarker.isDragging = true;
     if (!this._layerPaintTemp) {
-      this._layerPaintTemp = L.polyline([e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1]._latlng], Object.assign({
+      this._layerPaintTemp = L.polyline([this.markers[this._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, this.markers[this._hoverMarker.prevMarkerIndex + 1]._latlng], Object.assign({
         color: 'black',
         weight: 1.5,
         clickable: false,
         dashArray: '6,3'
-      }, e.target._map.__dr.view.rulerOptions.paintLineOptions)).addTo(e.target._map.__dr.view._layerPaint);
+      }, this.rulerOptions.paintLineOptions)).addTo(this._layerPaint);
     }
   },
   _onDragHoverMarker: function _onDragHoverMarker(e) {
-    this._layerPaintTemp.spliceLatLngs(0, 2, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1]._latlng);
+    this._layerPaintTemp.spliceLatLngs(0, 2, this.markers[this._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, this.markers[this._hoverMarker.prevMarkerIndex + 1]._latlng);
   },
   _onDragEndHoverMarker: function _onDragEndHoverMarker(e) {
-    e.target._map.__dr.view._hoverMarker.isDragging = false;
-    e.target._map.__dr.view.insertAfter(e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1, e.target);
-    e.target._map = e.target._map.removeLayer(e.target._map.__dr.view._hoverMarker);
-    e.target._map.removeLayer(e.target._layerPaintTemp);
-    e.target._layerPaintTemp = null;
-    e.target._hoverMarker = null;
+    debugger;
+    this._hoverMarker.isDragging = false;
+    this.insertAfter(this._hoverMarker.prevMarkerIndex + 1, e.target);
+    this._map = this._map.removeLayer(this._hoverMarker);
+    this._map.removeLayer(this._layerPaintTemp);
+    this._layerPaintTemp = null;
+    this._hoverMarker = null;
 
-    e.target._map.__dr.view._resetTooltipPositions();
+    this._resetTooltipPositions();
   },
   _onClickMarker: function _onClickMarker(e) {
     var marker = e.target;
@@ -452,13 +455,13 @@ var View = L.Class.extend({
 
     var new_latlng = void 0,
         prevMarkerIndex = void 0,
-        markerHovered = void 0;
+        markerUnderCursor = void 0;
     var distLine = _cursorOffset;
     var distMarker = _cursorOffset;
     this.markers.forEach(function (item, i) {
       var distanceToCursor = L.point(e.latlng.lat, e.latlng.lng).distanceTo(L.point(_this.markers[i]._latlng.lat, _this.markers[i]._latlng.lng));
       if (distanceToCursor && distanceToCursor < distMarker) {
-        markerHovered = _this.markers[i];
+        markerUnderCursor = _this.markers[i];
         distMarker = distanceToCursor;
       } else {
         if (i !== _this.markers.length - 1) {
@@ -472,25 +475,20 @@ var View = L.Class.extend({
       }
     });
 
-    if (!this.isEmpty(markerHovered)) {
-      if (!this.isEmpty(this._hoverMarker)) {
-        this.removeHoverMarker(e);
+    if (!this.isEmpty(new_latlng) && this.isEmpty(this.markers.find(function (marker) {
+      return marker.options.isDragging;
+    }))) {
+      var e_new = e;
+      e_new.latlng = new_latlng;
+      if (this.isEmpty(this._hoverMarker)) {
+        this.addHoverMarker(e_new, prevMarkerIndex);
+      } else {
+        this.redrawHoverMarker(e_new, prevMarkerIndex);
       }
     } else {
-      if (!this.isEmpty(new_latlng) && this.isEmpty(this.markers.find(function (marker) {
-        return marker.options.isDragging;
-      }))) {
-        var e_new = e;
-        e_new.latlng = new_latlng;
-        if (this.isEmpty(this._hoverMarker)) {
-          this.addHoverMarker(e_new, prevMarkerIndex);
-        } else {
-          this.redrawHoverMarker(e_new, prevMarkerIndex);
-        }
-      } else {
-        if (!this.isEmpty(this._hoverMarker) && !this._hoverMarker.isDragging) {
-          this.removeHoverMarker(e);
-        }
+      console.log('!this.isEmpty(this._hoverMarker)', this._hoverMarker && !this._hoverMarker.isDragging);
+      if (this._hoverMarker && !this._hoverMarker.isDragging) {
+        this.removeHoverMarker(e);
       }
     }
 
@@ -578,11 +576,14 @@ var View = L.Class.extend({
     this._points = [];
   },
   _createTooltip: function _createTooltip(position) {
-    var icon = L.divIcon({
+    var tooltip, icon;
+
+    icon = L.divIcon({
       className: 'ruler-tooltip',
       iconAnchor: [-5, -5]
     });
-    var tooltip = L.marker(position, {
+
+    tooltip = L.marker(position, {
       icon: icon,
       clickable: false
     });
