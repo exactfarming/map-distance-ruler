@@ -1,2 +1,709 @@
-System.registerDynamic("npm:core-js@1.2.7/library/modules/$.global.js",[],!0,function(a,b,c){var d=this||self,d=c.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();return"number"==typeof __g&&(__g=d),c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/modules/$.a-function.js",[],!0,function(a,b,c){this||self;return c.exports=function(a){if("function"!=typeof a)throw TypeError(a+" is not a function!");return a},c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/modules/$.ctx.js",["npm:core-js@1.2.7/library/modules/$.a-function.js"],!0,function(a,b,c){var d=(this||self,a("npm:core-js@1.2.7/library/modules/$.a-function.js"));return c.exports=function(a,b,c){if(d(a),void 0===b)return a;switch(c){case 1:return function(c){return a.call(b,c)};case 2:return function(c,d){return a.call(b,c,d)};case 3:return function(c,d,e){return a.call(b,c,d,e)}}return function(){return a.apply(b,arguments)}},c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/modules/$.export.js",["npm:core-js@1.2.7/library/modules/$.global.js","npm:core-js@1.2.7/library/modules/$.core.js","npm:core-js@1.2.7/library/modules/$.ctx.js"],!0,function(a,b,c){var d=this||self,d=a("npm:core-js@1.2.7/library/modules/$.global.js"),e=a("npm:core-js@1.2.7/library/modules/$.core.js"),f=a("npm:core-js@1.2.7/library/modules/$.ctx.js"),g="prototype",h=function(a,b,c){var i,j,k,l=a&h.F,m=a&h.G,n=a&h.S,o=a&h.P,p=a&h.B,q=a&h.W,r=m?e:e[b]||(e[b]={}),s=m?d:n?d[b]:(d[b]||{})[g];m&&(c=b);for(i in c)j=!l&&s&&i in s,j&&i in r||(k=j?s[i]:c[i],r[i]=m&&"function"!=typeof s[i]?c[i]:p&&j?f(k,d):q&&s[i]==k?function(a){var b=function(b){return this instanceof a?new a(b):a(b)};return b[g]=a[g],b}(k):o&&"function"==typeof k?f(Function.call,k):k,o&&((r[g]||(r[g]={}))[i]=k))};return h.F=1,h.G=2,h.S=4,h.P=8,h.B=16,h.W=32,c.exports=h,c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/modules/$.js",[],!0,function(a,b,c){var d=(this||self,Object);return c.exports={create:d.create,getProto:d.getPrototypeOf,isEnum:{}.propertyIsEnumerable,getDesc:d.getOwnPropertyDescriptor,setDesc:d.defineProperty,setDescs:d.defineProperties,getKeys:d.keys,getNames:d.getOwnPropertyNames,getSymbols:d.getOwnPropertySymbols,each:[].forEach},c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/modules/$.defined.js",[],!0,function(a,b,c){this||self;return c.exports=function(a){if(void 0==a)throw TypeError("Can't call method on  "+a);return a},c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/modules/$.to-object.js",["npm:core-js@1.2.7/library/modules/$.defined.js"],!0,function(a,b,c){var d=(this||self,a("npm:core-js@1.2.7/library/modules/$.defined.js"));return c.exports=function(a){return Object(d(a))},c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/modules/$.cof.js",[],!0,function(a,b,c){var d=(this||self,{}.toString);return c.exports=function(a){return d.call(a).slice(8,-1)},c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/modules/$.iobject.js",["npm:core-js@1.2.7/library/modules/$.cof.js"],!0,function(a,b,c){var d=(this||self,a("npm:core-js@1.2.7/library/modules/$.cof.js"));return c.exports=Object("z").propertyIsEnumerable(0)?Object:function(a){return"String"==d(a)?a.split(""):Object(a)},c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/modules/$.fails.js",[],!0,function(a,b,c){this||self;return c.exports=function(a){try{return!!a()}catch(a){return!0}},c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/modules/$.object-assign.js",["npm:core-js@1.2.7/library/modules/$.js","npm:core-js@1.2.7/library/modules/$.to-object.js","npm:core-js@1.2.7/library/modules/$.iobject.js","npm:core-js@1.2.7/library/modules/$.fails.js"],!0,function(a,b,c){var d=(this||self,a("npm:core-js@1.2.7/library/modules/$.js")),e=a("npm:core-js@1.2.7/library/modules/$.to-object.js"),f=a("npm:core-js@1.2.7/library/modules/$.iobject.js");return c.exports=a("npm:core-js@1.2.7/library/modules/$.fails.js")(function(){var a=Object.assign,b={},c={},d=Symbol(),e="abcdefghijklmnopqrst";return b[d]=7,e.split("").forEach(function(a){c[a]=a}),7!=a({},b)[d]||Object.keys(a({},c)).join("")!=e})?function(a,b){for(var c=e(a),g=arguments,h=g.length,i=1,j=d.getKeys,k=d.getSymbols,l=d.isEnum;h>i;)for(var m,n=f(g[i++]),o=k?j(n).concat(k(n)):j(n),p=o.length,q=0;p>q;)l.call(n,m=o[q++])&&(c[m]=n[m]);return c}:Object.assign,c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/modules/es6.object.assign.js",["npm:core-js@1.2.7/library/modules/$.export.js","npm:core-js@1.2.7/library/modules/$.object-assign.js"],!0,function(a,b,c){var d=(this||self,a("npm:core-js@1.2.7/library/modules/$.export.js"));return d(d.S+d.F,"Object",{assign:a("npm:core-js@1.2.7/library/modules/$.object-assign.js")}),c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/modules/$.core.js",[],!0,function(a,b,c){var d=(this||self,c.exports={version:"1.2.6"});return"number"==typeof __e&&(__e=d),c.exports}),System.registerDynamic("npm:core-js@1.2.7/library/fn/object/assign.js",["npm:core-js@1.2.7/library/modules/es6.object.assign.js","npm:core-js@1.2.7/library/modules/$.core.js"],!0,function(a,b,c){this||self;return a("npm:core-js@1.2.7/library/modules/es6.object.assign.js"),c.exports=a("npm:core-js@1.2.7/library/modules/$.core.js").Object.assign,c.exports}),System.registerDynamic("npm:babel-runtime@5.8.38/core-js/object/assign.js",["npm:core-js@1.2.7/library/fn/object/assign.js"],!0,function(a,b,c){this||self;return c.exports={default:a("npm:core-js@1.2.7/library/fn/object/assign.js"),__esModule:!0},c.exports}),System.register("lib/app/linked-list.js",[],function(a){"use strict";var b,c;return{setters:[],execute:function(){b=function a(b){var a=[];return b.each(function(b){a.push(b._position)}),a},c=L.Class.extend({data:null,next:null,prev:null,initialize:function(a){this.data=a},index:0}),a("default",L.Class.extend({_length:0,_head:null,_tail:null,_hash:{},_count:0,add:function(a){var b=new c(a);return 0==this._length?(this._head=b,this._tail=b):(this._tail.next=b,b.prev=this._tail,this._tail=b),this._length++,b.index=this._count,this._hash[this._count]=b,this._count++,this.resetPositions(),b},insertAfter:function(a,b){var c=this._head;if(!(0==this._length||b>this._length||b<0)&&null!==c){var d=this.get(b),e=this.get(b+1),f=this.add(a);return this._tail=f.prev,d.next=f,e.prev=f,f.prev=d,f.next=e,f}},get:function(a){var b=this._head,d=this._length,e=0;if(0===d||a<0||a>d)return new c;for(;e<a;)b=b.next,e++;return b},getLast:function(){return this.get(this._length-1)},getFirst:function(){return this.get(0)},remove:function(a){if(a>-1&&a<this._length){var b=this._head,c=0;if(0===a)this._head=b.next,this._head?this._head.prev=null:this._tail=null;else if(a===this._length-1)b=this._tail,this._tail=b.prev,this._tail.next=null;else{for(;c++<a;)b=b.next;b.prev.next=b.next,b.next.prev=b.prev}return this._length--,delete this._hash[b.index],this.resetPositions(),b.data}return null},isEmpty:function(){return 0===this._length},each:function(a){for(var b=this._head;null!==b;)null!==b&&a.call(this,b),b=b.next},resetPositions:function(){var a=0;this.each(function(b){b._position=a++})},_beforeClear:function(){},clear:function(){this._beforeClear(),this._length=0,this._head=null,this._tail=null,this._hash={},this._count=0}}))}}}),System.register("lib/app/div-icon.js",[],function(a){"use strict";return{setters:[],execute:function(){a("default",L.DivIcon.extend({options:{className:"ruler-icon",iconSize:new L.Point(10,10)}}))}}}),System.register("lib/app/ruler-view.js",["npm:babel-runtime@5.8.38/core-js/object/assign.js","lib/app/linked-list.js","lib/app/div-icon.js"],function(a){var b,c,d,e;return{setters:[function(a){b=a.default},function(a){c=a.default},function(a){d=a.default}],execute:function(){"use strict";e=L.Polyline.extend({options:{color:"black",weight:2,clickable:!0}}),a("default",L.Class.extend({initialize:function(a){this._map=a,this._map.__dr._options._updateTooltipDistance&&(this._updateTooltipDistance=this._map.__dr._options._updateTooltipDistance),this._map.__dr._options._createTooltip&&(this._createTooltip=this._map.__dr._options._createTooltip),this.rulerOptions=this._map.__dr._options},_layerPaintPath:null,markers:[],_hoverMarker:null,addMarker:function(a){var b=L.marker(a,{icon:new d(this.rulerOptions.iconOptions),draggable:!1,position:this.hash._length}).addTo(this._layerPaint);return b.on("click",function(){}),b.node=this.hash.add(b),this.markers.push(b),b},removeMarker:function(a){var b=a.node._position;this._layerPaintPath.spliceLatLngs(b,1),this.hash.remove(b),this.hash.resetPositions(),this._layerPaint.removeLayer(a),this.markers.splice(b,1)},addHoverMarker:function(a){a.target._map.__dr.view._hoverMarker=L.marker(a.latlng,{icon:new d(a.target._map.__dr.view.rulerOptions.iconOptions),draggable:!1,position:a.target._map.__dr.view.hash._length}).addTo(a.target._map.__dr.view._layerPaint);var b=a.target._map.__dr.view._map;b.on("mousemove.line",function(a){a.target._map.__dr.view._hoverMarker.setLatLng(a.latlng)})},removeHoverMarker:function(a){console.log("removeHoverMarker",a.target),a.target._map.__dr.view._layerPaint.removeLayer(a.target._map.__dr.view._hoverMarker),a.target._map.__dr.view._map.off("mousemove.line")},redrawHoverMarker:function(a){this._hoverMarker.setLatLng(a.latlng)},insertAfter:function(a){this._layerPaintPath.spliceLatLngs(pos,0,a._latlng),this.hash.add(a),this.markers.splice(pos,0,a)},get:function(){},getLast:function(){},getFirst:function(){},clear:function(){},_onDragMarker:function(a){a.target._map.__dr.view._layerPaintPath.spliceLatLngs(a.target.node._position,1,a.target._latlng)},_onClickMarker:function(a){var b=a.target,c=b._map.__dr.view;c.removeMarker(b)},__enabled:!1,_toggleMeasure:function(){this.__enabled=!this.__enabled,this.__enabled?this._startMeasuring():this._stopMeasuring()},_startMeasuring:function(){this._oldCursor=this._map._container.style.cursor,this._map._container.style.cursor="crosshair",this._doubleClickZoom=this._map.doubleClickZoom.enabled(),this._map.doubleClickZoom.disable(),L.DomEvent.on(this._map,"mousemove",this._mouseMove,this).on(this._map,"click",this._mouseClick,this).on(document,"keydown",this._onKeyDown,this),this._layerPaint||(this._layerPaint=L.layerGroup().addTo(this._map)),this._points||(this._points=[])},_stopMeasuring:function(){this._map._container.style.cursor=this._oldCursor,L.DomEvent.off(document,"keydown",this._onKeyDown,this).off(this._map,"mousemove",this._mouseMove,this).off(this._map,"click",this._mouseClick,this).off(this._map,"dblclick",this._mouseClick,this),this._doubleClickZoom&&this._map.doubleClickZoom.enable(),this._layerPaint&&this._layerPaint.clearLayers(),this._restartPath()},_mouseMove:function(a){if(a.latlng&&this._lastPoint&&this.rulerOptions.paintLineOptions&&(this._layerPaintPathTemp?this._layerPaintPathTemp.spliceLatLngs(0,2,this._lastPoint,a.latlng):this._layerPaintPathTemp=L.polyline([this._lastPoint,a.latlng],b({color:"black",weight:1.5,clickable:!1,dashArray:"6,3"},this.rulerOptions.paintLineOptions)).addTo(this._layerPaint),this._tooltip)){this._distance||(this._distance=0),this._updateTooltipPosition(a.latlng);var c=a.latlng.distanceTo(this._lastPoint);this._updateTooltipDistance(this._tooltip,this._distance+c,c)}},_mouseClick:function(a){if(a.latlng){if(this._lastPoint&&this._tooltip){this._distance||(this._distance=0),this._updateTooltipPosition(a.latlng);var b=a.latlng.distanceTo(this._lastPoint);this._updateTooltipDistance(this._tooltip,this._distance+b,b),this._distance+=b}this.addMarker(a.latlng,this._tooltip),this._createTooltip.call(this,a.latlng),this._lastPoint&&!this._layerPaintPath&&(this._layerPaintPath=new e([this._lastPoint],this.rulerOptions.lineOptions).addTo(this._layerPaint),this._layerPaintPath.on("click",this._onClickLine)),this._layerPaintPath&&this._layerPaintPath.addLatLng(a.latlng),this._lastPoint=a.latlng}},_onClickLine:function(){},_finishPath:function(){this._lastCircle&&this._layerPaint.removeLayer(this._lastCircle),this._tooltip&&this._layerPaint.removeLayer(this._tooltip),this._layerPaint&&this._layerPaintPathTemp&&this._layerPaint.removeLayer(this._layerPaintPathTemp),this._restartPath()},_restartPath:function(){this._distance=0,this._tooltip=void 0,this._lastCircle=void 0,this._lastPoint=void 0,this._layerPaintPath=void 0,this._layerPaintPathTemp=void 0},_createTooltip:function(a){var b=L.divIcon({className:"ruler-tooltip",iconAnchor:[-5,-5]});this._tooltip=L.marker(a,{icon:b,clickable:!1}).addTo(this._layerPaint)},_updateTooltipPosition:function(a){this._tooltip.setLatLng(a)},_updateTooltipDistance:function(a,b,c){var d=b,e=c,f='<div class="ruler-tooltip-total">'+d+" m</div>";e>0&&d!=e&&(f+='<div class="ruler-tooltip-difference">(+'+e+" m)</div>"),a._icon.innerHTML=f},_onKeyDown:function(a){27==a.keyCode&&(this._lastPoint?this._finishPath():this._toggleMeasure())},hash:new c}))}}}),System.register("lib/app/ruler-options.js",[],function(a){"use strict";return{setters:[],execute:function(){a("default",{renderRuler:null,iconOptions:{draggable:!0},lastNodeOptions:{},lineOptions:{},paintLineOptions:!1})}}}),System.register("lib/app.js",["npm:babel-runtime@5.8.38/core-js/object/assign.js","lib/app/ruler-view.js","lib/app/ruler-options.js"],function(a){var b,c,d;return{setters:[function(a){b=a.default},function(a){c=a.default},function(a){d=a.default}],execute:function(){"use strict";L.MapDistanceRuler=L.Class.extend({baseOptions:d,initialize:function(a){this._options=b({},this.baseOptions,a)},onAdd:function(a){this._map=a,this._map.__dr=this,this.view=new c(this._map)},onRemove:function(a){},view:null}),L.mapDistanceRuler=function(a){return new L.MapDistanceRuler(a)}}}});
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (factory((global.lib = global.lib || {})));
+}(this, (function (exports) { 'use strict';
+
+var Node = L.Class.extend({
+  data: null,
+  next: null,
+  prev: null,
+  initialize: function initialize(data) {
+    this.data = data;
+  },
+
+  index: 0
+});
+
+var List = L.Class.extend({
+  _length: 0,
+  _head: null,
+  _tail: null,
+  _hash: {},
+  _count: 0,
+
+  add: function add(data) {
+    var node = new Node(data);
+
+    //special case: no items in the list yet
+    if (this._length == 0) {
+      this._head = node;
+      this._tail = node;
+    } else {
+      //attach to the tail node
+      this._tail.next = node;
+      node.prev = this._tail;
+      this._tail = node;
+    }
+
+    //don't forget to update the count
+    this._length++;
+
+    node.index = this._count;
+    this._hash[this._count] = node;
+    this._count++;
+
+    this.resetPositions();
+
+    return node;
+  },
+  insertAfter: function insertAfter(data, index) {
+    var rslt = this._head;
+
+    if (this._length == 0 || index > this._length || index < 0) {
+      return;
+    }
+
+    if (rslt !== null) {
+      var prev = this.get(index);
+      var next = this.get(index + 1);
+
+      var node = this.add(data);
+
+      this._tail = node.prev;
+      delete this._tail.next;
+
+      node.prev = prev;
+      node.next = next;
+
+      prev.next = node;
+      next.prev = node;
+
+      var current = node;
+      while (index++ < this._length - 1) {
+        current.index = index;
+        current = current.next;
+      }
+
+      this.resetPositions();
+
+      return node;
+    }
+  },
+  get: function get(index) {
+    var currentNode = this._head,
+        length = this._length,
+        count = 0,
+        message = { failure: 'Failure: non-existent node in this list.' };
+
+    // 1st use-case: an invalid position
+    if (length === 0 || index < 0 || index > length) {
+      // throw new Error(message.failure);
+      return new Node();
+    }
+
+    // 2nd use-case: a valid position
+    while (count < index) {
+      currentNode = currentNode.next;
+      count++;
+    }
+
+    return currentNode;
+  },
+  getLast: function getLast() {
+    return this.get(this._length - 1);
+  },
+  getFirst: function getFirst() {
+    return this.get(0);
+  },
+  remove: function remove(index) {
+    //check for out-of-bounds values
+    if (index > -1 && index < this._length) {
+
+      var current = this._head,
+          i = 0;
+
+      //special case: removing first item
+      if (index === 0) {
+        this._head = current.next;
+
+        /*
+         * If there's only one item in the list and you remove it,
+         * then this._head will be null. In that case, you should
+         * also set this._tail to be null to effectively destroy
+         * the list. Otherwise, set the previous pointer on the
+         * new this._head to be null.
+         */
+        if (!this._head) {
+          this._tail = null;
+        } else {
+          this._head.prev = null;
+        }
+
+        //special case: removing last item
+      } else if (index === this._length - 1) {
+        current = this._tail;
+        this._tail = current.prev;
+        this._tail.next = null;
+      } else {
+
+        //find the right location
+        while (i++ < index) {
+          current = current.next;
+        }
+
+        //skip over the item to remove
+        current.prev.next = current.next;
+        current.next.prev = current.prev;
+      }
+
+      //decrement the length
+      this._length--;
+      // this._count--;
+
+      for (var ind in this._hash) {
+        if (this._hash[ind] === current) {
+          delete this._hash[ind];
+        }
+      }
+
+      this.resetPositions();
+      //return the value
+
+      return current.data;
+    } else {
+      return null;
+    }
+  },
+  isEmpty: function isEmpty() {
+    return this._length === 0;
+  },
+  each: function each(func) {
+    var node = this._head;
+
+    while (node !== null) {
+      if (node !== null) {
+        func.call(this, node);
+      }
+      node = node.next;
+    }
+  },
+  resetPositions: function resetPositions() {
+    var pos = 0;
+    this.each(function (node) {
+      node._position = pos++;
+    });
+  },
+  _beforeClear: function _beforeClear() {},
+  clear: function clear() {
+    this._beforeClear();
+
+    this._length = 0;
+    this._head = null;
+    this._tail = null;
+    this._hash = {};
+    this._count = 0;
+  }
+});
+
+var DivIcon = L.DivIcon.extend({
+  options: {
+    className: 'ruler-icon',
+    iconSize: new L.Point(10, 10)
+  }
+});
+
+var Line = L.Polyline.extend({
+  options: {
+    color: '#4a4a4a',
+    weight: 2,
+    clickable: true
+  }
+});
+
+var _cursorOffset = void 0;
+var cursorOffset = 0.3; // смещение положения курсора относительно линии, при котором появляется метка маркера
+
+var View = L.Class.extend({
+  initialize: function initialize(map) {
+    this._map = map;
+    this.rulerOptions = this._map.__dr._options;
+
+    if (this.rulerOptions._updateTooltipDistance) {
+      this._updateTooltipDistance = this.rulerOptions._updateTooltipDistance;
+    }
+
+    if (this.rulerOptions._createTooltip) {
+      this._createTooltip = this.rulerOptions._createTooltip;
+    }
+
+    cursorOffset = this.rulerOptions.cursorOffset || cursorOffset;
+
+    _cursorOffset = this._recalcZoom();
+  },
+
+  _layerPaintPath: null,
+  _layerPaintTemp: null,
+  markers: [],
+  _points: [],
+  _tooltip: [],
+  _hoverMarker: null,
+  _distance: 0,
+
+  isEmpty: function isEmpty(value) {
+    return value === '' || value === null || value === undefined || value.length === 0;
+  },
+
+
+  // interface
+
+  createMarker: function createMarker(latlng) {
+    var marker = L.marker(latlng, {
+      icon: new DivIcon(this.rulerOptions.iconOptions),
+      draggable: true,
+      isDragging: false,
+      riseOnHover: true
+    }).addTo(this._layerPaint);
+
+    marker.on('dragstart', this._onDragStartMarker.bind(this));
+    marker.on('drag', this._onDragMarker.bind(this));
+    marker.on('dragend', this._onDragEndMarker.bind(this));
+    marker.on('click', this._onClickMarker.bind(this));
+
+    return marker;
+  },
+  addMarker: function addMarker(latlng) {
+    var marker = this.createMarker(latlng);
+
+    marker.node = this.hash.add(marker);
+
+    this.markers.push(marker);
+    this._points.push(latlng);
+    this.resetMarkersPositions();
+
+    return marker;
+  },
+  removeMarker: function removeMarker(marker) {
+    var pos = marker.options.position;
+    this._layerPaintPath.spliceLatLngs(pos, 1);
+
+    this.hash.remove(pos);
+    this.hash.resetPositions();
+    this._layerPaint.removeLayer(marker);
+    if (pos !== 0) {
+      this._layerPaint.removeLayer(this._tooltip[pos - 1]);
+      this._tooltip.splice(pos - 1, 1);
+    }
+
+    if (pos === 0 && this._tooltip.length) {
+      this._layerPaint.removeLayer(this._tooltip[this._tooltip.length - 1]);
+      this._tooltip.pop();
+    }
+
+    this.markers.splice(pos, 1);
+    this._points.splice(pos, 1);
+
+    this.resetMarkersPositions();
+    this._resetTooltipPositions();
+
+    if (this.markers.length === 1) {
+      this._tooltip = [];
+      this._distance = 0;
+    }
+  },
+  resetMarkersPositions: function resetMarkersPositions() {
+    var pos = 0;
+    this.markers.forEach(function (node) {
+      node.options.position = pos++;
+    });
+  },
+  addHoverMarker: function addHoverMarker(e, prevMarkerIndex) {
+    e.target._map = e.target.__dr._map;
+    this._hoverMarker = L.marker(e.latlng, {
+      icon: new DivIcon(this.rulerOptions.iconOptions),
+      draggable: true,
+      position: this.hash._length
+    }).addTo(this._layerPaint);
+
+    this._hoverMarker.isDragging = false;
+    this._hoverMarker.prevMarkerIndex = prevMarkerIndex;
+    this._hoverMarker.on('dragstart', this._onDragStartHoverMarker.bind(this));
+    this._hoverMarker.on('drag', this._onDragHoverMarker.bind(this));
+    this._hoverMarker.on('dragend', this._onDragEndHoverMarker.bind(this));
+    this._hoverMarker.node = this.hash.insertAfter(this._hoverMarker, prevMarkerIndex);
+  },
+  removeHoverMarker: function removeHoverMarker(e) {
+    debugger;
+    if (this._hoverMarker.prevMarkerIndex !== null) {
+      this.hash.remove(this._hoverMarker.prevMarkerIndex + 1);
+    }
+    this._layerPaint.removeLayer(this._hoverMarker);
+    this._hoverMarker = null;
+  },
+  redrawHoverMarker: function redrawHoverMarker(e, prevMarkerIndex) {
+    this._hoverMarker.setLatLng(e.latlng);
+    if (prevMarkerIndex !== this._hoverMarker.prevMarkerIndex && !this._hoverMarker.isDragging) {
+      this._hoverMarker.node = this.hash.insertAfter(this._hoverMarker, prevMarkerIndex);
+      this._hoverMarker.prevMarkerIndex = prevMarkerIndex;
+    }
+  },
+  insertAfter: function insertAfter(pos, data) {
+    var marker = this.createMarker(data._latlng);
+    var tooltip = this._createTooltip(data._latlng);
+
+    this._layerPaintPath.spliceLatLngs(pos, 0, data._latlng);
+    tooltip.addTo(this._layerPaint);
+
+    this.hash.insertAfter(marker, pos);
+    marker.node = this.hash;
+
+    this.markers.splice(pos, 0, marker);
+    this._tooltip.splice(pos, 0, tooltip);
+    this._points.splice(pos, 0, data._latlng);
+
+    this.resetMarkersPositions();
+  },
+  get: function get() {},
+  getLast: function getLast() {},
+  getFirst: function getFirst() {},
+  clear: function clear() {},
+  _onDragStartMarker: function _onDragStartMarker(e) {
+    e.target.options.isDragging = true;
+    this._points.splice(e.target.options.position, 1, e.target._latlng);
+  },
+  _onDragMarker: function _onDragMarker(e) {
+    this._layerPaintPath.spliceLatLngs(e.target.options.position, 1, e.target._latlng);
+  },
+  _onDragEndMarker: function _onDragEndMarker(e) {
+    e.target.options.isDragging = false;
+    this._points.splice(e.target.options.position, 1, e.target._latlng);
+    this._resetTooltipPositions();
+  },
+  _onDragStartHoverMarker: function _onDragStartHoverMarker(e) {
+    this._hoverMarker.isDragging = true;
+    if (!this._layerPaintTemp) {
+      this._layerPaintTemp = L.polyline([this.markers[this._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, this.markers[this._hoverMarker.prevMarkerIndex + 1]._latlng], Object.assign({
+        color: 'black',
+        weight: 1.5,
+        clickable: false,
+        dashArray: '6,3'
+      }, this.rulerOptions.paintLineOptions)).addTo(this._layerPaint);
+    }
+  },
+  _onDragHoverMarker: function _onDragHoverMarker(e) {
+    this._layerPaintTemp.spliceLatLngs(0, 2, this.markers[this._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, this.markers[this._hoverMarker.prevMarkerIndex + 1]._latlng);
+  },
+  _onDragEndHoverMarker: function _onDragEndHoverMarker(e) {
+    debugger;
+    this._hoverMarker.isDragging = false;
+    this.insertAfter(this._hoverMarker.prevMarkerIndex + 1, e.target);
+    this._map = this._map.removeLayer(this._hoverMarker);
+    this._map.removeLayer(this._layerPaintTemp);
+    this._layerPaintTemp = null;
+    this._hoverMarker = null;
+
+    this._resetTooltipPositions();
+  },
+  _onClickMarker: function _onClickMarker(e) {
+    var marker = e.target;
+    marker._map.__dr.view.removeMarker(marker);
+  },
+
+
+  //inner functions (http://jtreml.github.com/leaflet.measure)
+  __enabled: false,
+  _toggleMeasure: function _toggleMeasure() {
+    this.__enabled = !this.__enabled;
+
+    if (this.__enabled) {
+      this._startMeasuring();
+    } else {
+      this._stopMeasuring();
+    }
+  },
+  _startMeasuring: function _startMeasuring() {
+    this._oldCursor = this._map._container.style.cursor;
+    this._map._container.style.cursor = 'crosshair';
+
+    this._doubleClickZoom = this._map.doubleClickZoom.enabled();
+    this._map.doubleClickZoom.disable();
+
+    L.DomEvent.on(this._map, 'zoomend', this._zoomChanged, this).on(this._map, 'mousemove', this._mouseMove, this).on(this._map, 'click', this._mouseClick, this)
+    // .on(this._map, 'dblclick', this._dblClick, this)
+    .on(document, 'keydown', this._onKeyDown, this);
+
+    if (!this._layerPaint) {
+      this._layerPaint = L.layerGroup().addTo(this._map);
+    }
+
+    if (!this._points) {
+      this._points = [];
+    }
+  },
+  _stopMeasuring: function _stopMeasuring() {
+    this._map._container.style.cursor = this._oldCursor;
+
+    L.DomEvent.off(document, 'keydown', this._onKeyDown, this).off(this._map, 'mousemove', this._mouseMove, this).off(this._map, 'click', this._mouseClick, this);
+    // .off(this._map, 'dblclick', this._dblClick, this);
+
+    if (this._doubleClickZoom) {
+      this._map.doubleClickZoom.enable();
+    }
+
+    if (this._layerPaint) {
+      this._layerPaint.clearLayers();
+    }
+
+    this._restartPath();
+  },
+  _mouseMove: function _mouseMove(e) {
+    var _this = this;
+
+    if (!e.latlng || !this._lastPoint) {
+      return;
+    }
+
+    var new_latlng = void 0,
+        prevMarkerIndex = void 0,
+        markerUnderCursor = void 0;
+    var distLine = _cursorOffset;
+    var distMarker = _cursorOffset;
+    this.markers.forEach(function (item, i) {
+      var distanceToCursor = L.point(e.latlng.lat, e.latlng.lng).distanceTo(L.point(_this.markers[i]._latlng.lat, _this.markers[i]._latlng.lng));
+      if (distanceToCursor && distanceToCursor < distMarker) {
+        markerUnderCursor = _this.markers[i];
+        distMarker = distanceToCursor;
+      } else {
+        if (i !== _this.markers.length - 1) {
+          distanceToCursor = _this._calcHoverMarkerCoordinates(e.latlng, _this.markers[i], _this.markers[i + 1]);
+          if (distanceToCursor && distanceToCursor.distance && distanceToCursor.distance < distLine) {
+            new_latlng = distanceToCursor.latlng;
+            distLine = distanceToCursor.distance;
+            prevMarkerIndex = i;
+          }
+        }
+      }
+    });
+
+    if (!this.isEmpty(new_latlng) && this.isEmpty(this.markers.find(function (marker) {
+      return marker.options.isDragging;
+    }))) {
+      var e_new = e;
+      e_new.latlng = new_latlng;
+      if (this.isEmpty(this._hoverMarker)) {
+        this.addHoverMarker(e_new, prevMarkerIndex);
+      } else {
+        this.redrawHoverMarker(e_new, prevMarkerIndex);
+      }
+    } else {
+      console.log('!this.isEmpty(this._hoverMarker)', this._hoverMarker && !this._hoverMarker.isDragging);
+      if (this._hoverMarker && !this._hoverMarker.isDragging) {
+        this.removeHoverMarker(e);
+      }
+    }
+
+    if (!this.rulerOptions.paintLineOptions) {
+      return;
+    }
+
+    if (!this._layerPaintPathTemp) {
+      this._layerPaintPathTemp = L.polyline([this._lastPoint, e.latlng], Object.assign({
+        color: 'black',
+        weight: 1.5,
+        clickable: false,
+        dashArray: '6,3'
+      }, this.rulerOptions.paintLineOptions)).addTo(this._layerPaint);
+    } else {
+      this._layerPaintPathTemp.spliceLatLngs(0, 2, this._lastPoint, e.latlng);
+    }
+
+    if (this._tooltip.length) {
+      var tooltip_latlng = new_latlng ? L.latLng(new_latlng) : e.latlng;
+      this._updateTooltipPosition(this._tooltip[this._tooltip.length - 1], tooltip_latlng);
+      if (!this._lastPoint.equals(tooltip_latlng)) {
+        var distance = tooltip_latlng.distanceTo(this._lastPoint);
+        this._updateTooltipDistance(this._tooltip[this._tooltip.length - 1], this._distance + distance, distance);
+      }
+    }
+  },
+  _mouseClick: function _mouseClick(e) {
+    // Skip if no coordinates
+    if (!e.latlng) {
+      return;
+    }
+    if (this.isEmpty(this._hoverMarker)) {
+      this.addMarker(e.latlng);
+
+      if (this.markers.length > 1) {
+        this._addTooltip(e.latlng);
+      }
+
+      // If we have a tooltip, update the distance and create a new tooltip, leaving the old one exactly where it is (i.e. where the user has clicked)
+      if (this._lastPoint && this._tooltip.length) {
+        this._updateTooltipPosition(this._tooltip[this._tooltip.length - 1], e.latlng);
+
+        var distance = e.latlng.distanceTo(this._lastPoint);
+        this._updateTooltipDistance(this._tooltip[this._tooltip.length - 1], this._distance + distance, distance);
+
+        this._distance += distance;
+      }
+
+      // If this is already the second click, add the location to the fix path (create one first if we don't have one)
+      if (this._lastPoint && !this._layerPaintPath) {
+        this._layerPaintPath = new Line([this._lastPoint], this.rulerOptions.lineOptions).addTo(this._layerPaint);
+      }
+
+      if (this._layerPaintPath) {
+        this._layerPaintPath.addLatLng(e.latlng);
+      }
+
+      // Save current location as last location
+      this._lastPoint = e.latlng;
+    }
+  },
+
+
+  _recalcZoom: function _recalcZoom() {
+    var zoom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this._map.getZoom();
+
+    return cursorOffset * Math.pow(2, 7 - zoom);
+  },
+
+  _zoomChanged: function _zoomChanged() {
+    var zoom = this._map.getZoom();
+
+    _cursorOffset = this._recalcZoom(zoom);
+  },
+  _restartPath: function _restartPath() {
+    this._distance = 0;
+    this._tooltip = [];
+    this._lastCircle = undefined;
+    this._lastPoint = undefined;
+    this._layerPaintPath = undefined;
+    this._layerPaintPathTemp = undefined;
+    this.hash.clear();
+    this.markers = [];
+    this._points = [];
+  },
+  _createTooltip: function _createTooltip(position) {
+    var tooltip, icon;
+
+    icon = L.divIcon({
+      className: 'ruler-tooltip',
+      iconAnchor: [-5, -5]
+    });
+
+    tooltip = L.marker(position, {
+      icon: icon,
+      clickable: false
+    });
+
+    return tooltip;
+  },
+  _addTooltip: function _addTooltip(position) {
+    var tooltip = this._createTooltip(position);
+
+    this._tooltip.push(tooltip);
+
+    tooltip.addTo(this._layerPaint);
+
+    return tooltip;
+  },
+  _updateTooltipPosition: function _updateTooltipPosition(tooltip, latlng) {
+    tooltip.setLatLng(latlng);
+    tooltip.update();
+  },
+  _updateTooltipDistance: function _updateTooltipDistance(tooltip, total, difference) {
+    var totalRound = total,
+        differenceRound = difference;
+
+    var text = '<div class="ruler-tooltip-total">' + totalRound + ' m</div>';
+    if (differenceRound > 0 && totalRound != differenceRound) {
+      text += '<div class="ruler-tooltip-difference">(+' + differenceRound + ' m)</div>';
+    }
+
+    tooltip._icon.innerHTML = text;
+  },
+  _resetTooltipPositions: function _resetTooltipPositions() {
+    var total_distance = 0;
+    if (this._points.length && this._tooltip.length) {
+      for (var i = 0; i < this._points.length - 1; i++) {
+        this._updateTooltipPosition(this._tooltip[i], this._points[i + 1]);
+        var distance = this._points[i].distanceTo(this._points[i + 1]);
+        this._updateTooltipDistance(this._tooltip[i], total_distance + distance, distance);
+        total_distance += distance;
+      }
+    }
+  },
+  _onKeyDown: function _onKeyDown(e) {
+    if (e.keyCode == 27) {
+      // If not in path exit measuring mode, else just finish path
+      if (!this._lastPoint) {
+        this._toggleMeasure();
+      } else {
+        this._finishPath();
+      }
+    }
+  },
+
+
+  hash: new List(),
+
+  _calcHoverMarkerCoordinates: function _calcHoverMarkerCoordinates(point, linePoint1, linePoint2) {
+    var x0 = point.lat;
+    var y0 = point.lng;
+    var x1 = linePoint1._latlng.lat;
+    var y1 = linePoint1._latlng.lng;
+    var x2 = linePoint2._latlng.lat;
+    var y2 = linePoint2._latlng.lng;
+    var lineLength = L.point(x1, y1).distanceTo(L.point(x2, y2));
+    var pointToLinePoint1 = L.point(x0, y0).distanceTo(L.point(x1, y1));
+    var pointToLinePoint2 = L.point(x0, y0).distanceTo(L.point(x2, y2));
+
+    var a = y2 - y1;
+    var b = x1 - x2;
+    var c = -x1 * y2 + x2 * y1;
+    var t = L.point(a, b).distanceTo(L.point(0, 0));
+
+    var distance = Math.abs((a * x0 + b * y0 + c) / t);
+
+    if (pointToLinePoint1 >= L.point(pointToLinePoint2, lineLength).distanceTo(L.point(0, 0)) || pointToLinePoint2 >= L.point(pointToLinePoint1, lineLength).distanceTo(L.point(0, 0))) {
+      return { latlng: null, distance: distance };
+    } else {
+      if (distance < _cursorOffset) {
+        var k = ((x0 - x1) * (x2 - x1) + (y0 - y1) * (y2 - y1)) / (Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        var x3 = x1 - b * k;
+        var y3 = y1 + a * k;
+
+        return { latlng: { lat: x3, lng: y3 }, distance: distance };
+      }
+    }
+  }
+});
+
+var options = {
+  renderRuler: null,
+  iconOptions: {
+    draggable: true
+  },
+  lastNodeOptions: {},
+  lineOptions: {},
+  paintLineOptions: false
+};
+
+L.MapDistanceRuler = L.Class.extend({
+  baseOptions: options,
+  initialize: function initialize(options$$1) {
+    this._options = Object.assign({}, this.baseOptions, options$$1);
+  },
+  onAdd: function onAdd(map) {
+    this._map = map;
+    this._map.__dr = this;
+
+    this.view = new View(this._map);
+  },
+  onRemove: function onRemove(map) {},
+
+
+  view: null
+});
+
+L.mapDistanceRuler = function (options$$1) {
+  return new L.MapDistanceRuler(options$$1);
+};
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+
 //# sourceMappingURL=build.js.map

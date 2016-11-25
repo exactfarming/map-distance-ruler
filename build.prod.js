@@ -1,1 +1,714 @@
-!function(a){function b(a,b,e){return 4===arguments.length?c.apply(this,arguments):void d(a,{declarative:!0,deps:b,declare:e})}function c(a,b,c,e){d(a,{declarative:!1,deps:b,executingRequire:c,execute:e})}function d(a,b){b.name=a,a in o||(o[a]=b),b.normalizedDeps=b.deps}function e(a,b){if(b[a.groupIndex]=b[a.groupIndex]||[],-1==p.call(b[a.groupIndex],a)){b[a.groupIndex].push(a);for(var c=0,d=a.normalizedDeps.length;d>c;c++){var f=a.normalizedDeps[c],g=o[f];if(g&&!g.evaluated){var h=a.groupIndex+(g.declarative!=a.declarative);if(void 0===g.groupIndex||g.groupIndex<h){if(void 0!==g.groupIndex&&(b[g.groupIndex].splice(p.call(b[g.groupIndex],g),1),0==b[g.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");g.groupIndex=h}e(g,b)}}}}function f(a){var b=o[a];b.groupIndex=0;var c=[];e(b,c);for(var d=!!b.declarative==c.length%2,f=c.length-1;f>=0;f--){for(var g=c[f],i=0;i<g.length;i++){var k=g[i];d?h(k):j(k)}d=!d}}function g(a){return s[a]||(s[a]={name:a,dependencies:[],exports:{},importers:[]})}function h(b){if(!b.module){var c=b.module=g(b.name),d=b.module.exports,e=b.declare.call(a,function(a,b){if(c.locked=!0,"object"==typeof a)for(var e in a)d[e]=a[e];else d[a]=b;for(var f=0,g=c.importers.length;g>f;f++){var h=c.importers[f];if(!h.locked)for(var i=0;i<h.dependencies.length;++i)h.dependencies[i]===c&&h.setters[i](d)}return c.locked=!1,b},{id:b.name});c.setters=e.setters,c.execute=e.execute;for(var f=0,i=b.normalizedDeps.length;i>f;f++){var j,k=b.normalizedDeps[f],l=o[k],m=s[k];m?j=m.exports:l&&!l.declarative?j=l.esModule:l?(h(l),m=l.module,j=m.exports):j=n(k),m&&m.importers?(m.importers.push(c),c.dependencies.push(m)):c.dependencies.push(null),c.setters[f]&&c.setters[f](j)}}}function i(a){var b,c=o[a];if(c)c.declarative?m(a,[]):c.evaluated||j(c),b=c.module.exports;else if(b=n(a),!b)throw new Error("Unable to load dependency "+a+".");return(!c||c.declarative)&&b&&b.__useDefault?b.default:b}function j(b){if(!b.module){var c={},d=b.module={exports:c,id:b.name};if(!b.executingRequire)for(var e=0,f=b.normalizedDeps.length;f>e;e++){var g=b.normalizedDeps[e],h=o[g];h&&j(h)}b.evaluated=!0;var l=b.execute.call(a,function(a){for(var c=0,d=b.deps.length;d>c;c++)if(b.deps[c]==a)return i(b.normalizedDeps[c]);throw new TypeError("Module "+a+" not declared as a dependency.")},c,d);l&&(d.exports=l),c=d.exports,c&&c.__esModule?b.esModule=c:b.esModule=k(c)}}function k(b){var c={};if(("object"==typeof b||"function"==typeof b)&&b!==a)if(q)for(var d in b)"default"!==d&&l(c,b,d);else{var e=b&&b.hasOwnProperty;for(var d in b)"default"===d||e&&!b.hasOwnProperty(d)||(c[d]=b[d])}return c.default=b,r(c,"__useDefault",{value:!0}),c}function l(a,b,c){try{var d;(d=Object.getOwnPropertyDescriptor(b,c))&&r(a,c,d)}catch(d){return a[c]=b[c],!1}}function m(b,c){var d=o[b];if(d&&!d.evaluated&&d.declarative){c.push(b);for(var e=0,f=d.normalizedDeps.length;f>e;e++){var g=d.normalizedDeps[e];-1==p.call(c,g)&&(o[g]?m(g,c):n(g))}d.evaluated||(d.evaluated=!0,d.module.execute.call(a))}}function n(a){if(u[a])return u[a];if("@node/"==a.substr(0,6))return u[a]=k(t(a.substr(6)));var b=o[a];if(!b)throw"Module "+a+" not present.";return f(a),m(a,[]),o[a]=void 0,b.declarative&&r(b.module.exports,"__esModule",{value:!0}),u[a]=b.declarative?b.module.exports:b.esModule}var o={},p=Array.prototype.indexOf||function(a){for(var b=0,c=this.length;c>b;b++)if(this[b]===a)return b;return-1},q=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(a){q=!1}var r;!function(){try{Object.defineProperty({},"a",{})&&(r=Object.defineProperty)}catch(a){r=function(a,b,c){try{a[b]=c.value||c.get.call(a)}catch(a){}}}}();var s={},t="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,u={"@empty":{}};return function(a,d,e,f){return function(g){g(function(g){for(var h={_nodeRequire:t,register:b,registerDynamic:c,get:n,set:function(a,b){u[a]=b},newModule:function(a){return a}},i=0;i<d.length;i++)(function(a,b){b&&b.__esModule?u[a]=b:u[a]=k(b)})(d[i],arguments[i]);f(h);var j=n(a[0]);if(a.length>1)for(var i=1;i<a.length;i++)n(a[i]);return e?j.default:j})}}}("undefined"!=typeof self?self:global)(["1"],[],!1,function(a){this.require,this.exports,this.module;a.registerDynamic("2",[],!0,function(a,b,c){var d=this||self,d=c.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();return"number"==typeof __g&&(__g=d),c.exports}),a.registerDynamic("3",[],!0,function(a,b,c){this||self;return c.exports=function(a){if("function"!=typeof a)throw TypeError(a+" is not a function!");return a},c.exports}),a.registerDynamic("4",["3"],!0,function(a,b,c){var d=(this||self,a("3"));return c.exports=function(a,b,c){if(d(a),void 0===b)return a;switch(c){case 1:return function(c){return a.call(b,c)};case 2:return function(c,d){return a.call(b,c,d)};case 3:return function(c,d,e){return a.call(b,c,d,e)}}return function(){return a.apply(b,arguments)}},c.exports}),a.registerDynamic("5",["2","6","4"],!0,function(a,b,c){var d=this||self,d=a("2"),e=a("6"),f=a("4"),g="prototype",h=function(a,b,c){var i,j,k,l=a&h.F,m=a&h.G,n=a&h.S,o=a&h.P,p=a&h.B,q=a&h.W,r=m?e:e[b]||(e[b]={}),s=m?d:n?d[b]:(d[b]||{})[g];m&&(c=b);for(i in c)j=!l&&s&&i in s,j&&i in r||(k=j?s[i]:c[i],r[i]=m&&"function"!=typeof s[i]?c[i]:p&&j?f(k,d):q&&s[i]==k?function(a){var b=function(b){return this instanceof a?new a(b):a(b)};return b[g]=a[g],b}(k):o&&"function"==typeof k?f(Function.call,k):k,o&&((r[g]||(r[g]={}))[i]=k))};return h.F=1,h.G=2,h.S=4,h.P=8,h.B=16,h.W=32,c.exports=h,c.exports}),a.registerDynamic("7",[],!0,function(a,b,c){var d=(this||self,Object);return c.exports={create:d.create,getProto:d.getPrototypeOf,isEnum:{}.propertyIsEnumerable,getDesc:d.getOwnPropertyDescriptor,setDesc:d.defineProperty,setDescs:d.defineProperties,getKeys:d.keys,getNames:d.getOwnPropertyNames,getSymbols:d.getOwnPropertySymbols,each:[].forEach},c.exports}),a.registerDynamic("8",[],!0,function(a,b,c){this||self;return c.exports=function(a){if(void 0==a)throw TypeError("Can't call method on  "+a);return a},c.exports}),a.registerDynamic("9",["8"],!0,function(a,b,c){var d=(this||self,a("8"));return c.exports=function(a){return Object(d(a))},c.exports}),a.registerDynamic("a",[],!0,function(a,b,c){var d=(this||self,{}.toString);return c.exports=function(a){return d.call(a).slice(8,-1)},c.exports}),a.registerDynamic("b",["a"],!0,function(a,b,c){var d=(this||self,a("a"));return c.exports=Object("z").propertyIsEnumerable(0)?Object:function(a){return"String"==d(a)?a.split(""):Object(a)},c.exports}),a.registerDynamic("c",[],!0,function(a,b,c){this||self;return c.exports=function(a){try{return!!a()}catch(a){return!0}},c.exports}),a.registerDynamic("d",["7","9","b","c"],!0,function(a,b,c){var d=(this||self,a("7")),e=a("9"),f=a("b");return c.exports=a("c")(function(){var a=Object.assign,b={},c={},d=Symbol(),e="abcdefghijklmnopqrst";return b[d]=7,e.split("").forEach(function(a){c[a]=a}),7!=a({},b)[d]||Object.keys(a({},c)).join("")!=e})?function(a,b){for(var c=e(a),g=arguments,h=g.length,i=1,j=d.getKeys,k=d.getSymbols,l=d.isEnum;h>i;)for(var m,n=f(g[i++]),o=k?j(n).concat(k(n)):j(n),p=o.length,q=0;p>q;)l.call(n,m=o[q++])&&(c[m]=n[m]);return c}:Object.assign,c.exports}),a.registerDynamic("e",["5","d"],!0,function(a,b,c){var d=(this||self,a("5"));return d(d.S+d.F,"Object",{assign:a("d")}),c.exports}),a.registerDynamic("6",[],!0,function(a,b,c){var d=(this||self,c.exports={version:"1.2.6"});return"number"==typeof __e&&(__e=d),c.exports}),a.registerDynamic("f",["e","6"],!0,function(a,b,c){this||self;return a("e"),c.exports=a("6").Object.assign,c.exports}),a.registerDynamic("10",["f"],!0,function(a,b,c){this||self;return c.exports={default:a("f"),__esModule:!0},c.exports}),a.register("11",[],function(a){"use strict";var b,c;return{setters:[],execute:function(){b=function a(b){var a=[];return b.each(function(b){a.push(b._position)}),a},c=L.Class.extend({data:null,next:null,prev:null,initialize:function(a){this.data=a},index:0}),a("default",L.Class.extend({_length:0,_head:null,_tail:null,_hash:{},_count:0,add:function(a){var b=new c(a);return 0==this._length?(this._head=b,this._tail=b):(this._tail.next=b,b.prev=this._tail,this._tail=b),this._length++,b.index=this._count,this._hash[this._count]=b,this._count++,this.resetPositions(),b},insertAfter:function(a,b){var c=this._head;if(!(0==this._length||b>this._length||b<0)&&null!==c){var d=this.get(b),e=this.get(b+1),f=this.add(a);return this._tail=f.prev,d.next=f,e.prev=f,f.prev=d,f.next=e,f}},get:function(a){var b=this._head,d=this._length,e=0;if(0===d||a<0||a>d)return new c;for(;e<a;)b=b.next,e++;return b},getLast:function(){return this.get(this._length-1)},getFirst:function(){return this.get(0)},remove:function(a){if(a>-1&&a<this._length){var b=this._head,c=0;if(0===a)this._head=b.next,this._head?this._head.prev=null:this._tail=null;else if(a===this._length-1)b=this._tail,this._tail=b.prev,this._tail.next=null;else{for(;c++<a;)b=b.next;b.prev.next=b.next,b.next.prev=b.prev}return this._length--,delete this._hash[b.index],this.resetPositions(),b.data}return null},isEmpty:function(){return 0===this._length},each:function(a){for(var b=this._head;null!==b;)null!==b&&a.call(this,b),b=b.next},resetPositions:function(){var a=0;this.each(function(b){b._position=a++})},_beforeClear:function(){},clear:function(){this._beforeClear(),this._length=0,this._head=null,this._tail=null,this._hash={},this._count=0}}))}}}),a.register("12",[],function(a){"use strict";return{setters:[],execute:function(){a("default",L.DivIcon.extend({options:{className:"ruler-icon",iconSize:new L.Point(10,10)}}))}}}),a.register("13",["10","11","12"],function(a){var b,c,d,e;return{setters:[function(a){b=a.default},function(a){c=a.default},function(a){d=a.default}],execute:function(){"use strict";e=L.Polyline.extend({options:{color:"black",weight:2,clickable:!0}}),a("default",L.Class.extend({initialize:function(a){this._map=a,this._map.__dr._options._updateTooltipDistance&&(this._updateTooltipDistance=this._map.__dr._options._updateTooltipDistance),this._map.__dr._options._createTooltip&&(this._createTooltip=this._map.__dr._options._createTooltip),this.rulerOptions=this._map.__dr._options},_layerPaintPath:null,markers:[],_hoverMarker:null,addMarker:function(a){var b=L.marker(a,{icon:new d(this.rulerOptions.iconOptions),draggable:!1,position:this.hash._length}).addTo(this._layerPaint);return b.on("click",function(){}),b.node=this.hash.add(b),this.markers.push(b),b},removeMarker:function(a){var b=a.node._position;this._layerPaintPath.spliceLatLngs(b,1),this.hash.remove(b),this.hash.resetPositions(),this._layerPaint.removeLayer(a),this.markers.splice(b,1)},addHoverMarker:function(a){a.target._map.__dr.view._hoverMarker=L.marker(a.latlng,{icon:new d(a.target._map.__dr.view.rulerOptions.iconOptions),draggable:!1,position:a.target._map.__dr.view.hash._length}).addTo(a.target._map.__dr.view._layerPaint);var b=a.target._map.__dr.view._map;b.on("mousemove.line",function(a){a.target._map.__dr.view._hoverMarker.setLatLng(a.latlng)})},removeHoverMarker:function(a){console.log("removeHoverMarker",a.target),a.target._map.__dr.view._layerPaint.removeLayer(a.target._map.__dr.view._hoverMarker),a.target._map.__dr.view._map.off("mousemove.line")},redrawHoverMarker:function(a){this._hoverMarker.setLatLng(a.latlng)},insertAfter:function(a){this._layerPaintPath.spliceLatLngs(pos,0,a._latlng),this.hash.add(a),this.markers.splice(pos,0,a)},get:function(){},getLast:function(){},getFirst:function(){},clear:function(){},_onDragMarker:function(a){a.target._map.__dr.view._layerPaintPath.spliceLatLngs(a.target.node._position,1,a.target._latlng)},_onClickMarker:function(a){var b=a.target,c=b._map.__dr.view;c.removeMarker(b)},__enabled:!1,_toggleMeasure:function(){this.__enabled=!this.__enabled,this.__enabled?this._startMeasuring():this._stopMeasuring()},_startMeasuring:function(){this._oldCursor=this._map._container.style.cursor,this._map._container.style.cursor="crosshair",this._doubleClickZoom=this._map.doubleClickZoom.enabled(),this._map.doubleClickZoom.disable(),L.DomEvent.on(this._map,"mousemove",this._mouseMove,this).on(this._map,"click",this._mouseClick,this).on(document,"keydown",this._onKeyDown,this),this._layerPaint||(this._layerPaint=L.layerGroup().addTo(this._map)),this._points||(this._points=[])},_stopMeasuring:function(){this._map._container.style.cursor=this._oldCursor,L.DomEvent.off(document,"keydown",this._onKeyDown,this).off(this._map,"mousemove",this._mouseMove,this).off(this._map,"click",this._mouseClick,this).off(this._map,"dblclick",this._mouseClick,this),this._doubleClickZoom&&this._map.doubleClickZoom.enable(),this._layerPaint&&this._layerPaint.clearLayers(),this._restartPath()},_mouseMove:function(a){if(a.latlng&&this._lastPoint&&this.rulerOptions.paintLineOptions&&(this._layerPaintPathTemp?this._layerPaintPathTemp.spliceLatLngs(0,2,this._lastPoint,a.latlng):this._layerPaintPathTemp=L.polyline([this._lastPoint,a.latlng],b({color:"black",weight:1.5,clickable:!1,dashArray:"6,3"},this.rulerOptions.paintLineOptions)).addTo(this._layerPaint),this._tooltip)){this._distance||(this._distance=0),this._updateTooltipPosition(a.latlng);var c=a.latlng.distanceTo(this._lastPoint);this._updateTooltipDistance(this._tooltip,this._distance+c,c)}},_mouseClick:function(a){if(a.latlng){if(this._lastPoint&&this._tooltip){this._distance||(this._distance=0),this._updateTooltipPosition(a.latlng);var b=a.latlng.distanceTo(this._lastPoint);this._updateTooltipDistance(this._tooltip,this._distance+b,b),this._distance+=b}this.addMarker(a.latlng,this._tooltip),this._createTooltip.call(this,a.latlng),this._lastPoint&&!this._layerPaintPath&&(this._layerPaintPath=new e([this._lastPoint],this.rulerOptions.lineOptions).addTo(this._layerPaint),this._layerPaintPath.on("click",this._onClickLine)),this._layerPaintPath&&this._layerPaintPath.addLatLng(a.latlng),this._lastPoint=a.latlng}},_onClickLine:function(){},_finishPath:function(){this._lastCircle&&this._layerPaint.removeLayer(this._lastCircle),this._tooltip&&this._layerPaint.removeLayer(this._tooltip),this._layerPaint&&this._layerPaintPathTemp&&this._layerPaint.removeLayer(this._layerPaintPathTemp),this._restartPath()},_restartPath:function(){this._distance=0,this._tooltip=void 0,this._lastCircle=void 0,this._lastPoint=void 0,this._layerPaintPath=void 0,this._layerPaintPathTemp=void 0},_createTooltip:function(a){var b=L.divIcon({className:"ruler-tooltip",iconAnchor:[-5,-5]});this._tooltip=L.marker(a,{icon:b,clickable:!1}).addTo(this._layerPaint)},_updateTooltipPosition:function(a){this._tooltip.setLatLng(a)},_updateTooltipDistance:function(a,b,c){var d=b,e=c,f='<div class="ruler-tooltip-total">'+d+" m</div>";e>0&&d!=e&&(f+='<div class="ruler-tooltip-difference">(+'+e+" m)</div>"),a._icon.innerHTML=f},_onKeyDown:function(a){27==a.keyCode&&(this._lastPoint?this._finishPath():this._toggleMeasure())},hash:new c}))}}}),a.register("14",[],function(a){"use strict";return{setters:[],execute:function(){a("default",{renderRuler:null,iconOptions:{draggable:!0},lastNodeOptions:{},lineOptions:{},paintLineOptions:!1})}}}),a.register("1",["10","13","14"],function(a){var b,c,d;return{setters:[function(a){b=a.default},function(a){c=a.default},function(a){d=a.default}],execute:function(){"use strict";L.MapDistanceRuler=L.Class.extend({baseOptions:d,initialize:function(a){this._options=b({},this.baseOptions,a)},onAdd:function(a){this._map=a,this._map.__dr=this,this.view=new c(this._map)},onRemove:function(a){},view:null}),L.mapDistanceRuler=function(a){return new L.MapDistanceRuler(a)}}}})})(function(a){a()});
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (factory((global.lib = global.lib || {})));
+}(this, (function (exports) { 'use strict';
+
+var Node = L.Class.extend({
+  data: null,
+  next: null,
+  prev: null,
+  initialize: function initialize(data) {
+    this.data = data;
+  },
+
+  index: 0
+});
+
+var List = L.Class.extend({
+  _length: 0,
+  _head: null,
+  _tail: null,
+  _hash: {},
+  _count: 0,
+
+  add: function add(data) {
+    var node = new Node(data);
+
+    //special case: no items in the list yet
+    if (this._length == 0) {
+      this._head = node;
+      this._tail = node;
+    } else {
+      //attach to the tail node
+      this._tail.next = node;
+      node.prev = this._tail;
+      this._tail = node;
+    }
+
+    //don't forget to update the count
+    this._length++;
+
+    node.index = this._count;
+    this._hash[this._count] = node;
+    this._count++;
+
+    this.resetPositions();
+
+    return node;
+  },
+  insertAfter: function insertAfter(data, index) {
+    var rslt = this._head;
+
+    if (this._length == 0 || index > this._length || index < 0) {
+      return;
+    }
+
+    if (rslt !== null) {
+      var prev = this.get(index);
+      var next = this.get(index + 1);
+
+      var node = this.add(data);
+
+      this._tail = node.prev;
+      delete this._tail.next;
+
+      node.prev = prev;
+      node.next = next;
+
+      prev.next = node;
+      next.prev = node;
+
+      var current = node;
+      while (index++ < this._length - 1) {
+        current.index = index;
+        current = current.next;
+      }
+
+      this.resetPositions();
+
+      return node;
+    }
+  },
+  get: function get(index) {
+    var currentNode = this._head,
+        length = this._length,
+        count = 0,
+        message = { failure: 'Failure: non-existent node in this list.' };
+
+    // 1st use-case: an invalid position
+    if (length === 0 || index < 0 || index > length) {
+      // throw new Error(message.failure);
+      return new Node();
+    }
+
+    // 2nd use-case: a valid position
+    while (count < index) {
+      currentNode = currentNode.next;
+      count++;
+    }
+
+    return currentNode;
+  },
+  getLast: function getLast() {
+    return this.get(this._length - 1);
+  },
+  getFirst: function getFirst() {
+    return this.get(0);
+  },
+  remove: function remove(index) {
+    //check for out-of-bounds values
+    if (index > -1 && index < this._length) {
+
+      var current = this._head,
+          i = 0;
+
+      //special case: removing first item
+      if (index === 0) {
+        this._head = current.next;
+
+        /*
+         * If there's only one item in the list and you remove it,
+         * then this._head will be null. In that case, you should
+         * also set this._tail to be null to effectively destroy
+         * the list. Otherwise, set the previous pointer on the
+         * new this._head to be null.
+         */
+        if (!this._head) {
+          this._tail = null;
+        } else {
+          this._head.prev = null;
+        }
+
+        //special case: removing last item
+      } else if (index === this._length - 1) {
+        current = this._tail;
+        this._tail = current.prev;
+        this._tail.next = null;
+      } else {
+
+        //find the right location
+        while (i++ < index) {
+          current = current.next;
+        }
+
+        //skip over the item to remove
+        current.prev.next = current.next;
+        current.next.prev = current.prev;
+      }
+
+      //decrement the length
+      this._length--;
+      // this._count--;
+
+      for (var ind in this._hash) {
+        if (this._hash[ind] === current) {
+          delete this._hash[ind];
+        }
+      }
+
+      this.resetPositions();
+      //return the value
+
+      return current.data;
+    } else {
+      return null;
+    }
+  },
+  isEmpty: function isEmpty() {
+    return this._length === 0;
+  },
+  each: function each(func) {
+    var node = this._head;
+
+    while (node !== null) {
+      if (node !== null) {
+        func.call(this, node);
+      }
+      node = node.next;
+    }
+  },
+  resetPositions: function resetPositions() {
+    var pos = 0;
+    this.each(function (node) {
+      node._position = pos++;
+    });
+  },
+  _beforeClear: function _beforeClear() {},
+  clear: function clear() {
+    this._beforeClear();
+
+    this._length = 0;
+    this._head = null;
+    this._tail = null;
+    this._hash = {};
+    this._count = 0;
+  }
+});
+
+var DivIcon = L.DivIcon.extend({
+  options: {
+    className: 'ruler-icon',
+    iconSize: new L.Point(10, 10)
+  }
+});
+
+var Line = L.Polyline.extend({
+  options: {
+    color: '#4a4a4a',
+    weight: 2,
+    clickable: true
+  }
+});
+
+var _cursorOffset = void 0;
+var cursorOffset = 0.3; // смещение положения курсора относительно линии, при котором появляется метка маркера
+
+var View = L.Class.extend({
+  initialize: function initialize(map) {
+    this._map = map;
+    this.rulerOptions = this._map.__dr._options;
+
+    if (this.rulerOptions._updateTooltipDistance) {
+      this._updateTooltipDistance = this.rulerOptions._updateTooltipDistance;
+    }
+
+    if (this.rulerOptions._createTooltip) {
+      this._createTooltip = this.rulerOptions._createTooltip;
+    }
+
+    cursorOffset = this.rulerOptions.cursorOffset || cursorOffset;
+
+    _cursorOffset = this._recalcZoom();
+  },
+
+  _layerPaintPath: null,
+  _layerPaintTemp: null,
+  markers: [],
+  _points: [],
+  _tooltip: [],
+  _hoverMarker: null,
+
+  isEmpty: function isEmpty(value) {
+    return value === '' || value === null || value === undefined || value.length === 0;
+  },
+
+
+  // interface
+
+  createMarker: function createMarker(latlng) {
+    var marker = L.marker(latlng, {
+      icon: new DivIcon(this.rulerOptions.iconOptions),
+      draggable: true,
+      isDragging: false
+    }).addTo(this._layerPaint);
+
+    marker.on('dragstart', this._onDragStartMarker);
+    marker.on('drag', this._onDragMarker);
+    marker.on('dragend', this._onDragEndMarker);
+    marker.on('click', this._onClickMarker);
+
+    return marker;
+  },
+  addMarker: function addMarker(latlng) {
+    var marker = this.createMarker(latlng);
+
+    marker.node = this.hash.add(marker);
+
+    this.markers.push(marker);
+    this._points.push(latlng);
+    this.resetMarkersPositions();
+
+    return marker;
+  },
+  removeMarker: function removeMarker(marker) {
+    var pos = marker.options.position;
+    this._layerPaintPath.spliceLatLngs(pos, 1);
+
+    this.hash.remove(pos);
+    this.hash.resetPositions();
+    this._layerPaint.removeLayer(marker);
+    if (pos !== 0) {
+      this._layerPaint.removeLayer(this._tooltip[pos - 1]);
+      this._tooltip.splice(pos - 1, 1);
+    }
+
+    this.markers.splice(pos, 1);
+    this._points.splice(pos, 1);
+
+    this.resetMarkersPositions();
+    this._resetTooltipPositions(pos);
+  },
+  resetMarkersPositions: function resetMarkersPositions() {
+    var pos = 0;
+    this.markers.forEach(function (node) {
+      node.options.position = pos++;
+    });
+  },
+  addHoverMarker: function addHoverMarker(e, prevMarkerIndex) {
+    e.target._map = e.target.__dr._map;
+    e.target._map.__dr.view._hoverMarker = L.marker(e.latlng, {
+      icon: new DivIcon(e.target._map.__dr.view.rulerOptions.iconOptions),
+      draggable: true,
+      position: e.target._map.__dr.view.hash._length
+    }).addTo(e.target._map.__dr.view._layerPaint);
+
+    e.target._map.__dr.view._hoverMarker.isDragging = false;
+    e.target._map.__dr.view._hoverMarker.prevMarkerIndex = prevMarkerIndex;
+    e.target._map.__dr.view._hoverMarker.on('dragstart', this._onDragStartHoverMarker);
+    e.target._map.__dr.view._hoverMarker.on('drag', this._onDragHoverMarker);
+    e.target._map.__dr.view._hoverMarker.on('dragend', this._onDragEndHoverMarker);
+    e.target._map.__dr.view._hoverMarker.node = this.hash.insertAfter(e.target._map.__dr.view._hoverMarker, prevMarkerIndex);
+  },
+  removeHoverMarker: function removeHoverMarker(e) {
+    if (e.target._map.__dr.view._hoverMarker.prevMarkerIndex !== null) {
+      this.hash.remove(e.target.__dr._map.__dr.view._hoverMarker.prevMarkerIndex + 1);
+    }
+    e.target._map.__dr.view._layerPaint.removeLayer(e.target._map.__dr.view._hoverMarker);
+    e.target._map.__dr.view._hoverMarker = null;
+  },
+  redrawHoverMarker: function redrawHoverMarker(e, prevMarkerIndex) {
+    this._hoverMarker.setLatLng(e.latlng);
+    if (prevMarkerIndex !== e.target._map.__dr.view._hoverMarker.prevMarkerIndex && !e.target._map.__dr.view._hoverMarker.isDragging) {
+      e.target._map.__dr.view._hoverMarker.node = this.hash.insertAfter(e.target._map.__dr.view._hoverMarker, prevMarkerIndex);
+      e.target._map.__dr.view._hoverMarker.prevMarkerIndex = prevMarkerIndex;
+    }
+  },
+  insertAfter: function insertAfter(pos, data) {
+    var marker = this.createMarker(data._latlng);
+    var tooltip = this._addTooltip(data._latlng);
+
+    this._layerPaintPath.spliceLatLngs(pos, 0, data._latlng);
+    this.hash.insertAfter(marker, pos);
+    marker.node = this.hash;
+
+    this.markers.splice(pos, 0, marker);
+    this._tooltip.splice(pos, 0, tooltip);
+    this._points.splice(pos, 0, data._latlng);
+
+    this.resetMarkersPositions();
+  },
+  get: function get() {},
+  getLast: function getLast() {},
+  getFirst: function getFirst() {},
+  clear: function clear() {},
+  _onDragStartMarker: function _onDragStartMarker(e) {
+    e.target.options.isDragging = true;
+    e.target._map.__dr.view._points.splice(e.target.options.position, 1, e.target._latlng);
+    // e.target._map.__dr.view._resetTooltipPositions();
+  },
+  _onDragMarker: function _onDragMarker(e) {
+    e.target._map.__dr.view._layerPaintPath.spliceLatLngs(e.target.options.position, 1, e.target._latlng);
+  },
+  _onDragEndMarker: function _onDragEndMarker(e) {
+    e.target.options.isDragging = false;
+    e.target._map.__dr.view._points.splice(e.target.options.position, 1, e.target._latlng);
+    e.target._map.__dr.view._resetTooltipPositions(e.target.options.position);
+  },
+  _onDragStartHoverMarker: function _onDragStartHoverMarker(e) {
+    e.target._map.__dr.view._hoverMarker.isDragging = true;
+    if (!this._layerPaintTemp) {
+      this._layerPaintTemp = L.polyline([e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1]._latlng], Object.assign({
+        color: 'black',
+        weight: 1.5,
+        clickable: false,
+        dashArray: '6,3'
+      }, e.target._map.__dr.view.rulerOptions.paintLineOptions)).addTo(e.target._map.__dr.view._layerPaint);
+    }
+  },
+  _onDragHoverMarker: function _onDragHoverMarker(e) {
+    this._layerPaintTemp.spliceLatLngs(0, 2, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex]._latlng, e.target._latlng, e.target._map.__dr.view.markers[e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1]._latlng);
+  },
+  _onDragEndHoverMarker: function _onDragEndHoverMarker(e) {
+    e.target._map.__dr.view._hoverMarker.isDragging = false;
+    e.target._map.__dr.view.insertAfter(e.target._map.__dr.view._hoverMarker.prevMarkerIndex + 1, e.target);
+    e.target._map = e.target._map.removeLayer(e.target._map.__dr.view._hoverMarker);
+    e.target._map.removeLayer(e.target._layerPaintTemp);
+    e.target._layerPaintTemp = null;
+    e.target._hoverMarker = null;
+
+    e.target._map.__dr.view._resetTooltipPositions();
+  },
+  _onClickMarker: function _onClickMarker(e) {
+    var marker = e.target;
+    marker._map.__dr.view.removeMarker(marker);
+  },
+
+
+  //inner functions (http://jtreml.github.com/leaflet.measure)
+  __enabled: false,
+  _toggleMeasure: function _toggleMeasure() {
+    this.__enabled = !this.__enabled;
+
+    if (this.__enabled) {
+      this._startMeasuring();
+    } else {
+      this._stopMeasuring();
+    }
+  },
+  _startMeasuring: function _startMeasuring() {
+    this._oldCursor = this._map._container.style.cursor;
+    this._map._container.style.cursor = 'crosshair';
+
+    this._doubleClickZoom = this._map.doubleClickZoom.enabled();
+    this._map.doubleClickZoom.disable();
+
+    L.DomEvent.on(this._map, 'zoomend', this._zoomChanged, this).on(this._map, 'mousemove', this._mouseMove, this).on(this._map, 'click', this._mouseClick.bind(this), this)
+    //.on(this._map, 'dblclick', this._finishPath, this)
+    .on(document, 'keydown', this._onKeyDown, this);
+
+    if (!this._layerPaint) {
+      this._layerPaint = L.layerGroup().addTo(this._map);
+    }
+
+    if (!this._points) {
+      this._points = [];
+    }
+  },
+  _stopMeasuring: function _stopMeasuring() {
+    this._map._container.style.cursor = this._oldCursor;
+
+    L.DomEvent.off(document, 'keydown', this._onKeyDown, this).off(this._map, 'mousemove', this._mouseMove, this).off(this._map, 'click', this._mouseClick, this).off(this._map, 'dblclick', this._mouseClick, this);
+
+    if (this._doubleClickZoom) {
+      this._map.doubleClickZoom.enable();
+    }
+
+    if (this._layerPaint) {
+      this._layerPaint.clearLayers();
+    }
+
+    this._restartPath();
+  },
+  _mouseMove: function _mouseMove(e) {
+    var _this = this;
+
+    if (!e.latlng || !this._lastPoint) {
+      return;
+    }
+
+    var new_latlng = void 0,
+        prevMarkerIndex = void 0,
+        markerHovered = void 0;
+    var distLine = _cursorOffset;
+    var distMarker = _cursorOffset;
+    this.markers.forEach(function (item, i) {
+      var distanceToCursor = L.point(e.latlng.lat, e.latlng.lng).distanceTo(L.point(_this.markers[i]._latlng.lat, _this.markers[i]._latlng.lng));
+      if (distanceToCursor && distanceToCursor < distMarker) {
+        markerHovered = _this.markers[i];
+        distMarker = distanceToCursor;
+      } else {
+        if (i !== _this.markers.length - 1) {
+          distanceToCursor = _this._calcHoverMarkerCoordinates(e.latlng, _this.markers[i], _this.markers[i + 1]);
+          if (distanceToCursor && distanceToCursor.distance && distanceToCursor.distance < distLine) {
+            new_latlng = distanceToCursor.latlng;
+            distLine = distanceToCursor.distance;
+            prevMarkerIndex = i;
+          }
+        }
+      }
+    });
+
+    if (!this.isEmpty(markerHovered)) {
+      if (!this.isEmpty(e.target.__dr._map.__dr.view._hoverMarker)) {
+        this.removeHoverMarker(e);
+      }
+    } else {
+      if (!this.isEmpty(new_latlng) && this.isEmpty(this.markers.find(function (marker) {
+        return marker.options.isDragging;
+      }))) {
+        var e_new = e;
+        e_new.latlng = new_latlng;
+        if (this.isEmpty(e.target.__dr._map.__dr.view._hoverMarker)) {
+          this.addHoverMarker(e_new, prevMarkerIndex);
+        } else {
+          this.redrawHoverMarker(e_new, prevMarkerIndex);
+        }
+      } else {
+        if (!this.isEmpty(e.target.__dr._map.__dr.view._hoverMarker) && !e.target.__dr._map.__dr.view._hoverMarker.isDragging) {
+          this.removeHoverMarker(e);
+        }
+      }
+    }
+
+    if (!this.rulerOptions.paintLineOptions) {
+      return;
+    }
+
+    if (!this._layerPaintPathTemp) {
+      this._layerPaintPathTemp = L.polyline([this._lastPoint, e.latlng], Object.assign({
+        color: 'black',
+        weight: 1.5,
+        clickable: false,
+        dashArray: '6,3'
+      }, this.rulerOptions.paintLineOptions)).addTo(this._layerPaint);
+    } else {
+      this._layerPaintPathTemp.spliceLatLngs(0, 2, this._lastPoint, e.latlng);
+    }
+
+    if (this._tooltip.length) {
+      if (!this._distance) {
+        this._distance = 0;
+      }
+      var tooltip_latlng = new_latlng ? L.latLng(new_latlng) : e.latlng;
+      this._updateTooltipPosition(this._tooltip[this._tooltip.length - 1], tooltip_latlng);
+      if (!this._lastPoint.equals(tooltip_latlng)) {
+        var distance = tooltip_latlng.distanceTo(this._lastPoint);
+        this._updateTooltipDistance(this._tooltip[this._tooltip.length - 1], this._distance + distance, distance);
+      }
+    }
+  },
+  _mouseClick: function _mouseClick(e) {
+    // Skip if no coordinates
+    if (!e.latlng) {
+      return;
+    }
+    if (this.isEmpty(this._hoverMarker)) {
+      this.addMarker(e.latlng);
+
+      if (this.markers.length > 1) {
+        this._addTooltip(e.latlng);
+      }
+
+      // If we have a tooltip, update the distance and create a new tooltip, leaving the old one exactly where it is (i.e. where the user has clicked)
+      if (this._lastPoint && this._tooltip.length) {
+        if (!this._distance) {
+          this._distance = 0;
+        }
+        this._updateTooltipPosition(this._tooltip[this._tooltip.length - 1], e.latlng);
+
+        var distance = e.latlng.distanceTo(this._lastPoint);
+        this._updateTooltipDistance(this._tooltip[this._tooltip.length - 1], this._distance + distance, distance);
+
+        this._distance += distance;
+      }
+
+      // If this is already the second click, add the location to the fix path (create one first if we don't have one)
+      if (this._lastPoint && !this._layerPaintPath) {
+        this._layerPaintPath = new Line([this._lastPoint], this.rulerOptions.lineOptions).addTo(this._layerPaint);
+      }
+
+      if (this._layerPaintPath) {
+        this._layerPaintPath.addLatLng(e.latlng);
+      }
+
+      // Save current location as last location
+      this._lastPoint = e.latlng;
+    }
+  },
+
+
+  _recalcZoom: function _recalcZoom() {
+    var zoom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this._map.getZoom();
+
+    return cursorOffset * Math.pow(2, 7 - zoom);
+  },
+
+  _zoomChanged: function _zoomChanged() {
+    var zoom = this._map.getZoom();
+
+    _cursorOffset = this._recalcZoom(zoom);
+  },
+  _finishPath: function _finishPath() {
+    // Remove the last end marker as well as the last (moving tooltip)
+    if (this._lastCircle) {
+      this._layerPaint.removeLayer(this._lastCircle);
+    }
+    if (this._tooltip.length) {
+      this._layerPaint.removeLayer(this._tooltip);
+    }
+    if (this._layerPaint && this._layerPaintPathTemp) {
+      this._layerPaint.removeLayer(this._layerPaintPathTemp);
+    }
+
+    // Reset everything
+    this._restartPath();
+  },
+  _restartPath: function _restartPath() {
+    this._distance = 0;
+    this._tooltip = [];
+    this._lastCircle = undefined;
+    this._lastPoint = undefined;
+    this._layerPaintPath = undefined;
+    this._layerPaintPathTemp = undefined;
+    this.hash.clear();
+    this.markers = [];
+    this._points = [];
+  },
+  _createTooltip: function _createTooltip(position) {
+    var icon = L.divIcon({
+      className: 'ruler-tooltip',
+      iconAnchor: [-5, -5]
+    });
+    var tooltip = L.marker(position, {
+      icon: icon,
+      clickable: false
+    });
+
+    return tooltip;
+  },
+  _addTooltip: function _addTooltip(position) {
+    var tooltip = this._createTooltip(position);
+
+    this._tooltip.push(tooltip);
+
+    tooltip.addTo(this._layerPaint);
+
+    return tooltip;
+  },
+  _updateTooltipPosition: function _updateTooltipPosition(tooltip, latlng) {
+    tooltip.setLatLng(latlng);
+    tooltip.update();
+  },
+  _updateTooltipDistance: function _updateTooltipDistance(tooltip, total, difference) {
+    var totalRound = total,
+        differenceRound = difference;
+
+    var text = '<div class="ruler-tooltip-total">' + totalRound + ' m</div>';
+    if (differenceRound > 0 && totalRound != differenceRound) {
+      text += '<div class="ruler-tooltip-difference">(+' + differenceRound + ' m)</div>';
+    }
+
+    tooltip._icon.innerHTML = text;
+  },
+  _resetTooltipPositions: function _resetTooltipPositions(redrawFromPosition) {
+    var total_distance = 0;
+    if (this._points.length && this._tooltip.length) {
+      for (var i = 0; i < this._points.length - 1; i++) {
+        this._updateTooltipPosition(this._tooltip[i], this._points[i + 1]);
+        var distance = this._points[i].distanceTo(this._points[i + 1]);
+        this._updateTooltipDistance(this._tooltip[i], total_distance + distance, distance);
+        total_distance += distance;
+      }
+    }
+  },
+  _onKeyDown: function _onKeyDown(e) {
+    if (e.keyCode == 27) {
+      // If not in path exit measuring mode, else just finish path
+      if (!this._lastPoint) {
+        this._toggleMeasure();
+      } else {
+        this._finishPath();
+      }
+    }
+  },
+
+
+  hash: new List(),
+
+  _calcHoverMarkerCoordinates: function _calcHoverMarkerCoordinates(point, linePoint1, linePoint2) {
+    var x0 = point.lat;
+    var y0 = point.lng;
+    var x1 = linePoint1._latlng.lat;
+    var y1 = linePoint1._latlng.lng;
+    var x2 = linePoint2._latlng.lat;
+    var y2 = linePoint2._latlng.lng;
+    var lineLength = L.point(x1, y1).distanceTo(L.point(x2, y2));
+    var pointToLinePoint1 = L.point(x0, y0).distanceTo(L.point(x1, y1));
+    var pointToLinePoint2 = L.point(x0, y0).distanceTo(L.point(x2, y2));
+
+    var a = y2 - y1;
+    var b = x1 - x2;
+    var c = -x1 * y2 + x2 * y1;
+    var t = L.point(a, b).distanceTo(L.point(0, 0));
+
+    var distance = Math.abs((a * x0 + b * y0 + c) / t);
+
+    if (pointToLinePoint1 >= L.point(pointToLinePoint2, lineLength).distanceTo(L.point(0, 0)) || pointToLinePoint2 >= L.point(pointToLinePoint1, lineLength).distanceTo(L.point(0, 0))) {
+      return { latlng: null, distance: distance };
+    } else {
+      if (distance < _cursorOffset) {
+        var k = ((x0 - x1) * (x2 - x1) + (y0 - y1) * (y2 - y1)) / (Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        var x3 = x1 - b * k;
+        var y3 = y1 + a * k;
+
+        return { latlng: { lat: x3, lng: y3 }, distance: distance };
+      }
+    }
+  }
+});
+
+var options = {
+  renderRuler: null,
+  iconOptions: {
+    draggable: true
+  },
+  lastNodeOptions: {},
+  lineOptions: {},
+  paintLineOptions: false
+};
+
+L.MapDistanceRuler = L.Class.extend({
+  baseOptions: options,
+  initialize: function initialize(options$$1) {
+    this._options = Object.assign({}, this.baseOptions, options$$1);
+  },
+  onAdd: function onAdd(map) {
+    this._map = map;
+    this._map.__dr = this;
+
+    this.view = new View(this._map);
+  },
+  onRemove: function onRemove(map) {},
+
+
+  view: null
+});
+
+L.mapDistanceRuler = function (options$$1) {
+  return new L.MapDistanceRuler(options$$1);
+};
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
