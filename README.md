@@ -23,15 +23,13 @@ Demo - https://exactfarming.github.io/map-distance-ruler/
     tooltip._icon.innerHTML = text;
   },
   _createTooltip(position) {
-    this._tooltip = L.marker(position, {
+    return L.marker(position, {
       icon: L.divIcon({
         className: 'ruler-tooltip',
         iconAnchor: [-5, -5]
       }),
       clickable: false,
     }).addTo(this._layerPaint);
-
-    return this._tooltip;
   }
 }
 ```
