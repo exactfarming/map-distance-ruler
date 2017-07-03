@@ -1,4 +1,7 @@
 {
+  "name": "map-distance-ruler",
+  "version": "1.0.0",
+  "description": "",
   "jspm": {
     "dependencies": {
       "jquery": "github:components/jquery@3.1.0",
