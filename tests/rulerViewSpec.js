@@ -1,4 +1,6 @@
-var view;
+import { initMap, destroyMap } from './init.js';
+
+let view;
 
 describe('ruler-view', function () {
   beforeEach(function () {
@@ -13,14 +15,14 @@ describe('ruler-view', function () {
 
 
   it('init view', function () {
-    expect(view).not.toBe(null);
+    expect(view).not.to.eql(null);
   });
   it('view: _toggleMeasure', function () {
 
-    expect(view.__enabled).toBe(false);
+    expect(view.__enabled).to.eql(false);
 
     view._toggleMeasure();
 
-    expect(view.__enabled).toBe(true);
+    expect(view.__enabled).to.eql(true);
   });
 });

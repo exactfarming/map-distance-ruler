@@ -33,6 +33,19 @@ Demo - https://exactfarming.github.io/map-distance-ruler/
   }
 }
 ```
+
+#### Install packages
+
+ Run `yarn`
+ 
+#### Build
+ 
+ Run `webpack`
+ 
+#### Testing
+ 
+ Run `testem`
+
 For more details see example
 
 ##### Thanks this guy https://github.com/jtreml for this example http://jtreml.github.io/leaflet.measure/example.html

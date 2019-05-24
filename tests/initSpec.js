@@ -1,3 +1,5 @@
+import { initMap, destroyMap } from './init.js';
+
 describe('Map', function () {
 
   beforeEach(function() {
@@ -10,8 +12,8 @@ describe('Map', function () {
 
   it('check options', function () {
     let dr = map.__dr;
-    expect(dr._options.center).toEqual([52, 37]);
-    expect(dr.baseOptions.renderRuler).toEqual(null);
+    assert.deepEqual(dr._options.center, [52, 37]);
+    expect(dr.baseOptions.renderRuler).to.equal(null);
   });
 
   it('"remove" layer', function () {
@@ -31,7 +33,7 @@ describe('Map: no render', function () {
 
   it('check options', function () {
     let dr = map.__dr;
-    expect(dr._options.center).toEqual([52, 37]);
-    expect(dr.baseOptions.renderRuler).toEqual(null);
+    assert.deepEqual(dr._options.center, [52, 37]);
+    expect(dr.baseOptions.renderRuler).to.equal(null);
   });
 });

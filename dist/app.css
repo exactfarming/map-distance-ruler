@@ -1,0 +1,59 @@
+.ruler {
+  position: relative;
+  height: 26px;
+  width: 100px;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+.ruler-items {
+  position: relative;
+  margin: 5px;
+}
+.ruler-icon {
+  padding: 1px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 50%;
+}
+.ruler-icon:before {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 2px solid #000;
+  background: transparent;
+}
+.ruler-tooltip {
+  width: auto !important;
+  height: auto !important;
+  margin: 0;
+  background-color: rgba(51,50,50,0.5);
+  border-radius: 2px;
+  padding: 3px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.ruler-tooltip-total {
+  display: inline-block;
+  vertical-align: middle;
+  color: #fff;
+  font: 13px "Roboto", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  white-space: nowrap;
+}
+.ruler-tooltip-difference {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 2px;
+  margin-left: 3px;
+  font: 10px "Roboto", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  color: #7ed321;
+}

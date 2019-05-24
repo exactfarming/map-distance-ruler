@@ -1,21 +1,21 @@
-function initMap(useCustomRender = true) {
+export function initMap(useCustomRender = true) {
+  const bodyEl = document.querySelector('#test-wrapper');
 
-  let mapId = `mapid_${new Date().getTime()}`;
-  let $body = $('body');
+  bodyEl.innerHTML = `
+    <div id="map" style="width: 400px; height: 400px;"></div>
+    <div id="distance"></div>
+  `;
 
-  $body.append(`<div id="${mapId}"></div>`);
-  var map = L.map(mapId).setView([52, 37], 13);
+  const map = L.map('map').setView([52, 37], 13);
 
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-
-  $body.append(`<div id="distance"></div>`);
 
   let options;
   if (useCustomRender) {
     options = {
       center: [52, 37],
       renderRuler: function (map, _el) {
-        $('#distance').append(_el);
+        document.querySelector('#distance').appendChild(_el);
       },
       onChange: function (distance, distanceArray, rulerHTMLObjects) {
       }
@@ -32,6 +32,6 @@ function initMap(useCustomRender = true) {
   return map;
 }
 
-function destroyMap() {
-  $('body').html('');
+export function destroyMap() {
+  document.querySelector('#test-wrapper').innerHTML = '';
 }
